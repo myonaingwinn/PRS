@@ -229,9 +229,9 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
-            'username' => 'my_app',
-            'password' => 'secret',
-            'database' => 'my_app',
+            'username' => 'root',
+            'password' => 'root',
+            'database' => 'products_ranking_system',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],
