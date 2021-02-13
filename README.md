@@ -5,7 +5,7 @@
 * `Don't create this project on your own, I've already setting up all requirements and version errors for '3 days'`
 
 ## Step 1 : XAMPP
-If you don't have [xampp version 7.4](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/7.4.13/), download and install first.
+If you don't have [xampp with PHP version 7.4](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/7.4.13/), download and install first.
 
 ## Step 2 : Fork this repository
 
