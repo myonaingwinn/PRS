@@ -8,7 +8,7 @@
 If you don't have [Xampp with PHP version 7.3.27](https://www.apachefriends.org/download.php?xampp-win32-1.7.3.exe%C2%A0), download and install first.
 
 * You can also run this project with this command `Path-to-your-project> bin/cake server`
-> example ⇒ D:/xampp7.3/htdocs/PRS> bin/cake server
+    > example ⇒ D:/xampp7.3/htdocs/PRS> bin/cake server
 
 ## Step 2 : Fork this repository
 
