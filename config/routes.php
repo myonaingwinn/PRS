@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration
  *
@@ -51,6 +52,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
+    $routes->connect('/new_survey', ['controller' => 'Admins', 'action' => 'new_survey', 'new_survey']);
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
