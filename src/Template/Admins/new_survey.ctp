@@ -10,9 +10,9 @@
         margin-bottom: 0rem;
     }
 
-    .card .card-action {
+    /* .card .card-action {
         padding-bottom: 0px;
-    }
+    } */
 
     .row .col.s5 {
         width: 26.6666666667%;
@@ -259,7 +259,7 @@
         // $('#card-' + id).after(container);
         container.insertAfter($('#card-' + id));
 
-        var card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s8"><input  id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div><div  id="selDiv-' + cardCount + '" class="input-field col s4"><select id="selType-' + cardCount + '" class="my-sel"  onchange="typeChange(this)"><option value="1" data-icon="/img/title.svg">Text</option><option value="2" data-icon="/img/check_box.svg">CheckBox</option><option value="3" data-icon="/img/radio_button.svg">Radio</option></select><label>Select Question Type</label></div></div><div class="row"><div class="input-field col s12"><input placeholder="Answer Text" type="text" class="validate" disabled></div></div><div class="card-action"><div class="row"><div class="col s6"></div><div class="col s1"><div id="clone-' + cardCount + '" class="waves-effect waves-light my-btn"><i class="material-icons">content_copy</i></div></div><div class="col s1"><div id="delete-' + cardCount + '" class="waves-effect waves-light my-btn"><i class="material-icons">delete</i></div></div><div class="col s1"></div><div class="col s4"><div class="switch">Required<label> <input type="checkbox"><span class="lever"></span></label></div></div></div></div></div></div></div></div>');
+        var card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s8"><input  id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div><div  id="selDiv-' + cardCount + '" class="input-field col s4"><select id="selType-' + cardCount + '" class="my-sel"  onchange="typeChange(this)"><option value="1" data-icon="/img/title.svg">Text</option><option value="2" data-icon="/img/check_box.svg">CheckBox</option><option value="3" data-icon="/img/radio_button.svg">Radio</option></select><label>Select Question Type</label></div></div><div class="row"><div class="input-field col s12"><input placeholder="Answer Text" type="text" class="validate" disabled></div></div></div><div class="card-action"><div class="row"><div class="col s10"></div><div class="col s2"><div id="delete-' + cardCount + '" class="waves-effect waves-light my-btn"><i class="material-icons">delete</i></div></div></div></div></div></div></div></div></div>');
 
         // Initialize
         $(function() {
