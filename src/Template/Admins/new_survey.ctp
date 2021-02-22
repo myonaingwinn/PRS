@@ -177,11 +177,11 @@
 
                 <div id="card-1-child-1" class="row check-child">
                     <div class="input-field col s8 my-input-field">
-                        <i class="tiny material-icons prefix my-icon">check_box_outline_blank</i>
+                        <i class="material-icons prefix my-icon">check_box_outline_blank</i>
                         <input placeholder="Option" type="text">
                     </div>
                     <div class="input-field col s1">
-                        <a class="btn-floating waves-effect btn-small green lighten-1"><i class="material-icons">add
+                        <a class="btn-floating waves-effect btn-small green lighten-1" onclick="addCheckOption(this)"><i class="material-icons">add
                             </i></a>
                     </div>
 
@@ -222,7 +222,7 @@
                         <div id="clone-1" class="waves-effect waves-light my-btn"><i class="material-icons">content_copy</i></div>
                     </div> -->
                     <div class="col s2">
-                        <div id="delete-1" class="waves-effect waves-light my-btn"><i class="material-icons ">delete</i></div>
+                        <div id="delete-2" class="waves-effect waves-light my-btn"><i class="material-icons ">delete</i></div>
                     </div>
                     <!-- <div class="col s5 pull-s7">
                     </div> -->
@@ -279,13 +279,11 @@
             // $(".container:last").after(paragraph);
 
             // $(".container").clone().appendTo(".container:after");
-
             // $("body").append($("#card-1").clone(true));
-
             // $(this).clone().insertAfter(this);
 
             M.toast({
-                html: total + " " + last_id
+                html: "card total : " + total + ",<br> last card id : " + last_id
             });
         });
 
@@ -318,21 +316,12 @@
     // Copy and Delete
     $(document).on("click", ".my-btn", function() {
         var clickedBtnID = $(this).attr('id');
-        var btnType = clickedBtnID.split("-");
-        if (btnType[0] == "clone") {
-            M.toast({
-                html: btnType[0] +
-                    clickedBtnID
-            });
-            createCard(btnType[1]);
-            // cloneMe(btnType[1]);
-        }
-        if (btnType[0] == "delete") {
-            M.toast({
-                html: btnType[0]
-            });
-            deleteMe(btnType[1]);
-        }
+        var id = clickedBtnID.split("-");
+
+        $("#card-" + id[1]).remove();
+        M.toast({
+            html: "Deleted"
+        });
     });
 
     // Create Card
@@ -360,13 +349,33 @@
         if (type == 1) {
             card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s12"><input  id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div class="row"><div class="input-field col s12"><input placeholder="Answer Text" type="text" class="validate" disabled></div></div></div><div class="card-action"><div class="row"><div class="col s10"></div><div class="col s2"><div id="delete-' + cardCount + '" class="waves-effect waves-light my-btn"><i class="material-icons">delete</i></div></div></div></div></div></div></div>');
         } else if (type == 2) {
-            card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s12"><input id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div id="card-' + cardCount + '-child-1" class="row check-child"> <div class="input-field col s8 my-input-field"> <i class = "tiny material-icons prefix my-icon" > check_box_outline_blank </i> <input placeholder = "Option" type = "text"> </div> <div class = "input-field col s1" > <a class = "btn-floating waves-effect btn-small green lighten-1"> <i class = "material-icons"> add </i> </a> </div> </div> </div> <div class="card-action my-card-action"> <div class="row"> <div class="col s10"> </div> <div class = "col s2" >  <div id = "delete-' + cardCount + '" class = "waves-effect waves-light my-btn" > <i class = "material-icons">delete</i> </div> </div> </div > </div> </div> </div> </div > ');
+            card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s12"><input id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div id="card-' + cardCount + '-child-1" class="row check-child"> <div class="input-field col s8 my-input-field"> <i class = "material-icons prefix my-icon" > check_box_outline_blank </i> <input placeholder = "Option" type = "text"> </div> <div class = "input-field col s1" > <a class = "btn-floating waves-effect btn-small green lighten-1" onclick="addCheckOption(this)"> <i class = "material-icons"> add </i> </a> </div> </div> </div> <div class="card-action my-card-action"> <div class="row"> <div class="col s10"> </div> <div class = "col s2" >  <div id = "delete-' + cardCount + '" class = "waves-effect waves-light my-btn" > <i class = "material-icons">delete</i> </div> </div> </div > </div> </div> </div> </div > ');
         } else if (type == 3) {
 
         }
 
         container.append(card);
     }
+
+    // add Check Option
+    function addCheckOption(btnAdd) {
+        var id = $(btnAdd).parent().parent().attr('id');
+        console.log("parent id : " + id);
+        var raw = id.split('-');
+        var cardNo = raw[1];
+
+        // renew child IDs
+        setNewID(id, 'check-child');
+
+        var checkChild = '<div id="card-' + cardNo + '-child-2" class="row check-child"><div class="input-field col s8 my-input-field"><i class="tiny material-icons prefix my-icon">check_box_outline_blank</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>';
+
+        $('#' + id).append(checkChild);
+    }
+
+    // remove Child Option
+    $(document).on("click", "a.remove", function() {
+        $(this).parent().parent().remove();
+    });
 
     // TODO: Clone Card
     function cloneMe(id) {
@@ -384,48 +393,12 @@
         // $("#card-" + id).clone().insertAfter("#card-" + id);
     }
 
-    // Delete Card
-    function deleteMe(id) {
-        M.toast({
-            html: "Deleted"
-        });
-
-        $("#card-" + id).remove();
-    }
-
-    function typeChange(select) {
-        var selected = $("#" + select.id).val();
-
-        M.toast({
-            html: selected
-        });
-        if (selected == 1) {
-            typeText();
-        }
-        if (selected == 2) {
-            typeCheck();
-        }
-        if (selected == 3) {
-            typeRadio();
-        }
-    }
-
-    function typeText() {
-        // createCard(1);
-        M.toast({
-            html: 'in text'
-        });
-    }
-
-    function typeCheck() {
-        M.toast({
-            html: 'in check'
-        });
-    }
-
-    function typeRadio() {
-        M.toast({
-            html: 'in radio'
+    function setNewID(ID, className) {
+        var raw = ID.split('-');
+        $('#' + ID + ' > .' + className).map(function(index) {
+            index += 3;
+            var newID = 'card-' + raw[1] + '-child-' + index;
+            $(this).attr('id', newID);
         });
     }
 </script>
