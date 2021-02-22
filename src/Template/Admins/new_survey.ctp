@@ -149,6 +149,69 @@
     </div>
 </div>
 
+<!-- Radio Card -->
+<div class="container" id="card-3">
+    <div class="col s3">
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="txtQuestion-3" placeholder="Question" type="text" class="validate" require>
+                    </div>
+                </div>
+
+                <div id="card-3-radio-child-1" class="row radio-child">
+                    <div class="input-field col s8 my-input-field">
+                        <i class="material-icons prefix my-icon">radio_button_unchecked</i>
+                        <input placeholder="Option" type="text">
+                    </div>
+                    <div class="input-field col s1">
+                        <a class="btn-floating waves-effect btn-small green lighten-1" onclick="addOption(this)"><i class="material-icons">add
+                            </i></a>
+                    </div>
+
+                    <!-- for Check Child -->
+                    <!-- <div id="card-1-child-1" class="row check-child">
+                        <div class="input-field col s8 my-input-field">
+                            <i class="tiny material-icons prefix my-icon">check_box_outline_blank</i>
+                            <input placeholder="Option" type="text">
+                        </div>
+                        <div class="input-field col s1">
+                            <a class="btn-floating waves-effect btn-small red lighten-1"><i class="material-icons">remove</i></a>
+                        </div>
+                    </div> -->
+
+                    <!-- for Other -->
+                    <!-- <div class="input-field col s8 my-input-field">
+                        <i class="tiny material-icons prefix my-icon">check_box_outline_blank</i>
+                        <input value="Other" type="text" disabled>
+                    </div>
+                    <div class="input-field col s1">
+                        <a class="btn-floating waves-effect btn-small red lighten-1"><i class="material-icons">remove</i></a>
+                    </div> -->
+
+                    <!-- <div class="input-field col s4 my-input-field">
+                        <i class="tiny material-icons prefix my-icon">check_box_outline_blank</i>
+                        <input placeholder="Add option" type="text">
+                    </div>
+                    <div class="input-field col s3">
+                        or &nbsp;<a class="waves-effect"> add "Other"</a>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="card-action my-card-action">
+                <div class="row">
+                    <div class="col s10"></div>
+                    <div class="col s2">
+                        <div id="delete-3" class="waves-effect waves-light my-btn"><i class="material-icons ">delete</i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Check Card -->
 <div class="container" id="card-2">
     <div class="col s3">
@@ -156,7 +219,7 @@
             <div class="card-content">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="txtQuestion-1" placeholder="Question" type="text" class="validate" require>
+                        <input id="txtQuestion-2" placeholder="Question" type="text" class="validate" require>
                     </div>
                 </div>
                 <!-- <div class="row">
@@ -175,13 +238,13 @@
                     </div>
                 </div> -->
 
-                <div id="card-1-child-1" class="row check-child">
+                <div id="card-2-check-child-1" class="row check-child">
                     <div class="input-field col s8 my-input-field">
                         <i class="material-icons prefix my-icon">check_box_outline_blank</i>
                         <input placeholder="Option" type="text">
                     </div>
                     <div class="input-field col s1">
-                        <a class="btn-floating waves-effect btn-small green lighten-1" onclick="addCheckOption(this)"><i class="material-icons">add
+                        <a class="btn-floating waves-effect btn-small green lighten-1" onclick="addOption(this)"><i class="material-icons">add
                             </i></a>
                     </div>
 
@@ -313,7 +376,7 @@
             console.log(id + " " + selected);
         } */
 
-    // Copy and Delete
+    // Delete Card
     $(document).on("click", ".my-btn", function() {
         var clickedBtnID = $(this).attr('id');
         var id = clickedBtnID.split("-");
@@ -330,49 +393,62 @@
         var lastCardID = $(".container:last").attr('id');
         var cardTotal = $(".container").length - 1;
 
-        M.toast({
-            html: lastCardID
-        });
+        if (cardTotal < 30) {
 
-        if (cardTotal > cardCount) {
-            cardCount = cardTotal;
-            ++cardCount;
-        } else {
-            ++cardCount;
+            M.toast({
+                html: lastCardID
+            });
+
+            if (cardTotal > cardCount) {
+                cardCount = cardTotal;
+                ++cardCount;
+            } else {
+                ++cardCount;
+            }
+
+            var ID = 'card-' + cardCount;
+            var container = $('<div class="container" id="' + ID + '"></div>');
+            container.insertAfter($("#" + lastCardID));
+            var card = "";
+
+            if (type == 1) {
+                card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s12"><input  id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div class="row"><div class="input-field col s12"><input placeholder="Answer Text" type="text" class="validate" disabled></div></div></div><div class="card-action"><div class="row"><div class="col s10"></div><div class="col s2"><div id="delete-' + cardCount + '" class="waves-effect waves-light my-btn"><i class="material-icons">delete</i></div></div></div></div></div></div></div>');
+            } else if (type == 2) {
+                card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s12"><input id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div id="card-' + cardCount + '-check-child-1" class="row check-child"> <div class="input-field col s8 my-input-field"> <i class = "material-icons prefix my-icon" > check_box_outline_blank </i> <input placeholder = "Option" type = "text"> </div> <div class = "input-field col s1" > <a class = "btn-floating waves-effect btn-small green lighten-1" onclick="addOption(this)"> <i class = "material-icons"> add </i> </a> </div> </div> </div> <div class="card-action my-card-action"> <div class="row"> <div class="col s10"> </div> <div class = "col s2" >  <div id = "delete-' + cardCount + '" class = "waves-effect waves-light my-btn" > <i class = "material-icons">delete</i> </div> </div> </div > </div> </div> </div> </div > ');
+            } else if (type == 3) {
+                card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s12"><input id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div id="card-' + cardCount + '-radio-child-1" class="row radio-child"> <div class="input-field col s8 my-input-field"> <i class = "material-icons prefix my-icon" > radio_button_unchecked</i> <input placeholder = "Option" type = "text"> </div> <div class = "input-field col s1" > <a class = "btn-floating waves-effect btn-small green lighten-1" onclick="addOption(this)"> <i class = "material-icons"> add </i> </a> </div> </div> </div> <div class="card-action my-card-action"> <div class="row"> <div class="col s10"> </div> <div class = "col s2" >  <div id = "delete-' + cardCount + '" class = "waves-effect waves-light my-btn" > <i class = "material-icons">delete</i> </div> </div> </div > </div> </div> </div> </div > ');
+            }
+
+            container.append(card);
         }
-
-        var ID = 'card-' + cardCount;
-        var container = $('<div class="container" id="' + ID + '"></div>');
-        container.insertAfter($("#" + lastCardID));
-        var card = "";
-
-        if (type == 1) {
-            card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s12"><input  id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div class="row"><div class="input-field col s12"><input placeholder="Answer Text" type="text" class="validate" disabled></div></div></div><div class="card-action"><div class="row"><div class="col s10"></div><div class="col s2"><div id="delete-' + cardCount + '" class="waves-effect waves-light my-btn"><i class="material-icons">delete</i></div></div></div></div></div></div></div>');
-        } else if (type == 2) {
-            card = $('<div class="col s3"><div class="card"><div class="card-content"><div class="row"><div class="input-field col s12"><input id="txtQuestion-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div id="card-' + cardCount + '-child-1" class="row check-child"> <div class="input-field col s8 my-input-field"> <i class = "material-icons prefix my-icon" > check_box_outline_blank </i> <input placeholder = "Option" type = "text"> </div> <div class = "input-field col s1" > <a class = "btn-floating waves-effect btn-small green lighten-1" onclick="addCheckOption(this)"> <i class = "material-icons"> add </i> </a> </div> </div> </div> <div class="card-action my-card-action"> <div class="row"> <div class="col s10"> </div> <div class = "col s2" >  <div id = "delete-' + cardCount + '" class = "waves-effect waves-light my-btn" > <i class = "material-icons">delete</i> </div> </div> </div > </div> </div> </div> </div > ');
-        } else if (type == 3) {
-
-        }
-
-        container.append(card);
     }
 
-    // add Check Option
-    function addCheckOption(btnAdd) {
+    // add Check/Radio Option
+    function addOption(btnAdd) {
         var id = $(btnAdd).parent().parent().attr('id');
         console.log("parent id : " + id);
-        var raw = id.split('-');
-        var cardNo = raw[1];
 
-        // renew child IDs
-        setNewID(id, 'check-child');
+        if (getChildCount(id) < 9) {
+            var raw = id.split('-');
+            var cardNo = raw[1];
+            var optionType = raw[2];
+            var option = '';
 
-        var checkChild = '<div id="card-' + cardNo + '-child-2" class="row check-child"><div class="input-field col s8 my-input-field"><i class="tiny material-icons prefix my-icon">check_box_outline_blank</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>';
+            if (optionType == 'check') {
+                option = '<div id="card-' + cardNo + '-check-child-x" class="row check-child"><div class="input-field col s8 my-input-field"><i class="material-icons prefix my-icon">check_box_outline_blank</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>';
+            } else if (optionType == 'radio') {
+                option = '<div id="card-' + cardNo + '-radio-child-x" class="row radio-child"><div class="input-field col s8 my-input-field"><i class="material-icons prefix my-icon">radio_button_unchecked</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>';
+            }
 
-        $('#' + id).append(checkChild);
+            if (option != '') {
+                $('#' + id).append(option);
+
+                setNewID(id);
+            }
+        }
     }
 
-    // remove Child Option
+    // remove Option
     $(document).on("click", "a.remove", function() {
         $(this).parent().parent().remove();
     });
@@ -393,12 +469,26 @@
         // $("#card-" + id).clone().insertAfter("#card-" + id);
     }
 
-    function setNewID(ID, className) {
+    function setNewID(ID) {
+        var className = getClassName(ID);
         var raw = ID.split('-');
         $('#' + ID + ' > .' + className).map(function(index) {
-            index += 3;
-            var newID = 'card-' + raw[1] + '-child-' + index;
+            index += 2;
+            var newID = 'card-' + raw[1] + '-' + className + '-' + index;
             $(this).attr('id', newID);
         });
+    }
+
+    function getClassName(ID) {
+        var className = $('#' + ID).attr('class').split(' ').pop();
+        // console.log(className);
+        return className;
+    }
+
+    function getChildCount(ID) {
+        var className = getClassName(ID);
+        var count = $('#' + ID + ' > .' + className).length;
+        // console.log(count);
+        return count;
     }
 </script>
