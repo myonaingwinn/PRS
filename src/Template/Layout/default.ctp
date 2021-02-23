@@ -40,8 +40,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 
-<body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
+<body class="blue-grey lighten-5">
+    <!-- default -->
+    <!-- <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-3 medium-4 columns">
             <li class="name">
                 <h1><a href=""><?= $this->fetch('title') ?></a></h1>
@@ -53,7 +54,58 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <li><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></li>
             </ul>
         </div>
+    </nav> -->
+
+    <!-- fixed nav -->
+    <!-- <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">Logo</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="sass.html">Sass</a></li>
+                    <li><a href="badges.html">Components</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div> -->
+
+    <nav>
+        <div class="nav-wrapper green">
+            <a href="#" class="brand-logo center">Logo</a>
+            <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
+                <i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down right">
+                <!-- <li><a href="#" data-target="slide-out" class="sidenav-trigger">
+                        <i class="material-icons">menu</i></a></li> -->
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="badges.html">Components</a></li>
+                <li><a href="collapsible.html">JavaScript</a></li>
+            </ul>
+        </div>
     </nav>
+
+    <!-- side nav -->
+    <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view">
+                <div class="background">
+                    <img width="300" height="500" src="https://wallpapercave.com/wp/wp5086278.jpg">
+                </div>
+                <a href="#user"><img class="circle" src="http://1.bp.blogspot.com/-oFBZLSILB48/TdV-TLATY1I/AAAAAAAACQE/2GUcBagIPWc/s1600/Liu+Yifei+%25286%2529.jpg"></a>
+                <a href="#name"><span class="white-text name">John Doe</span></a>
+                <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+            </div>
+        </li>
+        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+        <li><a href="#!">Second Link</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="subheader">Subheader</a></li>
+        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    </ul>
+
+
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
         <?= $this->fetch('content') ?>
@@ -65,3 +117,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </body>
 
 </html>
+
+<script>
+    $(document).ready(function() {
+        $('.sidenav').sidenav();
+    });
+</script>
