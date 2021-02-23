@@ -14,6 +14,10 @@
         padding-bottom: 0px;
     } */
 
+    .container {
+        margin-top: 2rem;
+    }
+
     .row .col.s5 {
         width: 26.6666666667%;
         margin-right: 6%;
@@ -55,6 +59,35 @@
 
     TODO: Draggleable Card
 -->
+
+<!-- Title Card -->
+<div class="container" id="card-1">
+    <div class="col s3">
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="txtTitle-1" placeholder="Form Title" type="text" class="validate" require>
+                        <input placeholder="Form Description" type="text" class="validate">
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="input-field col s12"><input placeholder="Answer Text" type="text" class="validate"></div>
+                </div> -->
+            </div>
+
+            <!-- <div class="card-action">
+                <div class="row">
+                    <div class="col s10"></div>
+                    <div class="col s2">
+                        <div id="delete-1" class="waves-effect waves-light my-btn"><i class="material-icons ">delete</i></div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
 <!-- CARD -->
 <div class="container" id="card-1">
     <div class="col s3">
@@ -391,7 +424,7 @@
     function createCard(type) {
         // get latest card
         var lastCardID = $(".container:last").attr('id');
-        var cardTotal = $(".container").length - 1;
+        var cardTotal = $(".container").length - 2; //default container and title container
 
         if (cardTotal < 30) {
 
