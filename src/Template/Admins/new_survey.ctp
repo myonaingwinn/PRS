@@ -63,12 +63,12 @@
 <!-- Title Card -->
 <div class="container" id="card-1">
     <div class="col s3">
-        <div class="card">
+        <div class="card hoverable">
             <div class="card-content">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="txtTitle-1" placeholder="Form Title" type="text" class="validate" require>
-                        <input placeholder="Form Description" type="text" class="validate">
+                        <input id="txtTitle" placeholder="Form Title" type="text" class="validate" require>
+                        <input id="txtDescription" placeholder="Form Description" type="text" class="validate">
                     </div>
                 </div>
                 <!-- <div class="row">
