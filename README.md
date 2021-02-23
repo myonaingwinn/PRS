@@ -18,8 +18,9 @@ If you don't have [Xampp with PHP version 7.3.27](https://www.apachefriends.org/
 * Clone your `forked repository` now
     
 ## Step 4 : Download vendor folder & DB.sql file
-* Download this [vendor & DB](https://1drv.ms/u/s!AuA8irZ7iz1cg0aDD1S5TkDl4wnC?e=BzWOUg) zipped folder 
-* Extract into your `Path-to-your-xampp/htdocs/PRS>`
+1. Download this [vendor & DB](https://1drv.ms/u/s!AuA8irZ7iz1cg0aDD1S5TkDl4wnC?e=BzWOUg)
+1. Extract into your `Path-to-your-xampp/htdocs/PRS>`
     > example ⇒ D:/xampp7.3/htdocs/PRS>
+1. Import DB.sql file.
     
 ## Let's Go!
