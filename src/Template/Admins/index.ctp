@@ -8,6 +8,18 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New Admin'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Companies'), ['controller' => 'Companies', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Company'), ['controller' => 'Companies', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Options'), ['controller' => 'Options', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Option'), ['controller' => 'Options', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Products'), ['controller' => 'Products', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Product'), ['controller' => 'Products', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Questions'), ['controller' => 'Questions', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Question'), ['controller' => 'Questions', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Surveys'), ['controller' => 'Surveys', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Survey'), ['controller' => 'Surveys', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="admins index large-9 medium-8 columns content">
@@ -15,7 +27,7 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('admin_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('password') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('del_flg') ?></th>
@@ -28,7 +40,7 @@
         <tbody>
             <?php foreach ($admins as $admin): ?>
             <tr>
-                <td><?= $admin->has('admin') ? $this->Html->link($admin->admin->admin_id, ['controller' => 'Admins', 'action' => 'view', $admin->admin->admin_id]) : '' ?></td>
+                <td><?= $this->Number->format($admin->id) ?></td>
                 <td><?= h($admin->email) ?></td>
                 <td><?= h($admin->password) ?></td>
                 <td><?= h($admin->del_flg) ?></td>
@@ -36,9 +48,9 @@
                 <td><?= h($admin->modified) ?></td>
                 <td><?= h($admin->token) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $admin->admin_id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $admin->admin_id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $admin->admin_id], ['confirm' => __('Are you sure you want to delete # {0}?', $admin->admin_id)]) ?>
+                    <?= $this->Html->link(__('View'), ['action' => 'view', $admin->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $admin->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $admin->id], ['confirm' => __('Are you sure you want to delete # {0}?', $admin->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

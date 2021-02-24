@@ -17,7 +17,7 @@ class AdminsFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'admin_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'email' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'del_flg' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'not', 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -25,7 +25,7 @@ class AdminsFixture extends TestFixture
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'token' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['admin_id'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -41,12 +41,12 @@ class AdminsFixture extends TestFixture
      */
     public $records = [
         [
-            'admin_id' => 1,
+            'id' => 1,
             'email' => 'Lorem ipsum dolor sit amet',
             'password' => 'Lorem ipsum dolor sit amet',
             'del_flg' => 'Lorem ipsum dolor sit amet',
-            'created' => '2021-02-16 08:01:07',
-            'modified' => '2021-02-16 08:01:07',
+            'created' => '2021-02-24 06:57:44',
+            'modified' => '2021-02-24 06:57:44',
             'token' => 'Lorem ipsum dolor sit amet'
         ],
     ];

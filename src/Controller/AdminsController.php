@@ -20,9 +20,6 @@ class AdminsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Admins']
-        ];
         $admins = $this->paginate($this->Admins);
 
         $this->set(compact('admins'));
@@ -39,7 +36,7 @@ class AdminsController extends AppController
     public function view($id = null)
     {
         $admin = $this->Admins->get($id, [
-            'contain' => ['Admins']
+            'contain' => ['Companies', 'Options', 'Products', 'Questions', 'Surveys', 'Users']
         ]);
 
         $this->set('admin', $admin);
@@ -63,8 +60,7 @@ class AdminsController extends AppController
             }
             $this->Flash->error(__('The admin could not be saved. Please, try again.'));
         }
-        $admins = $this->Admins->Admins->find('list', ['limit' => 200]);
-        $this->set(compact('admin', 'admins'));
+        $this->set(compact('admin'));
         $this->set('_serialize', ['admin']);
     }
 
@@ -89,8 +85,7 @@ class AdminsController extends AppController
             }
             $this->Flash->error(__('The admin could not be saved. Please, try again.'));
         }
-        $admins = $this->Admins->Admins->find('list', ['limit' => 200]);
-        $this->set(compact('admin', 'admins'));
+        $this->set(compact('admin'));
         $this->set('_serialize', ['admin']);
     }
 
@@ -112,9 +107,5 @@ class AdminsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-    }
-
-    public function newSurvey(){
-
     }
 }
