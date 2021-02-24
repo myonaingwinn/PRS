@@ -27,10 +27,7 @@ class SurveysTableTest extends TestCase
         'app.surveys',
         'app.products',
         'app.categories',
-        'app.admins',
-        'app.answers',
-        'app.options',
-        'app.questions'
+        'app.admins'
     ];
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -9,7 +10,12 @@ use Cake\Validation\Validator;
 /**
  * Admins Model
  *
- * @property \App\Model\Table\AdminsTable|\Cake\ORM\Association\BelongsTo $Admins
+ * @property \App\Model\Table\CompaniesTable|\Cake\ORM\Association\HasMany $Companies
+ * @property \App\Model\Table\OptionsTable|\Cake\ORM\Association\HasMany $Options
+ * @property \App\Model\Table\ProductsTable|\Cake\ORM\Association\HasMany $Products
+ * @property \App\Model\Table\QuestionsTable|\Cake\ORM\Association\HasMany $Questions
+ * @property \App\Model\Table\SurveysTable|\Cake\ORM\Association\HasMany $Surveys
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\HasMany $Users
  *
  * @method \App\Model\Entity\Admin get($primaryKey, $options = [])
  * @method \App\Model\Entity\Admin newEntity($data = null, array $options = [])
@@ -36,13 +42,27 @@ class AdminsTable extends Table
 
         $this->setTable('admins');
         $this->setDisplayField('admin_id');
-        $this->setPrimaryKey('admin_id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Admins', [
-            'foreignKey' => 'admin_id',
-            'joinType' => 'INNER'
+        $this->hasMany('Companies', [
+            'foreignKey' => 'admin_id'
+        ]);
+        $this->hasMany('Options', [
+            'foreignKey' => 'admin_id'
+        ]);
+        $this->hasMany('Products', [
+            'foreignKey' => 'admin_id'
+        ]);
+        $this->hasMany('Questions', [
+            'foreignKey' => 'admin_id'
+        ]);
+        $this->hasMany('Surveys', [
+            'foreignKey' => 'admin_id'
+        ]);
+        $this->hasMany('Users', [
+            'foreignKey' => 'admin_id'
         ]);
     }
 
@@ -54,6 +74,10 @@ class AdminsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
+        $validator
+            ->integer('id')
+            ->allowEmpty('id', 'create');
+
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
@@ -83,7 +107,6 @@ class AdminsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['admin_id'], 'Admins'));
 
         return $rules;
     }

@@ -57,7 +57,8 @@ class SurveysController extends AppController
         $survey = $this->Surveys->newEntity();
         if ($this->request->is('post')) {
             $survey = $this->Surveys->patchEntity($survey, $this->request->getData());
-            $survey;
+            // debug($survey);
+            // debug($survey->schema());
             if ($this->Surveys->save($survey)) {
                 $this->Flash->success(__('The survey has been saved.'));
 

@@ -6,7 +6,7 @@ use Cake\ORM\Entity;
 /**
  * Survey Entity
  *
- * @property int $survey_id
+ * @property int $id
  * @property string $name
  * @property string $description
  * @property int $product_id
@@ -16,12 +16,10 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
+ * @property \App\Model\Entity\Survey $survey
  * @property \App\Model\Entity\Product $product
  * @property \App\Model\Entity\Category $category
  * @property \App\Model\Entity\Admin $admin
- * @property \App\Model\Entity\Answer[] $answers
- * @property \App\Model\Entity\Option[] $options
- * @property \App\Model\Entity\Question[] $questions
  */
 class Survey extends Entity
 {

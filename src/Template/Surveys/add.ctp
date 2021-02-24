@@ -84,15 +84,18 @@
     TODO: Draggleable Card
 -->
 
-<form method="post" action="/add_survey">
+<form method="post" action="/surveys/add">
     <!-- TODO: handle Category and Products -->
+    <input type="hidden" name="del_flg" value="not">
+    <input type="hidden" name="admin_id" value="1" />
+
     <div class="row">
         <div class="input-field col s1"></div>
         <div class="input-field col s2">
             <h6>Choose target &emsp;:</h6>
         </div>
         <div class="input-field col s4">
-            <select id="selCategory">
+            <select id="selCategory" name="category_id">
                 <option value="0" disabled selected>Choose your category</option>
                 <?php foreach ($my_categories as $category) : ?>
                     <option value="<?= h($category->id) ?>"><?= h($category->category_name) ?></option>
@@ -102,7 +105,7 @@
         </div>
 
         <div class="input-field col s4">
-            <select id="selProduct" class="selProduct">
+            <select id="selProduct" class="selProduct" name="product_id">
                 <option value="0" disabled selected>Choose your product</option>
                 <!-- <option value="1">Option 1</option> -->
                 <?php foreach ($my_products as $product) : ?>
@@ -120,8 +123,8 @@
                 <div class="card-content">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="txtTitle" placeholder="Form Title" type="text" class="validate" require>
-                            <input id="txtDescription" placeholder="Form Description" type="text" class="validate">
+                            <input id="txtTitle" name="name" placeholder="Form Title" type="text" class="validate" require>
+                            <input id="txtDescription" name="description" placeholder="Form Description" type="text" class="validate">
                         </div>
                     </div>
                 </div>

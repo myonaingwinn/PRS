@@ -9,10 +9,12 @@ use Cake\Validation\Validator;
 /**
  * Surveys Model
  *
- * @property |\Cake\ORM\Association\BelongsTo $Surveys
  * @property \App\Model\Table\ProductsTable|\Cake\ORM\Association\BelongsTo $Products
  * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
  * @property \App\Model\Table\AdminsTable|\Cake\ORM\Association\BelongsTo $Admins
+ * @property |\Cake\ORM\Association\HasMany $Answers
+ * @property |\Cake\ORM\Association\HasMany $Options
+ * @property |\Cake\ORM\Association\HasMany $Questions
  *
  * @method \App\Model\Entity\Survey get($primaryKey, $options = [])
  * @method \App\Model\Entity\Survey newEntity($data = null, array $options = [])
@@ -43,10 +45,6 @@ class SurveysTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Surveys', [
-            'foreignKey' => 'survey_id',
-            'joinType' => 'INNER'
-        ]);
         $this->belongsTo('Products', [
             'foreignKey' => 'product_id'
         ]);
@@ -56,6 +54,15 @@ class SurveysTable extends Table
         ]);
         $this->belongsTo('Admins', [
             'foreignKey' => 'admin_id'
+        ]);
+        $this->hasMany('Answers', [
+            'foreignKey' => 'survey_id'
+        ]);
+        $this->hasMany('Options', [
+            'foreignKey' => 'survey_id'
+        ]);
+        $this->hasMany('Questions', [
+            'foreignKey' => 'survey_id'
         ]);
     }
 
@@ -67,6 +74,10 @@ class SurveysTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
+        $validator
+            ->integer('id')
+            ->allowEmpty('id', 'create');
+
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
@@ -91,7 +102,6 @@ class SurveysTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['survey_id'], 'Surveys'));
         $rules->add($rules->existsIn(['product_id'], 'Products'));
         $rules->add($rules->existsIn(['category_id'], 'Categories'));
         $rules->add($rules->existsIn(['admin_id'], 'Admins'));

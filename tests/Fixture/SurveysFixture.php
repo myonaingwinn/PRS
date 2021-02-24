@@ -17,7 +17,7 @@ class SurveysFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'survey_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'name' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'description' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'product_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -32,7 +32,7 @@ class SurveysFixture extends TestFixture
             'product_key' => ['type' => 'index', 'columns' => ['product_id'], 'length' => []],
         ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['survey_id'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'admin_key' => ['type' => 'foreign', 'columns' => ['admin_id'], 'references' => ['admins', 'admin_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
             'category_key' => ['type' => 'foreign', 'columns' => ['category_id'], 'references' => ['categories', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
             'product_key' => ['type' => 'foreign', 'columns' => ['product_id'], 'references' => ['products', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
@@ -51,15 +51,15 @@ class SurveysFixture extends TestFixture
      */
     public $records = [
         [
-            'survey_id' => 1,
+            'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
             'description' => 'Lorem ipsum dolor sit amet',
             'product_id' => 1,
             'category_id' => 1,
             'del_flg' => 'Lorem ipsum dolor sit amet',
             'admin_id' => 1,
-            'created' => '2021-02-24 09:56:15',
-            'modified' => '2021-02-24 09:56:15'
+            'created' => '2021-02-24 12:01:50',
+            'modified' => '2021-02-24 12:01:50'
         ],
     ];
 }

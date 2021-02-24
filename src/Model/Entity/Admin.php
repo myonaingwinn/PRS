@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -6,7 +7,7 @@ use Cake\ORM\Entity;
 /**
  * Admin Entity
  *
- * @property int $admin_id
+ * @property int $id
  * @property string $email
  * @property string $password
  * @property string $del_flg
@@ -14,7 +15,12 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  * @property string $token
  *
- * @property \App\Model\Entity\Admin $admin
+ * @property \App\Model\Entity\Company[] $companies
+ * @property \App\Model\Entity\Option[] $options
+ * @property \App\Model\Entity\Product[] $products
+ * @property \App\Model\Entity\Question[] $questions
+ * @property \App\Model\Entity\Survey[] $surveys
+ * @property \App\Model\Entity\User[] $users
  */
 class Admin extends Entity
 {
@@ -30,7 +36,7 @@ class Admin extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'admin_id' => false
+        'id' => false
     ];
 
     /**

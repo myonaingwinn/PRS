@@ -24,7 +24,15 @@ class AdminsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.admins'
+        'app.admins',
+        'app.companies',
+        'app.options',
+        'app.products',
+        'app.questions',
+        'app.surveys',
+        'app.categories',
+        'app.answers',
+        'app.users'
     ];
 
     /**
