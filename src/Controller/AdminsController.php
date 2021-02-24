@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -107,5 +108,16 @@ class AdminsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function newSurvey()
+    {
+        $this->loadModel('Products');
+        $products = $this->Products->find('all');
+        $this->set(compact('products'));
+
+        $this->loadModel('Categories');
+        $categories = $this->Categories->find('all');
+        $this->set(compact('categories'));
     }
 }

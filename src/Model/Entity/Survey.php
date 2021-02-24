@@ -4,19 +4,26 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Admin Entity
+ * Survey Entity
  *
- * @property int $admin_id
- * @property string $email
- * @property string $password
+ * @property int $survey_id
+ * @property string $name
+ * @property string $description
+ * @property int $product_id
+ * @property int $category_id
  * @property string $del_flg
+ * @property int $admin_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
- * @property string $token
  *
+ * @property \App\Model\Entity\Product $product
+ * @property \App\Model\Entity\Category $category
  * @property \App\Model\Entity\Admin $admin
+ * @property \App\Model\Entity\Answer[] $answers
+ * @property \App\Model\Entity\Option[] $options
+ * @property \App\Model\Entity\Question[] $questions
  */
-class Admin extends Entity
+class Survey extends Entity
 {
 
     /**
@@ -30,16 +37,6 @@ class Admin extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'admin_id' => false
-    ];
-
-    /**
-     * Fields that are excluded from JSON versions of the entity.
-     *
-     * @var array
-     */
-    protected $_hidden = [
-        'password',
-        'token'
+        'id' => false
     ];
 }
