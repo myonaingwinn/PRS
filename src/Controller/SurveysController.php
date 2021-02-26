@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+// use Cake\ORM\TableRegistry;
 
 /**
  * Surveys Controller
@@ -54,13 +55,73 @@ class SurveysController extends AppController
      */
     public function add()
     {
+        // $questions = TableRegistry::getTableLocator()->get('Questions');
+        // $Options = TableRegistry::getTableLocator()->get('Options');
+        $this->loadModel('Questions');
+        $this->loadModel('Options');
+
         $survey = $this->Surveys->newEntity();
+        $question = $this->Questions->newEntity();
+        $Option = $this->Options->newEntity();
+
+        // return debug($option);
+
         if ($this->request->is('post')) {
             $survey = $this->Surveys->patchEntity($survey, $this->request->getData());
-            // debug($survey);
-            // debug($survey->schema());
-            if ($this->Surveys->save($survey)) {
+
+            $totalCard = $this->request->getData('card_array');
+            $admin_id = $this->request->getData('admin_id');
+            // $admin_id = $this->request->getData('admin_id');
+            $currDateTime = date("Y-m-d H:i:s");
+
+            $cards = json_decode($totalCard, true);
+
+            // $options = [];
+
+            /* foreach ($cards as $card) {
+                $questionType = $card['type'];
+                $questionText = $card['question'];
+
+                $options = $card['options'];
+            } */
+
+            // debug($options);
+            // return debug($cards);
+
+            if ($SResult = $this->Surveys->save($survey)) {
                 $this->Flash->success(__('The survey has been saved.'));
+
+                //save question
+                foreach ($cards as $card) {
+                    $question->type = $card['type'];
+                    $question->description = $card['question'];
+                    $question->survey_id = $SResult->id;
+                    $question->admin_id = $admin_id;
+                    $question->created = $currDateTime;
+                    $question->modified = $currDateTime;
+
+                    if ($QResult = $this->Questions->save($question)) {
+                        $this->Flash->success(__('The question has been saved.'));
+
+                        $options = $card['options'];
+                        if (!empty($options)) {
+                            foreach ($options as $optionL) {
+                                $Option->description = $optionL;
+                                $Option->survey_id = $SResult->id;
+                                $Option->question_id = $QResult->id;
+                                $Option->admin_id = $admin_id;
+                                $Option->created = $currDateTime;
+                                $Option->modified = $currDateTime;
+
+                                if ($this->Options->save($Option)) {
+                                    $this->Flash->success(__('The options : ' . $optionL . ' have been saved.'));
+                                }
+                                $Option = $this->Options->newEntity();
+                            }
+                        }
+                        $question = $this->Questions->newEntity();
+                    }
+                }
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -78,6 +139,12 @@ class SurveysController extends AppController
         // $this->set(compact('categories'));
         $this->set(compact('survey', 'products', 'categories', 'admins', 'my_products', 'my_categories'));
         $this->set('_serialize', ['survey']);
+    }
+
+    public function saveData($entity, $table)
+    {
+        $result = $this->$table->save($entity);
+        return $result;
     }
 
     /**
