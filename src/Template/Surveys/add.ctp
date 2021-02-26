@@ -84,7 +84,7 @@
     TODO: Draggleable Card
 -->
 
-<form method="post" action="/surveys/add">
+<form method="post" action="/surveys/add" id="form-id">
     <!-- TODO: handle Category and Products -->
     <input type="hidden" name="del_flg" value="not">
     <input type="hidden" name="admin_id" value="1" />
@@ -228,6 +228,29 @@
             e.preventDefault();
         }); */
 
+    // disable enterOnSubmit
+    $(function() {
+        $("form").on("keypress", function(event) {
+            var keyPressed = event.keyCode || event.which;
+            if (keyPressed === 13) {
+                var focused = $(':focus');
+                if (focused) {
+                    addOption(focused);
+                }
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        // press Enter on input-field
+        /*        $('input[type=text]').on('keypress', function(event) {
+                   if (keyPressed === 13) {
+                       alert('ok');
+                       event.preventDefault();
+                   }
+               }); */
+    });
+
     // Delete Card
     $(document).on("click", ".my-btn", function() {
         var clickedBtnID = $(this).attr('id');
@@ -307,16 +330,17 @@
             var option = '';
 
             if (optionType == 'check') {
-                option = '<div id="crd-' + cardNo + '-check-child-x" class="row check-child"><div class="input-field col s8 my-input-field"><i class="material-icons prefix my-icon">check_box_outline_blank</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>';
+                option = '<div id="crd-' + cardNo + '-check-child-1" class="row check-child"><div class="input-field col s8 my-input-field"><i class="material-icons prefix my-icon">check_box_outline_blank</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>';
             } else if (optionType == 'radio') {
-                option = '<div id="crd-' + cardNo + '-radio-child-x" class="row radio-child"><div class="input-field col s8 my-input-field"><i class="material-icons prefix my-icon">radio_button_unchecked</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>';
+                option = '<div id="crd-' + cardNo + '-radio-child-1" class="row radio-child"><div class="input-field col s8 my-input-field"><i class="material-icons prefix my-icon">radio_button_unchecked</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>';
             }
 
             if (option != '') {
                 $('#' + id).append(option);
 
-                setNewID(id);
+                // setNewID(id);
             }
+            $('#' + id + ' :last-child').focus();
         }
     }
 
@@ -326,15 +350,15 @@
     });
 
     // renew ID of Options
-    function setNewID(ID) {
-        var className = getClassName(ID);
-        var raw = ID.split('-');
-        $('#' + ID + ' > .' + className).map(function(index) {
-            index += 2;
-            var newID = 'crd-' + raw[1] + '-' + className + '-' + index;
-            $(this).attr('id', newID);
-        });
-    }
+    /*     function setNewID(ID) {
+            var className = getClassName(ID);
+            var raw = ID.split('-');
+            $('#' + ID + ' > .' + className).map(function(index) {
+                index += 2;
+                var newID = 'crd-' + raw[1] + '-' + className + '-' + index;
+                $(this).attr('id', newID);
+            });
+        } */
 
     function getClassName(ID) {
         var className = $('#' + ID).attr('class').split(' ').pop();
