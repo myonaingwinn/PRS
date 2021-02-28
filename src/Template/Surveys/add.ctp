@@ -179,47 +179,88 @@
         $('.fixed-action-btn').floatingActionButton();
     });
 
+    // validation
+    function validate() {
+        var valid = 1;
+        // select validation
+        $('#selCategory option').each(function() {
+            if ($(this).is(':selected') && $('#selCategory').val() == null) {
+                M.toast({
+                    html: "Select Category"
+                });
+                event.preventDefault();
+                valid = 0;
+            } else {
+                valid = 1;
+            }
+        });
+
+        // all input validation
+        $('input[type=text]').each(function() {
+            if ($(this).attr('placeholder') && !$(this).val()) {
+                if ($(this).attr('disabled')) {
+                    return true;
+                } else {
+                    $(this).focus();
+                    M.toast({
+                        html: "Fill your data"
+                    });
+                    event.preventDefault();
+                    valid = 0;
+                }
+            }
+        });
+
+        return valid;
+    }
+
     // before save
     $(document).on("click", "#btnSave", function() {
         // var cardTotal = new Object();
         var cardTotal = [];
         var card = {};
 
-        // alert($("[id^=card-]").length);
-        $("[id^=card-]").each(function() {
-            var cardID = $(this).attr('id');
-            var options = [];
+        var ready = validate();
+        console.log(ready);
 
-            $("#" + cardID + " :input").each(function(index) {
-                // var card = {};
-                // var options = [];
+        if (ready == 1) { // alert($("[id^=card-]").length);
+            $("[id^=card-]").each(function() {
+                var cardID = $(this).attr('id');
+                var options = [];
 
-                if (index == 0) {
-                    var questionID = $(this).attr('id').split('-');
-                    card.type = questionID[1];
-                    card.question = $(this).val();
-                    // alert(questionID[1]);
-                } else {
-                    if ($(this).prop('disabled')) {
-                        options = null;
+                $("#" + cardID + " :input").each(function(index) {
+                    // var card = {};
+                    // var options = [];
+
+                    if (index == 0) {
+                        var questionID = $(this).attr('id').split('-');
+                        card.type = questionID[1];
+                        card.question = $(this).val();
+                        // alert(questionID[1]);
                     } else {
-                        if ($(this).val()) {
-                            options.push($(this).val());
-                            // alert($(this).val());
+                        if ($(this).prop('disabled')) {
+                            options = null;
                         } else {
-                            // alert('empty');
+                            if ($(this).val()) {
+                                options.push($(this).val());
+                                // alert($(this).val());
+                            } else {
+                                // alert('empty');
+                            }
                         }
                     }
-                }
-                if (options != null) {
-                    card.options = options;
-                }
+                    if (options != null) {
+                        card.options = options;
+                    }
+                });
+                cardTotal.push(card);
+                card = {};
             });
-            cardTotal.push(card);
-            card = {};
-        });
 
-        $('#card_array').val(JSON.stringify(cardTotal));
+            $('#card_array').val(JSON.stringify(cardTotal));
+        } else {
+            return false;
+        }
 
     });
 
@@ -234,7 +275,9 @@
             var keyPressed = event.keyCode || event.which;
             if (keyPressed === 13) {
                 var focused = $(':focus');
-                if (focused) {
+                var parent = $(focused).parent().parent().attr('id');
+                // console.log(focused + ' -> ' + parent);
+                if (parent) {
                     addOption(focused);
                 }
                 event.preventDefault();
