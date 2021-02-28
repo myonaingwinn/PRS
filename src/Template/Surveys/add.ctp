@@ -112,9 +112,9 @@
             <select id="selProduct" class="selProduct" name="product_id">
                 <option value="0" disabled selected>Choose your product</option>
                 <!-- <option value="1">Option 1</option> -->
-                <?php foreach ($my_products as $product) : ?>
+                <!-- <?php foreach ($my_products as $product) : ?>
                     <option value="<?= h($product->id) ?>" data-category="<?= h($product->category_id) ?>"><?= h($product->product_name) ?></option>
-                <?php endforeach; ?>
+                <?php endforeach; ?> -->
             </select>
             <label>Select Product</label>
         </div>
@@ -142,9 +142,9 @@
             <i class="large material-icons">add</i>
         </a>
         <ul>
-            <li onclick="createCard(1)"><a class="btn-floating yellow darken-1"><i class="material-icons">title</i></a></li>
-            <li onclick="createCard(2)"><a class="btn-floating green"><i class="material-icons">check_box</i></a></li>
-            <li onclick="createCard(3)"><a class="btn-floating blue"><i class="material-icons">radio_button_checked</i></a></li>
+            <li onclick="createCard(1)"><a class="btn-floating yellow darken-1 tooltipped" data-position="left" data-tooltip="Text Question"><i class="material-icons">title</i></a></li>
+            <li onclick="createCard(2)"><a class="btn-floating green tooltipped" data-position="left" data-tooltip="CheckBox Question"><i class=" material-icons">check_box</i></a></li>
+            <li onclick="createCard(3)"><a class="btn-floating blue tooltipped" data-position="left" data-tooltip="Radio Button Question"><i class="material-icons">radio_button_checked</i></a></li>
         </ul>
     </div>
     <div class="row center my-submit">
@@ -179,6 +179,34 @@
         $('.fixed-action-btn').floatingActionButton();
 
         // SELECT
+        $('select').formSelect();
+
+        // Tooltips
+        $('.tooltipped').tooltip();
+    });
+
+    // selCategory index change event
+    $("#selCategory").on('change', function() {
+        var categories = <?php echo json_encode($my_categories); ?>;
+        var products = <?php echo json_encode($my_products); ?>;
+        // console.log(categories);
+        // console.log(products);
+
+        var categoryID = $(this).val();
+        // console.log(categoryID);
+        $('#selProduct option').remove();
+        $('#selProduct').append('<option value="0" disabled selected>Choose your product</option>')
+
+        $.each(products, function() {
+            // console.log($(this)[0].category_id);
+            // console.log('product_name : ' + $(this)[0].product_name);
+
+            if (categoryID == $(this)[0].category_id) {
+                $('#selProduct').append('<option value="' + $(this)[0].id + '">' + $(this)[0].product_name + '</option>');
+            }
+        });
+        // <option value="0" disabled selected>Choose your product</option>
+        // $('#selProduct').append("<option value='" + 1 + "'> Test </option>");
         $('select').formSelect();
     });
 
@@ -219,7 +247,6 @@
 
     // before save
     $(document).on("click", "#btnSave", function() {
-        // var cardTotal = new Object();
         var cardTotal = [];
         var card = {};
 
@@ -298,15 +325,15 @@
     });
 
     // select box index change
-    $('#selCategory').change(function() {
-        var idx = $('#selCategory').val();
-        console.log(idx);
+    /*     $('#selCategory').change(function() {
+            var idx = $('#selCategory').val();
+            console.log(idx);
 
-        // $('.selProduct option[data-category="' + idx + '"]').remove();
-        $(".selProduct option[value='2']").each(function() {
-            $(this).remove();
-        });
-    });
+            // $('.selProduct option[data-category="' + idx + '"]').remove();
+            $(".selProduct option[value='2']").each(function() {
+                $(this).remove();
+            });
+        }); */
 
     // Create Card
     function createCard(type) {
