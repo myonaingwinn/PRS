@@ -88,7 +88,7 @@
     <!-- TODO: handle Category and Products -->
     <input type="hidden" name="del_flg" value="not">
     <input type="hidden" name="admin_id" value="1" />
-    <input type="hidden" name="card_total" id="card_total">
+    <input type="hidden" name="card_total" id="card_total" value="0">
 
     <input type="hidden" name="card_array" id="card_array">
 
@@ -127,8 +127,8 @@
                 <div class="card-content">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="txtTitle" name="name" placeholder="Form Title" type="text" class="validate" require>
-                            <input id="txtDescription" name="description" placeholder="Form Description" type="text" class="validate">
+                            <input id="txtTitle" name="name" placeholder="Survey Title" type="text" class="validate" require>
+                            <input id="txtDescription" name="description" placeholder="Survey Description" type="text" class="validate">
                         </div>
                     </div>
                 </div>
@@ -177,6 +177,9 @@
 
         // FAB
         $('.fixed-action-btn').floatingActionButton();
+
+        // SELECT
+        $('select').formSelect();
     });
 
     // validation
@@ -221,31 +224,26 @@
         var card = {};
 
         var ready = validate();
+        var numOfCard = $('#card_total').val();
         console.log(ready);
 
-        if (ready == 1) { // alert($("[id^=card-]").length);
+        if (ready == 1 && numOfCard >= 3) {
             $("[id^=card-]").each(function() {
                 var cardID = $(this).attr('id');
                 var options = [];
 
                 $("#" + cardID + " :input").each(function(index) {
-                    // var card = {};
-                    // var options = [];
 
                     if (index == 0) {
                         var questionID = $(this).attr('id').split('-');
                         card.type = questionID[1];
                         card.question = $(this).val();
-                        // alert(questionID[1]);
                     } else {
                         if ($(this).prop('disabled')) {
                             options = null;
                         } else {
                             if ($(this).val()) {
                                 options.push($(this).val());
-                                // alert($(this).val());
-                            } else {
-                                // alert('empty');
                             }
                         }
                     }
@@ -259,15 +257,15 @@
 
             $('#card_array').val(JSON.stringify(cardTotal));
         } else {
+            if (numOfCard < 3) {
+                M.toast({
+                    html: 'A survey should have at least 3 questions.'
+                });
+            }
             return false;
         }
 
     });
-
-    // prevent Submit TODO:if not empty fields => submit
-    /*     $("form").submit(function(e) {
-            e.preventDefault();
-        }); */
 
     // disable enterOnSubmit
     $(function() {
@@ -276,7 +274,6 @@
             if (keyPressed === 13) {
                 var focused = $(':focus');
                 var parent = $(focused).parent().parent().attr('id');
-                // console.log(focused + ' -> ' + parent);
                 if (parent) {
                     addOption(focused);
                 }
@@ -284,14 +281,6 @@
                 return false;
             }
         });
-
-        // press Enter on input-field
-        /*        $('input[type=text]').on('keypress', function(event) {
-                   if (keyPressed === 13) {
-                       alert('ok');
-                       event.preventDefault();
-                   }
-               }); */
     });
 
     // Delete Card
@@ -306,11 +295,6 @@
         M.toast({
             html: "Deleted"
         });
-    });
-
-    // Initialization on Document Ready State
-    $(function() {
-        $('select').formSelect();
     });
 
     // select box index change

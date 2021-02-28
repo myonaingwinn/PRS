@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-// use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 
 /**
  * Surveys Controller
@@ -64,14 +64,17 @@ class SurveysController extends AppController
         $question = $this->Questions->newEntity();
         $Option = $this->Options->newEntity();
 
-        // return debug($option);
+        // time zone
+        $currDateTime = Time::now();
+        $currDateTime->timezone = 'Asia/Yangon';
 
         if ($this->request->is('post')) {
             $survey = $this->Surveys->patchEntity($survey, $this->request->getData());
 
             $totalCard = $this->request->getData('card_array');
             $admin_id = $this->request->getData('admin_id');
-            $currDateTime = date("Y-m-d H:i:s");
+            $survey->created = $currDateTime;
+            $survey->modified = $currDateTime;
 
             $cards = json_decode($totalCard, true);
 
@@ -81,39 +84,41 @@ class SurveysController extends AppController
                 $this->Flash->success(__('The survey has been saved.'));
 
                 // save question
-                foreach ($cards as $card) {
-                    $question->type = $card['type'];
-                    $question->description = $card['question'];
-                    $question->survey_id = $SResult->id;
-                    $question->admin_id = $admin_id;
-                    $question->created = $currDateTime;
-                    $question->modified = $currDateTime;
+                if (!empty($cards)) {
+                    foreach ($cards as $card) {
+                        $question->type = $card['type'];
+                        $question->description = $card['question'];
+                        $question->survey_id = $SResult->id;
+                        $question->admin_id = $admin_id;
+                        $question->created = $currDateTime;
+                        $question->modified = $currDateTime;
 
-                    if ($QResult = $this->Questions->save($question)) {
-                        $this->Flash->success(__('The question has been saved.'));
+                        if ($QResult = $this->Questions->save($question)) {
+                            $this->Flash->success(__('The question has been saved.'));
 
-                        // save option
-                        $options = $card['options'];
-                        if (!empty($options)) {
-                            foreach ($options as $optionL) {
-                                $Option->description = $optionL;
-                                $Option->survey_id = $SResult->id;
-                                $Option->question_id = $QResult->id;
-                                $Option->admin_id = $admin_id;
-                                $Option->created = $currDateTime;
-                                $Option->modified = $currDateTime;
+                            // save option
+                            $options = $card['options'];
+                            if (!empty($options)) {
+                                foreach ($options as $optionL) {
+                                    $Option->description = $optionL;
+                                    $Option->survey_id = $SResult->id;
+                                    $Option->question_id = $QResult->id;
+                                    $Option->admin_id = $admin_id;
+                                    $Option->created = $currDateTime;
+                                    $Option->modified = $currDateTime;
 
-                                if ($this->Options->save($Option)) {
-                                    $this->Flash->success(__('The options have been saved.'));
-                                } else {
-                                    $this->Flash->error(__('The options could not be saved. Please, try again.'));
+                                    if ($this->Options->save($Option)) {
+                                        $this->Flash->success(__('The options have been saved.'));
+                                    } else {
+                                        $this->Flash->error(__('The options could not be saved. Please, try again.'));
+                                    }
+                                    $Option = $this->Options->newEntity();
                                 }
-                                $Option = $this->Options->newEntity();
                             }
+                            $question = $this->Questions->newEntity();
+                        } else {
+                            $this->Flash->error(__('The question could not be saved. Please, try again.'));
                         }
-                        $question = $this->Questions->newEntity();
-                    } else {
-                        $this->Flash->error(__('The question could not be saved. Please, try again.'));
                     }
                 }
                 return $this->redirect(['action' => 'index']);
