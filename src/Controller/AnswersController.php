@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -51,8 +52,14 @@ class AnswersController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($surveyID = null)
     {
+        // FIXME: dynamic $surveyID
+        $surveyID = 88;
+        $this->loadModel('Surveys');
+        $this->loadModel('Questions');
+        $this->loadModel('Options');
+
         $answer = $this->Answers->newEntity();
         if ($this->request->is('post')) {
             $answer = $this->Answers->patchEntity($answer, $this->request->getData());
@@ -63,13 +70,21 @@ class AnswersController extends AppController
             }
             $this->Flash->error(__('The answer could not be saved. Please, try again.'));
         }
-        $products = $this->Answers->Products->find('list', ['limit' => 200]);
-        $categories = $this->Answers->Categories->find('list', ['limit' => 200]);
-        $questions = $this->Answers->Questions->find('list', ['limit' => 200]);
-        $surveys = $this->Answers->Surveys->find('list', ['limit' => 200]);
-        $options = $this->Answers->Options->find('list', ['limit' => 200]);
-        $users = $this->Answers->Users->find('list', ['limit' => 200]);
-        $this->set(compact('answer', 'products', 'categories', 'questions', 'surveys', 'options', 'users'));
+        // $products = $this->Answers->Products->find('list', ['limit' => 200]);
+        // $categories = $this->Answers->Categories->find('list', ['limit' => 200]);
+        // $questions = $this->Answers->Questions->find('list', ['limit' => 200]);
+        // $surveys = $this->Answers->Surveys->find('list', ['limit' => 200]);
+        // $options = $this->Answers->Options->find('list', ['limit' => 200]);
+        // $users = $this->Answers->Users->find('list', ['limit' => 200]);
+        // $this->set(compact('answer', 'products', 'categories', 'questions', 'surveys', 'options', 'users'));
+
+        $survey = $this->Surveys->find()->select(['id', 'title' => 'name', 'description'])->where(['id' => $surveyID, 'del_flg' => 'not'])->toArray();
+        $questions = $this->Questions->find()->select(['id', 'type', 'description'])->where(['survey_id' => $surveyID, 'del_flg' => 'not']);
+        $options = $this->Options->find()->select(['id', 'question_id', 'description'])->where(['survey_id' => $surveyID, 'del_flg' => 'not']);
+
+        // $my_surveys = $this->Surveys->find('all');
+
+        $this->set(compact('answer', 'survey', 'questions', 'options'));
         $this->set('_serialize', ['answer']);
     }
 

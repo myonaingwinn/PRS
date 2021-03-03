@@ -55,6 +55,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/new_survey', ['controller' => 'Admins', 'action' => 'new_survey', 'new_survey']);
 
     $routes->connect('/add_survey', ['controller' => 'Surveys', 'action' => 'add']);
+
+    $routes->connect('/add_answer', ['controller' => 'Answers', 'action' => 'add']);
+
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
