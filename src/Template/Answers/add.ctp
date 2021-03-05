@@ -86,15 +86,25 @@
     }
 
     h4 {
-        margin: 1rem 0 .912rem 0;
+        margin: 0rem 0 1rem 0;
     }
 
     h6 {
         margin-top: -0.5rem;
     }
+
+    /* span {
+        color: black;
+    } */
 </style>
 
 <form method="post" action="/answers/add">
+    <input type="hidden" name="user_id" value="1" />
+    <input type="hidden" name="survey_id" value="<?= h($survey[0]->id) ?>" />
+    <input type="hidden" name="category_id" value="<?= h($survey[0]->category_id) ?>" />
+    <input type="hidden" name="product_id" value="<?= h($survey[0]->product_id) ?>" />
+    <input type="hidden" name="answers" id="answers" />
+
     <!-- Title Card -->
     <div class="container" id="title-card">
         <div class="col s3">
@@ -106,25 +116,15 @@
                             <!-- <input id="txtDescription" name="description" placeholder="Survey Description" type="text" class="validate">
                              -->
                             <h4><?= h($survey[0]->title) ?></h4>
-                            <p><?= h($survey[0]->description) ?></p>
+                            <blockquote>
+                                <?= h($survey[0]->description) ?>
+                            </blockquote>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- <?php foreach ($questions as $question) : ?>
-        <input type="hidden" value="<?= h($question->id) ?>">
-        <script>
-            var tmp = '<?php echo $question->type ?>';
-            var description = '<?= h($question->description) ?>';
-            var type = getType(tmp);
-
-            console.log(type);
-            createCard(1);
-        </script>
-    <?php endforeach ?> -->
 
     <!-- Check Card -->
     <!-- <div class="container" id="card-2">
@@ -165,57 +165,165 @@
         </div>
     </div> -->
 
+    <div class="row center my-submit">
+        <div class="col s6"></div>
+        <div class="col s6">
+            <button id="btnSave" class="btn waves-effect waves-light btn-medium indigo" type="submit" name="action">submit
+                <i class="material-icons left">save</i>
+            </button>
+        </div>
+    </div>
 </form>
 
 <script>
     var cardCount = 0;
-    // load data from DB
+    // load data from PHP
     var survey = <?php echo json_encode($survey); ?>;
     var questions = <?php echo json_encode($questions); ?>;
     var options = <?php echo json_encode($options); ?>;
-    console.log(survey);
+    /* console.log(survey);
     console.log(questions);
-    console.log(options);
+    console.log(options); */
 
     questions.forEach(element => {
         // console.log(element.id);
         // var type = getType(element.type);
         // console.log(type);
-        createCard(element.type, element.description);
+        createCard(element.id, element.type, element.description);
         // console.log('card no : ' + cardCount);
         options.forEach(elem => {
             if (element.id === elem.question_id) {
                 // console.log('option: ' + elem.description);
-                addOption(element.type, elem.description, cardCount);
+                addOption(element.type, elem.description, cardCount, elem.id);
             }
         });
     });
 
-    // return Question Type
-    function getType(args) {
-        var type = '';
-        switch (args) {
-            case 'text':
-                type = 1;
-                break;
-            case 'check':
-                type = 2;
-                break;
-            case 'radio':
-                type = 3;
-                break;
+    // before Save
+    $(document).on("click", "#btnSave", function(event) {
+        if (validate() === 1) {
+            getAnswers();
+        } else {
+            M.toast({
+                html: 'Please answer all questions.'
+            });
+
+            event.preventDefault();
         }
-        return type;
+    });
+
+    function getAnswers() {
+        var allCards = [];
+        var card = {};
+
+        $("[id^=card-]").each(function() {
+            var cardID = $(this).attr('id');
+
+            card.question = $('#' + cardID).find('h6').attr('id').split('-').pop();
+
+            questionType = $('#' + cardID).find('h6').attr('id').split('-');
+            // console.log(questionType);
+
+            if (questionType[1] == 'text') {
+                card.answer = $('#' + cardID).find('input[type=text]').val();
+
+                // console.log($('#' + cardID).find('input[type=text]').val());
+            } else if (questionType[1] == 'radio') {
+                var group = $('#' + cardID).find(':radio').attr('name');
+                // console.log($(':radio[name="' + group + '"]:checked').val());
+                card.option = $(':radio[name="' + group + '"]:checked').val();
+            } else if (questionType[1] == 'check') {
+                var options = [];
+                $('#' + cardID).find(':checkbox').each(function() {
+                    if ($(this).is(':checked')) {
+                        // console.log($(this).val());
+                        options.push($(this).val());
+                    }
+                });
+                card.options = options;
+            }
+            allCards.push(card);
+            card = {};
+        });
+        $('#answers').val(JSON.stringify(allCards));
+    }
+
+    // validation
+    function validate() {
+        var ready = 0;
+        var checkArr = [];
+        var radioArr = [];
+        var textArr = [];
+
+        // RADIO
+        // get all radio group
+        var radio_groups = {}
+        $(":radio").each(function() {
+            radio_groups[this.name] = true;
+        });
+        // selected or not?
+        for (group in radio_groups) {
+            if_checked = !!$(":radio[name='" + group + "']:checked").length;
+            // console.log('if checked : ' + if_checked);
+            if_checked ? radioArr.push(1) : radioArr.push(0);
+
+            // console.log(group + (if_checked ? ' has checked radios, value is : id-' + $(":radio[name='" + group + "']:checked").val() : ' does not have checked radios'));
+        }
+
+        // CHECKBOX
+        // get all cardID
+        $("[id^=card-]").each(function() {
+            var cardID = $(this).attr('id');
+            var checked = 0;
+
+            // console.log('card id : ' + cardID);
+
+            if ($('#' + cardID + ' div:nth-child(even)').attr('id')) {
+                var checkID = $('#' + cardID + ' div:nth-child(even)').attr('id');
+                var raw = checkID.split('-');
+                if (raw[2] == 'check') {
+                    $('#' + checkID).find(':checkbox').each(function() {
+                        if ($(this).is(':checked')) {
+                            checked = 1;
+                            // console.log($(this).val());
+                        }
+                    });
+                    checkArr.push(checked);
+                    checked = 0;
+                }
+            }
+            /* else
+                           console.log('no such child'); */
+        });
+
+        // TEXTBOX
+        $("input[type='text']").each(function() {
+            // alert('text input : ' + ($(this).attr('id')));
+            // alert('val : ' + $(this).val());
+
+            $(this).val() ? textArr.push(1) : textArr.push(0);
+        });
+
+        /* console.log('check array : ' + checkArr);
+        console.log('all radios : ' + radioArr);
+        console.log('all text : ' + textArr); */
+
+        if (($.inArray(0, checkArr) === -1) && ($.inArray(0, radioArr) === -1) && ($.inArray(0, textArr) === -1)) {
+            ready = 1;
+            // alert('Ok bro!');
+        } else ready = 0;
+
+        return ready;
     }
 
     // Create Card
-    function createCard(type, description) {
+    function createCard(qID, type, description) {
         // get last card
         var lastCardID = $(".container:last").attr('id');
         var cardTotal = $(".container").length - 2; //default container and title container
 
         // if (cardTotal < 30) {
-        $('#card_total').val(cardTotal + 1);
+        // $('#card_total').val(cardTotal + 1);
 
         if (cardTotal > cardCount) {
             cardCount = cardTotal;
@@ -230,16 +338,11 @@
         var card = "";
 
         if (type === 'text') {
-            // card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><input  id="txt-text-Question-' + cardCount + '"  placeholder="Question" type="text" class="validate" required value="' + description + '" disabled></div></div><div class="row"><div class="input-field col s12"><input placeholder="Your answer" type="text" class="validate"></div></div></div><div class="card-action"><div class="row"><div class="col s10"></div><div class="col s2"><div id="delete-' + cardCount + '" class="waves-effect waves-light my-btn"><i class="material-icons">delete</i></div></div></div></div></div></div></div>');
-            card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6  id="txt-text-Question-' + cardCount + '" >' + description + '</h6></div></div><div class="row"><div class="input-field col s12"><input placeholder="Your answer" type="text" class="validate"></div></div></div></div></div></div>');
+            card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6  id="question-text-' + cardCount + '-' + qID + '" >' + description + '</h6></div></div><div class="row"><div class="input-field col s12"><input id="answer-text-' + cardCount + '-' + qID + '" placeholder="Your answer" type="text" class="validate"></div></div></div></div></div></div>');
         } else if (type === 'check') {
-            // card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><input id="txt-check-Question-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div id="crd-' + cardCount + '-check-child-1" class="row check-child"> <div class="input-field col s8 my-input-field"> <i class = "material-icons prefix my-icon" > check_box_outline_blank </i> <input placeholder = "Option" type = "text"> </div> <div class = "input-field col s1" > <a class = "btn-floating waves-effect btn-small green lighten-1" onclick="addOption(this)"> <i class = "material-icons"> add </i> </a> </div> </div> </div> <div class="card-action my-card-action"> <div class="row"> <div class="col s10"> </div> <div class = "col s2" >  <div id = "delete-' + cardCount + '" class = "waves-effect waves-light my-btn" > <i class = "material-icons">delete</i> </div> </div> </div > </div> </div> </div> </div > ');
-            card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6 id="txt-check-Question-' + cardCount + '">' + description + '</h6></div></div><div id="crd-' + cardCount + '-check-child-1" class="row check-child"> <div id="crd-' + cardCount + '-check-child-2" class="input-field col s6"></div></div></div></div></div></div> ');
-            // <p><label><input type="checkbox" /><span>Filled in Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum, quam!</span></label></p>
+            card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6 id="question-check-' + cardCount + '-' + qID + '">' + description + '</h6></div></div><div id="crd-' + cardCount + '-check-child-1" class="row check-child"> <div id="crd-' + cardCount + '-check-child-2" class="input-field col s12"></div></div></div></div></div></div> ');
         } else if (type === 'radio') {
-            // card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><input id="txt-radio-Question-' + cardCount + '"  placeholder="Question" type="text" class="validate" require></div></div><div id="crd-' + cardCount + '-radio-child-1" class="row radio-child"> <div class="input-field col s8 my-input-field"> <i class = "material-icons prefix my-icon" > radio_button_unchecked</i> <input placeholder = "Option" type = "text"> </div> <div class = "input-field col s1" > <a class = "btn-floating waves-effect btn-small green lighten-1" onclick="addOption(this)"> <i class = "material-icons"> add </i> </a> </div> </div> </div> <div class="card-action my-card-action"> <div class="row"> <div class="col s10"> </div> <div class = "col s2" >  <div id = "delete-' + cardCount + '" class = "waves-effect waves-light my-btn" > <i class = "material-icons">delete</i> </div> </div> </div > </div> </div> </div> </div > ');
-            card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6 id="txt-radio-Question-' + cardCount + '">' + description + '</h6></div></div><div id="crd-' + cardCount + '-radio-child-1" class="row radio-child"> <div id="crd-' + cardCount + '-radio-child-2" class="input-field col s8"></div></div></div></div></div></div>');
-            // <p><label><input class="with-gap" name="group3" type="radio"/><span>Filled in Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum, quam!</span></label></p>
+            card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6 id="question-radio-' + cardCount + '-' + qID + '">' + description + '</h6></div></div><div id="crd-' + cardCount + '-radio-child-1" class="row radio-child"> <div id="crd-' + cardCount + '-radio-child-2" class="input-field col s12"></div></div></div></div></div></div>');
         }
 
         container.append(card);
@@ -251,7 +354,7 @@
     }
 
     // add Check/Radio Option
-    function addOption(optionType, description, cardNo) {
+    function addOption(optionType, description, cardNo, ID) {
         // var id = $(btnAdd).parent().parent().attr('id');
         // console.log("parent id : " + id);
 
@@ -265,20 +368,13 @@
         var option = '';
 
         if (optionType == 'check') {
-            /* option = '<div id="crd-' + cardNo + '-check-child-1" class="row check-child"><div class="input-field col s8 my-input-field"><i class="material-icons prefix my-icon">check_box_outline_blank</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>'; */
-            option = '<p><label><input type="checkbox" /><span>' + description + '</span></label></p>';
+            option = '<p><label><input type="checkbox" value="' + ID + '"/><span>' + description + '</span></label></p>';
         } else if (optionType == 'radio') {
-            /* option = '<div id="crd-' + cardNo + '-radio-child-1" class="row radio-child"><div class="input-field col s8 my-input-field"><i class="material-icons prefix my-icon">radio_button_unchecked</i><input placeholder="Option" type="text"></div><div class="input-field col s1"><a class="btn-floating waves-effect btn-small red lighten-1 remove"><i class="material-icons">remove</i></a></div></div>'; */
-            option = '<p><label><input class="with-gap" name="group3" type="radio"/><span>' + description + '</span></label></p>';
-            // FIXME:GROUP NAME
+            option = '<p><label><input class="with-gap" name="group' + cardNo + '" type="radio" value="' + ID + '"/><span>' + description + '</span></label></p>';
         }
 
         if (option != '') {
             $('#' + parentID).append(option);
-
-            // setNewID(id);
         }
-        // $('#' + id + ' :last-child').focus();
-        // }
     }
 </script>

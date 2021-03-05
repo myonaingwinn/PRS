@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Cake\I18n\Time;
 use App\Controller\AppController;
 
 /**
@@ -60,15 +61,51 @@ class AnswersController extends AppController
         $this->loadModel('Questions');
         $this->loadModel('Options');
 
+        // time zone
+        $currDateTime = Time::now();
+        $currDateTime->timezone = 'Asia/Yangon';
+
         $answer = $this->Answers->newEntity();
         if ($this->request->is('post')) {
-            $answer = $this->Answers->patchEntity($answer, $this->request->getData());
-            if ($this->Answers->save($answer)) {
+            // $answer = $this->Answers->patchEntity($answer, $this->request->getData());
+
+            $answers = $this->request->getData('answers');
+            $answers = json_decode($answers, true);
+
+            // return debug($answers);
+
+            if (!empty($answers)) {
+                foreach ($answers as $ans) {
+                    $answer->user_id = $this->request->getData('user_id');
+                    $answer->category_id = $this->request->getData('category_id');
+                    $answer->product_id = $this->request->getData('product_id');
+                    $answer->survey_id = $this->request->getData('survey_id');
+
+                    $answer->question_id = $ans['question'];
+                    $answer->created = $currDateTime;
+                    if (!empty($ans['option'])) {
+                        $answer->option_id = $ans['option'];
+                        $this->saveAnswer($answer);
+                    } else if (!empty($ans['answer'])) {
+                        $answer->answer = $ans['answer'];
+                        $this->saveAnswer($answer);
+                    } else if (!empty($ans['options'])) {
+                        $options = $ans['options'];
+                        foreach ($options as $option) {
+                            $answer->option_id = $option;
+                            $this->saveAnswer($answer);
+                        }
+                    }
+                    $answer = $this->Answers->newEntity();
+                }
+            }
+            return $this->redirect(['action' => 'index']);
+            /*             if ($this->Answers->save($answer)) {
                 $this->Flash->success(__('The answer has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The answer could not be saved. Please, try again.'));
+            $this->Flash->error(__('The answer could not be saved. Please, try again.')); */
         }
         // $products = $this->Answers->Products->find('list', ['limit' => 200]);
         // $categories = $this->Answers->Categories->find('list', ['limit' => 200]);
@@ -78,8 +115,10 @@ class AnswersController extends AppController
         // $users = $this->Answers->Users->find('list', ['limit' => 200]);
         // $this->set(compact('answer', 'products', 'categories', 'questions', 'surveys', 'options', 'users'));
 
-        $survey = $this->Surveys->find()->select(['id', 'title' => 'name', 'description'])->where(['id' => $surveyID, 'del_flg' => 'not'])->toArray();
+        $survey = $this->Surveys->find()->select(['id', 'title' => 'name', 'description', 'category_id', 'product_id'])->where(['id' => $surveyID, 'del_flg' => 'not'])->toArray();
+
         $questions = $this->Questions->find()->select(['id', 'type', 'description'])->where(['survey_id' => $surveyID, 'del_flg' => 'not']);
+
         $options = $this->Options->find()->select(['id', 'question_id', 'description'])->where(['survey_id' => $surveyID, 'del_flg' => 'not']);
 
         // $my_surveys = $this->Surveys->find('all');
@@ -137,5 +176,13 @@ class AnswersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function saveAnswer($answer)
+    {
+        if ($this->Answers->save($answer)) {
+            $this->Flash->success(__('The answer has been saved.'));
+        } else
+            $this->Flash->error(__('The answer could not be saved. Please, try again.'));
     }
 }
