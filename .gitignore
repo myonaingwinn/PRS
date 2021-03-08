@@ -4,3 +4,4 @@
 /logs/*
 /src/Shell/*
 /tests/TestCase/Shell/*
+*.orig

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration
  *
@@ -50,6 +51,12 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+
+    $routes->connect('/new_survey', ['controller' => 'Admins', 'action' => 'new_survey', 'new_survey']);
+
+    $routes->connect('/add_survey', ['controller' => 'Surveys', 'action' => 'add']);
+
+    $routes->connect('/add_answer', ['controller' => 'Answers', 'action' => 'add']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
