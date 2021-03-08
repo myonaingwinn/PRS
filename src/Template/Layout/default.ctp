@@ -30,10 +30,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <!-- <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('cake.css') ?> -->
 
+    <?= $this->Html->css('materialize.min.css') ?>
+    <?= $this->Html->script('jquery-3.5.1.min.js') ?>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <!-- <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" /> -->
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
-    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <!-- <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script> -->
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -113,7 +116,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <footer>
     </footer>
     <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- <script type="text/javascript" src="js/materialize.min.js"></script> -->
+    <?= $this->Html->script('materialize.min.js') ?>
 </body>
 
 </html>
