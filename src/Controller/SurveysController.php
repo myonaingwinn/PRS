@@ -40,12 +40,21 @@ class SurveysController extends AppController
      */
     public function view($id = null)
     {
-        $survey = $this->Surveys->get($id, [
-            'contain' => ['Products', 'Categories', 'Admins', 'Answers', 'Options', 'Questions']
-        ]);
+        $surveyID = $id;
+        $this->loadModel('Surveys');
+        $this->loadModel('Questions');
+        $this->loadModel('Options');
+        if ($this->request->is('post')) {
+            return $this->redirect(['action' => 'index']);
+        }
+        $survey = $this->Surveys->find()->select(['id', 'title' => 'name', 'description', 'category_id', 'product_id'])->where(['id' => $surveyID, 'del_flg' => 'not'])->toArray();
 
-        $this->set('survey', $survey);
-        $this->set('_serialize', ['survey']);
+        $questions = $this->Questions->find()->select(['id', 'type', 'description'])->where(['survey_id' => $surveyID, 'del_flg' => 'not']);
+
+        $options = $this->Options->find()->select(['id', 'question_id', 'description'])->where(['survey_id' => $surveyID, 'del_flg' => 'not']);
+
+        $this->set(compact('survey', 'questions', 'options'));
+        // $this->set('_serialize', ['answer']);
     }
 
     /**
@@ -174,9 +183,10 @@ class SurveysController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->request->allowMethod(['patch', 'post', 'put']);
         $survey = $this->Surveys->get($id);
-        if ($this->Surveys->delete($survey)) {
+        $survey->del_flg = 'deleted';
+        if ($this->Surveys->save($survey)) {
             $this->Flash->success(__('The survey has been deleted.'));
         } else {
             $this->Flash->error(__('The survey could not be deleted. Please, try again.'));
