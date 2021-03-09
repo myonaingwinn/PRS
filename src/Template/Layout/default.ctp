@@ -14,7 +14,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'PRS';
 ?>
 <!DOCTYPE html>
 <html>
@@ -73,16 +73,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </div> -->
 
     <nav>
-        <div class="nav-wrapper green">
-            <a href="#" class="brand-logo center">Logo</a>
+        <div class="nav-wrapper indigo z-depth-1">
+            <a href="#" class="brand-logo center">PRS</a>
             <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
                 <i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="left hide-on-med-and-down right">
                 <!-- <li><a href="#" data-target="slide-out" class="sidenav-trigger">
                         <i class="material-icons">menu</i></a></li> -->
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">JavaScript</a></li>
+                <!-- <li><a href="sass.html">Sass</a></li>
+                <li><a href="badges.html">Components</a></li> -->
+                <li><a href="#" class="badge1" data-badge="27"><i class="material-icons left">notifications</i></a></li>
             </ul>
         </div>
     </nav>
@@ -127,3 +127,25 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         $('.sidenav').sidenav();
     });
 </script>
+
+<style>
+    .badge1 {
+        position: relative;
+    }
+
+    .badge1[data-badge]:after {
+        content: attr(data-badge);
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: .7em;
+        background: red;
+        color: white;
+        width: 18px;
+        height: 18px;
+        text-align: center;
+        line-height: 18px;
+        border-radius: 50%;
+        box-shadow: 0 0 1px #333;
+    }
+</style>
