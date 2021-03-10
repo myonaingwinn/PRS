@@ -72,6 +72,30 @@ class AnswersController extends AppController
             $answers = $this->request->getData('answers');
             $answers = json_decode($answers, true);
 
+            $rating = '';
+            $remark = '';
+
+            $rating = $this->getRemarkNRating($answers, 'rating');
+            $remark = $this->getRemarkNRating($answers, 'remark');
+
+            // debug($answers);
+
+            // remove from array
+            foreach ($answers as $k => $val) {
+                foreach ($val as $key => $value) {
+                    if ($key == 'rating') {
+                        array_splice($answers, $k, 1);
+                    }
+                }
+            }
+            foreach ($answers as $k => $val) {
+                foreach ($val as $key => $value) {
+                    if ($key == 'remark') {
+                        array_splice($answers, $k, 1);
+                    }
+                }
+            }
+
             // return debug($answers);
 
             if (!empty($answers)) {
@@ -83,6 +107,8 @@ class AnswersController extends AppController
 
                     $answer->question_id = $ans['question'];
                     $answer->created = $currDateTime;
+                    $answer->rating = $rating;
+                    $answer->remark = $remark;
                     if (!empty($ans['option'])) {
                         $answer->option_id = $ans['option'];
                         $this->saveAnswer($answer);
@@ -184,5 +210,21 @@ class AnswersController extends AppController
             $this->Flash->success(__('The answer has been saved.'));
         } else
             $this->Flash->error(__('The answer could not be saved. Please, try again.'));
+    }
+
+    public function getRemarkNRating($answers, $keyword)
+    {
+        $result = '';
+        foreach ($answers as $k => $val) {
+            foreach ($val as $key => $value) {
+                if ($key == $keyword) {
+                    $result = $value;
+                    // delete this element from array
+                    array_splice($answers, $k, 1);
+                    debug($answers);
+                }
+            }
+        }
+        return $result;
     }
 }
