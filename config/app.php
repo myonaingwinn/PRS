@@ -231,7 +231,7 @@ return [
             //'port' => 'non_standard_port_number',
             'username' => 'root',
             'password' => 'root',
-            'database' => 'products_ranking_system',
+            'database' => 'product_ranking_system',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],

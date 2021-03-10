@@ -49,7 +49,9 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+   // $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+   $routes->connect('/', ['controller' => 'Prize', 'action' => 'prizelist']);
+
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
@@ -72,6 +74,25 @@ Router::scope('/', function (RouteBuilder $routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
+    $routes->fallbacks(DashedRoute::class);
+});
+
+
+Router::prefix('admin', function (RouteBuilder $routes) {
+  
+    $routes->connect('/', ['controller' => 'Luckydraw', 'action' => 'index']);
+    $routes->fallbacks(DashedRoute::class);
+});
+
+Router::prefix('admin', function (RouteBuilder $routes) {
+  
+    $routes->connect('/prize', ['controller' => 'Prizes', 'action' => 'prizelist']);
+    $routes->fallbacks(DashedRoute::class);
+});
+
+Router::prefix('user', function (RouteBuilder $routes) {
+  
+    $routes->connect('/', ['controller' => 'Prizes', 'action' => 'spin']);
     $routes->fallbacks(DashedRoute::class);
 });
 
