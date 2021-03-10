@@ -126,44 +126,55 @@
         </div>
     </div>
 
-    <!-- Check Card -->
-    <!-- <div class="container" id="card-2">
-        <div class="col s3">
-            <div class="card">
-                <div class="card-content">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <h6 id="txt-text-Question-' + cardCount + '">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum beatae inventore ducimus cupiditate ex nam recusandae reprehenderit odio ea totam molestiae quisquam excepturi rerum amet officiis tempora aut, optio, consequuntur expedita minus. Pariatur blanditiis dolorem inventore! Quas perspiciatis libero suscipit ut? Natus veniam dolor culpa itaque ipsum tempore ducimus iste.</h6>
-                        </div>
-                    </div>
-                    <div id="card-1-child-1" class="row check-child">
-                        <div class="input-field col s6">
-                            <p>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Filled in Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum, quam!</span>
-                                </label>
-                            </p>
-                            <p>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Filled in</span>
-                                </label>
-                            </p>
-                        </div>
-                        <div class="input-field col s6">
-                            <p>
-                                <label>
-                                    <input type="checkbox" />
-                                    <span>Filled in / out Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa,</span>
-                                </label>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+    <!-- for Rating -->
+    <style>
+        .my-rate {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rate:not(:checked)>input {
+            position: absolute;
+            top: -9999px;
+        }
+
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rate:not(:checked)>label:before {
+            content: '★ ';
+        }
+
+        .rate>input:checked~label {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked)>label:hover,
+        .rate:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
+
+        .rate>input:checked+label:hover,
+        .rate>input:checked+label:hover~label,
+        .rate>input:checked~label:hover,
+        .rate>input:checked~label:hover~label,
+        .rate>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+    </style>
 
     <div class="row center my-submit">
         <div class="col s6"></div>
@@ -203,6 +214,7 @@
     $(document).on("click", "#btnSave", function(event) {
         if (validate() === 1) {
             getAnswers();
+            // event.preventDefault();
         } else {
             M.toast({
                 html: 'Please answer all questions.'
@@ -241,6 +253,14 @@
                     }
                 });
                 card.options = options;
+            } else if (questionType[1] == 'remark') {
+                delete card.question;
+                card.remark = $('#' + cardID).find('input[type=text]').val();
+
+                // console.log($('#' + cardID).find('input[type=text]').val());
+            } else if (questionType[1] == 'rating') {
+                delete card.question;
+                card.rating = $(':radio[name="rate"]:checked').val();
             }
             allCards.push(card);
             card = {};
@@ -377,4 +397,25 @@
             $('#' + parentID).append(option);
         }
     }
+
+    // Remark & Rating Card
+    function addRemarkNRatingCard() {
+        var lastCardID = $(".container:last").attr('id');
+        var containerRating = $('<div class="container" id="card-rating"></div>');
+        var containerRemark = $('<div class="container" id="card-remark"></div>');
+
+        var cardRating = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6 id="question-rating-h-r">How many stars will you rate to this product?</h6></div></div><div class="row my-rate"><div class="col s4"></div><div class="rate"><input type="radio" id="star5" name="rate" value="5" /><label for="star5" title="excellent">5 stars</label><input type="radio" id="star4" name="rate" value="4" /><label for="star4" title="best">4 stars</label><input type="radio" id="star3" name="rate" value="3" /><label for="star3" title="good">3 stars</label><input type="radio" id="star2" name="rate" value="2" /><label for="star2" title="bad">2 stars</label><input type="radio" id="star1" name="rate" value="1" /><label for="star1" title="worst">1 star</label></div><div class="col s3"></div></div></div></div></div>');
+
+        var cardRemark = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6  id="question-remark-x-x" >We appreciate your remarks?</h6></div></div><div class="row"><div class="input-field col s12"><input id="answer-remark-x-x" placeholder="Your remark" type="text" class="validate"></div></div></div></div></div></div>');
+
+        containerRemark.insertAfter($('#' + lastCardID));
+        containerRemark.append(cardRemark);
+
+        containerRating.insertAfter($('#card-remark'));
+        containerRating.append(cardRating);
+    }
+
+    $(function() {
+        addRemarkNRatingCard();
+    });
 </script>
