@@ -22,7 +22,7 @@ use PhpParser\Node\Stmt\Label;
 </style>
 
 <div style="margin-top: 5px;">
-    <a class="waves-effect waves-light indigo btn right" href="/PRS/users/index">User List</a>
+    <!-- <a class="waves-effect waves-light indigo btn right" href="/users/index">User List</a> -->
 
     <?= $this->Form->create($user, [
         'class' => 'was-validated', 'enctype' => 'multipart/form-data'

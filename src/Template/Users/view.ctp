@@ -8,13 +8,13 @@
 use Cake\Http\Client\FormData;
 
 ?>
-<a class="waves-effect waves-light indigo btn right" href="/PRS/users/index">User List</a>
+<!-- <a class="waves-effect waves-light indigo btn right" href="/users/index">User List</a> -->
 
 <div style="margin-left: 15%;">
     <div class="users view large-9 medium-8 columns content">
         <fieldset class="col s8">
             <legend>
-                <h4> User Profile </h4>
+                <h4>Profile</h4>
             </legend>
 
             <?php if (!empty($user->profile_img)) { ?>

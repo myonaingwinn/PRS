@@ -57,6 +57,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/add_survey', ['controller' => 'Surveys', 'action' => 'add']);
     $routes->connect('/view_survey/*', ['controller' => 'Surveys', 'action' => 'view']);
 
+    $routes->connect('/register', ['controller' => 'Users', 'action' => 'add']);
+
     $routes->connect('/add_answer', ['controller' => 'Answers', 'action' => 'add']);
 
     /**

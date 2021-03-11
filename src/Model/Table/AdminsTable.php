@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -36,7 +37,7 @@ class AdminsTable extends Table
 
         $this->setTable('admins');
         $this->setDisplayField('admin_id');
-        $this->setPrimaryKey('admin_id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 

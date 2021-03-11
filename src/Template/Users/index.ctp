@@ -5,7 +5,7 @@
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
 ?>
-<a class="waves-effect waves-light btn indigo right" href="/PRS/users/add" style="margin-top: 5px;">New User</a>
+<!-- <a class="waves-effect waves-light btn indigo right" href="/users/add" style="margin-top: 5px;">New User</a> -->
 <div class="users index large-9 medium-8 columns content">
 
     <table>
@@ -41,9 +41,9 @@
                     <td><?= h($user->reward) ?></td>
 
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $user->user_id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->user_id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->user_id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->user_id)]) ?>
+                        <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

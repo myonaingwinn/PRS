@@ -6,8 +6,8 @@
 ?>
 <!-- <?= $this->Form->postLink(
             __('Delete'),
-            ['action' => 'delete', $user->user_id],
-            ['confirm' => __('Are you sure you want to delete # {0}?', $user->user_id)]
+            ['action' => 'delete', $user->id],
+            ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
         )
         ?> -->
 
@@ -24,14 +24,14 @@
 </style>
 
 <div style="margin-top: 5px;">
-    <a class="waves-effect waves-light btn indigo right" href="/PRS/users/index">User List</a>
+    <!-- <a class="waves-effect waves-light btn indigo right" href="/users/index">User List</a> -->
     <?= $this->Form->create($user, [
         'class' => 'was-validated', 'enctype' => 'multipart/form-data'
     ]) ?>
     <div>
         <fieldset>
             <legend>
-                <h4>User Update Form</h4>
+                <h4>Update Profile</h4>
             </legend>
             <?php
 
