@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Answer Entity
  *
  * @property int $id
- * @property int $product_id
+ * @property int|null $product_id
  * @property int $category_id
  * @property int $question_id
  * @property int $survey_id
@@ -27,7 +27,6 @@ use Cake\ORM\Entity;
  */
 class Answer extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -38,7 +37,21 @@ class Answer extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        'product_id' => true,
+        'category_id' => true,
+        'question_id' => true,
+        'survey_id' => true,
+        'option_id' => true,
+        'user_id' => true,
+        'answer' => true,
+        'remark' => true,
+        'rating' => true,
+        'created' => true,
+        'product' => true,
+        'category' => true,
+        'question' => true,
+        'survey' => true,
+        'option' => true,
+        'user' => true,
     ];
 }
