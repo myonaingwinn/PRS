@@ -43,7 +43,7 @@ class PrizesController extends AppController
 
        // $prizes = $this->Prizes->find('all')->where(['id' => 3]);
         $tbl_score= $this->loadModel('Scores');
-        $scores = $this->Scores->find()->where(['user_id' => 2])->first();
+        $scores = $this->Scores->find()->where(['user_id' => 1])->first();
        
          $pr_score = $prizes->scores;
          $user_score = $scores->score;
@@ -114,6 +114,10 @@ class PrizesController extends AppController
         ]);
     }
 
+    public function dashboard(){
+        
+    }
+  
    
   
 }

@@ -92,9 +92,16 @@ Router::prefix('admin', function (RouteBuilder $routes) {
 
 Router::prefix('user', function (RouteBuilder $routes) {
   
+    $routes->connect('/dashboard', ['controller' => 'Prizes', 'action' => 'dashboard']);
+    $routes->fallbacks(DashedRoute::class);
+});
+Router::prefix('user', function (RouteBuilder $routes) {
+  
     $routes->connect('/', ['controller' => 'Prizes', 'action' => 'spin']);
     $routes->fallbacks(DashedRoute::class);
 });
+
+
 
 /**
  * Load all plugin routes.  See the Plugin documentation on
