@@ -1,21 +1,21 @@
 <?php
 return [
     /**
-     * Debug Level:
-     *
-     * Production Mode:
-     * false: No error messages, errors, or warnings shown.
-     *
-     * Development Mode:
-     * true: Errors and warnings shown.
-     */
+                                         * Debug Level:
+                                         *
+                                         * Production Mode:
+                                         * false: No error messages, errors, or warnings shown.
+                                     *
+                                     * Development Mode:
+                                     * true: Errors and warnings shown.
+                                     */
     'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
 
     /**
-     * Configure basic information about the application.
-     *
-     * - namespace - The namespace to find app classes under.
-     * - defaultLocale - The default locale for translation, formatting currencies and numbers, date and time.
+                         * Configure basic information about the application.
+                     *
+                     * - namespace - The namespace to find app classes under.
+             * - defaultLocale - The default locale for translation, formatting currencies and numbers, date and time.
      * - encoding - The encoding used for HTML + database connections.
      * - base - The base directory the app resides in. If false this
      *   will be auto detected.
@@ -189,6 +189,7 @@ return [
             'tls' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
+       
     ],
 
     /**
@@ -207,6 +208,10 @@ return [
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
+        'mailForget' => [
+            'transport' => 'mailForget',
+            'from' => ['ecctester2222@gmail.com' => 'Password Forget'],
+        ], 
     ],
 
     /**
@@ -269,7 +274,7 @@ return [
             'persistent' => false,
             'host' => 'localhost',
             //'port' => 'non_standard_port_number',
-            'username' => 'my_app',
+            'username' => 'root',
             'password' => 'secret',
             'database' => 'test_myapp',
             'encoding' => 'utf8',
