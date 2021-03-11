@@ -150,7 +150,8 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL,
+        'errorLevel' => E_ALL & ~E_DEPRECATED,
+		'errorLevel' => E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED ,
         'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
         'skipLog' => [],
         'log' => true,
@@ -229,6 +230,7 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
+            'port' => '3308',
             'username' => 'root',
             'password' => 'root',
             'database' => 'products_ranking_system',
