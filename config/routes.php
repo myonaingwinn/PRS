@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration
  *
@@ -49,14 +50,33 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
-   // $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-   $routes->connect('/', ['controller' => 'Prize', 'action' => 'prizelist']);
+ 
+   $routes->connect('/prizelist', ['controller' => 'Prize', 'action' => 'prizelist']);
 
+    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/data_analysis', ['controller' => 'DataAnalysis', 'action' => 'index']);
+    //$routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    // $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
-    /**
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
+    $routes->connect('/new_survey', ['controller' => 'Admins', 'action' => 'new_survey', 'new_survey']);
+
+    $routes->connect('/add_survey', ['controller' => 'Surveys', 'action' => 'add']);
+    $routes->connect('/view_survey/*', ['controller' => 'Surveys', 'action' => 'view']);
+
+    $routes->connect('/register', ['controller' => 'Users', 'action' => 'add']);
+
+    $routes->connect('/login', ['controller' => 'UserLogin', 'action' => 'login']);
+
+    $routes->connect('/spin', ['controller' => 'Luckydraw', 'action' => 'spin']);
+
+    $routes->connect('/add_answer', ['controller' => 'Answers', 'action' => 'add']);
+
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+
+    $routes->connect('/', ['controller' => 'Products', 'action' => 'index']);
+    $routes->connect('/survey-summary', ['controller' => 'Surveys', 'action' => 'index']);
+    // $routes->connect('/add', ['controller' => 'Products', 'action' => 'add']);
+    // $routes->connect('/edit/*', ['controller' => 'Products', 'action' => 'edit']);
 
     /**
      * Connect catchall routes for all controllers.
