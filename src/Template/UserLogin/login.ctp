@@ -8,6 +8,7 @@
         ],
         ['legend' => 'Login Here']
     );
+    echo $this->Html->link("Forgot Password", ['action' => 'forgetPassword']);
     echo $this->Form->submit(__('Login'));
     echo "Don't have an account?";
     echo $this->Html->link("Sign up", ['action' => 'register']);
