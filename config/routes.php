@@ -59,6 +59,8 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'add']);
 
+    $routes->connect('/spin', ['controller' => 'Luckydraw', 'action' => 'spin']);
+
     $routes->connect('/add_answer', ['controller' => 'Answers', 'action' => 'add']);
 
     /**
