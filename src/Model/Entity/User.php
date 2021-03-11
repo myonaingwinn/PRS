@@ -3,12 +3,11 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * User Entity
  *
- * @property int $user_id
+ * @property int $id
  * @property string $name
  * @property string $email
  * @property string $password
@@ -23,11 +22,9 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  * @property string $profile_img
- * @property string $admin_id
+ * @property int $admin_id
  * @property string $token
- * @property int $score
  *
- * @property \App\Model\Entity\User[] $users
  * @property \App\Model\Entity\Admin $admin
  * @property \App\Model\Entity\Answer[] $answers
  * @property \App\Model\Entity\Score[] $scores
@@ -46,7 +43,7 @@ class User extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'user_id' => false
+        'id' => false
     ];
 
     /**
@@ -58,10 +55,4 @@ class User extends Entity
         'password',
         'token'
     ];
-    // protected function _setPassword($password)
-    // {
-    //     if (strlen($password) > 0) {
-    //         return (new DefaultPasswordHasher)->hash($password);
-    //     }
-    // }
 }

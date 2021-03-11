@@ -50,6 +50,9 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
+    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/data_analysis', ['controller' => 'DataAnalysis', 'action' => 'index']);
+    //$routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     // $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
     $routes->connect('/new_survey', ['controller' => 'Admins', 'action' => 'new_survey', 'new_survey']);
@@ -63,9 +66,6 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/add_answer', ['controller' => 'Answers', 'action' => 'add']);
 
-    /**
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
     $routes->connect('/', ['controller' => 'Products', 'action' => 'index']);

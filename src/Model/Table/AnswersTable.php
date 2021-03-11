@@ -9,12 +9,12 @@ use Cake\Validation\Validator;
 /**
  * Answers Model
  *
- * @property \App\Model\Table\ProductsTable|\Cake\ORM\Association\BelongsTo $Products
- * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
- * @property \App\Model\Table\QuestionsTable|\Cake\ORM\Association\BelongsTo $Questions
- * @property \App\Model\Table\SurveysTable|\Cake\ORM\Association\BelongsTo $Surveys
- * @property \App\Model\Table\OptionsTable|\Cake\ORM\Association\BelongsTo $Options
  * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
+ * @property \App\Model\Table\ProductsTable|\Cake\ORM\Association\BelongsTo $Products
+ * @property \App\Model\Table\SurveysTable|\Cake\ORM\Association\BelongsTo $Surveys
+ * @property \App\Model\Table\QuestionsTable|\Cake\ORM\Association\BelongsTo $Questions
+ * @property \App\Model\Table\OptionsTable|\Cake\ORM\Association\BelongsTo $Options
  *
  * @method \App\Model\Entity\Answer get($primaryKey, $options = [])
  * @method \App\Model\Entity\Answer newEntity($data = null, array $options = [])
@@ -45,27 +45,27 @@ class AnswersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Products', [
-            'foreignKey' => 'product_id'
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
         ]);
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Products', [
+            'foreignKey' => 'product_id'
+        ]);
+        $this->belongsTo('Surveys', [
+            'foreignKey' => 'survey_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Questions', [
             'foreignKey' => 'question_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Surveys', [
-            'foreignKey' => 'survey_id',
-            'joinType' => 'INNER'
-        ]);
         $this->belongsTo('Options', [
             'foreignKey' => 'option_id'
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
         ]);
     }
 
@@ -103,12 +103,12 @@ class AnswersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['product_id'], 'Products'));
-        $rules->add($rules->existsIn(['category_id'], 'Categories'));
-        $rules->add($rules->existsIn(['question_id'], 'Questions'));
-        $rules->add($rules->existsIn(['survey_id'], 'Surveys'));
-        $rules->add($rules->existsIn(['option_id'], 'Options'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['category_id'], 'Categories'));
+        $rules->add($rules->existsIn(['product_id'], 'Products'));
+        $rules->add($rules->existsIn(['survey_id'], 'Surveys'));
+        $rules->add($rules->existsIn(['question_id'], 'Questions'));
+        $rules->add($rules->existsIn(['option_id'], 'Options'));
 
         return $rules;
     }

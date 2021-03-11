@@ -4,28 +4,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Answer Entity
+ * Category Entity
  *
  * @property int $id
- * @property int $user_id
- * @property int $category_id
- * @property int $product_id
- * @property int $survey_id
- * @property int $question_id
- * @property int $option_id
- * @property string $answer
- * @property string $remark
- * @property int $rating
+ * @property string $name
+ * @property string $del_flg
  * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\Category $category
- * @property \App\Model\Entity\Product $product
- * @property \App\Model\Entity\Survey $survey
- * @property \App\Model\Entity\Question $question
- * @property \App\Model\Entity\Option $option
+ * @property \App\Model\Entity\Answer[] $answers
+ * @property \App\Model\Entity\Product[] $products
+ * @property \App\Model\Entity\Survey[] $surveys
  */
-class Answer extends Entity
+class Category extends Entity
 {
 
     /**
