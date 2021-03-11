@@ -1,22 +1,38 @@
 <?php
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
- * Admin Entity
+ * User Entity
  *
- * @property int $admin_id
+ * @property int $user_id
+ * @property string $name
  * @property string $email
  * @property string $password
+ * @property string $gender
+ * @property string $phone
+ * @property \Cake\I18n\FrozenDate $birthdate
+ * @property int $age
+ * @property string $premium_flg
+ * @property string $reward
  * @property string $del_flg
+ * @property \Cake\I18n\FrozenTime $last_login
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property string $profile_img
+ * @property string $admin_id
  * @property string $token
+ * @property int $score
  *
+ * @property \App\Model\Entity\User[] $users
  * @property \App\Model\Entity\Admin $admin
+ * @property \App\Model\Entity\Answer[] $answers
+ * @property \App\Model\Entity\Score[] $scores
  */
-class Admin extends Entity
+class User extends Entity
 {
 
     /**
@@ -30,7 +46,7 @@ class Admin extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'admin_id' => false
+        'user_id' => false
     ];
 
     /**
@@ -42,4 +58,10 @@ class Admin extends Entity
         'password',
         'token'
     ];
+    // protected function _setPassword($password)
+    // {
+    //     if (strlen($password) > 0) {
+    //         return (new DefaultPasswordHasher)->hash($password);
+    //     }
+    // }
 }
