@@ -64,8 +64,9 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '__SALT__'),
+        'salt' => env('SECURITY_SALT', '73409fc7bc3c1ab4b7cfb7425e3e285181d3801006b48b9d334d63a583058fa0'),
     ],
+
 
     /**
      * Apply timestamps with the last modified time to static assets (js, css, images).
@@ -150,7 +151,8 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL,
+        'errorLevel' => E_ALL & ~E_DEPRECATED,
+		'errorLevel' => E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED ,
         'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
         'skipLog' => [],
         'log' => true,
@@ -243,6 +245,7 @@ return [
              * the following line and set the port accordingly
              */ 
             //'port' => 'non_standard_port_number',
+            'port' => '3308',
             'username' => 'root', 
             'password' => 'root',
             'database' => 'product_ranking_system',
