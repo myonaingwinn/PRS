@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -75,21 +76,21 @@ class ProductsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('product_model_no');
+            ->allowEmpty('model_no');
 
         $validator
-            ->requirePresence('product_name', 'create')
-            ->notEmpty('product_name');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
 
         $validator
-            ->requirePresence('product_price', 'create')
-            ->notEmpty('product_price');
+            ->requirePresence('price', 'create')
+            ->notEmpty('price');
 
         $validator
-            ->allowEmpty('product_image');
+            ->allowEmpty('image');
 
         $validator
-            ->allowEmpty('product_video');
+            ->allowEmpty('video');
 
         $validator
             ->requirePresence('del_flg', 'create')

@@ -32,6 +32,8 @@ $cakeDescription = 'PRS';
 
     <?= $this->Html->css('materialize.min.css') ?>
     <?= $this->Html->script('jquery-3.5.1.min.js') ?>
+    <?= $this->Html->script('fusioncharts/fusioncharts.js') ?>
+    <script src="/js/fusioncharts/fusioncharts.js"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" /> -->

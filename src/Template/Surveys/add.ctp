@@ -102,7 +102,7 @@
             <select id="selCategory" name="category_id">
                 <option value="0" disabled selected>Choose your category</option>
                 <?php foreach ($my_categories as $category) : ?>
-                    <option value="<?= h($category->id) ?>"><?= h($category->category_name) ?></option>
+                    <option value="<?= h($category->id) ?>"><?= h($category->name) ?></option>
                 <?php endforeach ?>
             </select>
             <label>Select Category</label>
@@ -113,7 +113,7 @@
                 <option value="0" disabled selected>Choose your product</option>
                 <!-- <option value="1">Option 1</option> -->
                 <!-- <?php foreach ($my_products as $product) : ?>
-                    <option value="<?= h($product->id) ?>" data-category="<?= h($product->category_id) ?>"><?= h($product->product_name) ?></option>
+                    <option value="<?= h($product->id) ?>" data-category="<?= h($product->category_id) ?>"><?= h($product->name) ?></option>
                 <?php endforeach; ?> -->
             </select>
             <label>Select Product</label>
@@ -202,7 +202,7 @@
             // console.log('product_name : ' + $(this)[0].product_name);
 
             if (categoryID == $(this)[0].category_id) {
-                $('#selProduct').append('<option value="' + $(this)[0].id + '">' + $(this)[0].product_name + '</option>');
+                $('#selProduct').append('<option value="' + $(this)[0].id + '">' + $(this)[0].name + '</option>');
             }
         });
         // <option value="0" disabled selected>Choose your product</option>

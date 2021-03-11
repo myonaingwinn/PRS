@@ -144,10 +144,10 @@ function getPieCharts($categoryType)
 
     $proData = TableRegistry::get('products');
 
-    $query = $proData->find('all')->where(['category_id' => $categoryType]);
+    $query = $proData->find('all')->where(['id' => $categoryType]);
     foreach ($query as $result) {
         $pid = $result->id;
-        $pname = $result->product_name;
+        $pname = $result->name;
         $rateResult = getRatingForEachProduct($categoryType, $pid);
         $label = $pname;
         if ($rateResult != 0) {
@@ -301,13 +301,13 @@ function getFeedback($pid)
             <select id="ctype" name="Color[]">
                 <option value="">Category List</option>
                 <?php foreach ($categories_list as $c) : ?>
-                    <option value="<?= h($c->category_id) ?>"><?= h($c->category_name) ?></option>
+                    <option value="<?= h($c->id) ?>"><?= h($c->name) ?></option>
 
                 <?php endforeach; ?>
             </select>
         </div>
         <div class="col s2">
-            <input type="submit" name="peach" value="View Results" class="btn waves-effect waves-teal" />
+            <button type="submit" name="peach" class="btn waves-effect waves-teal" />View Results</button>
         </div>
     </div>
 </form>
@@ -320,13 +320,13 @@ function getFeedback($pid)
             <select id="ptype" name="Pro[]">
                 <option value="">Product List</option>
                 <?php foreach ($pList as $p) : ?>
-                    <option value="<?= h($p->product_id) ?>"><?= h($p->product_name) ?></option>
+                    <option value="<?= h($p->id) ?>"><?= h($p->name) ?></option>
 
                 <?php endforeach; ?>
             </select>
         </div>
         <div class="col s2">
-            <input type="submit" name="showproduct" value="View Results" class="btn waves-effect waves-teal" />
+            <button type="submit" name="showproduct" class="btn waves-effect waves-teal" />View Results</button>
         </div>
     </div>
 </form>
@@ -366,7 +366,7 @@ function getFeedback($pid)
     $(document).ready(function() {
         $('select').formSelect();
     });
-    ('#ctype').change(function() {
+    /* ('#ctype').change(function() {
         $_SESSION('ctype') = ('#ctype').value;
-    });
+    }); */
 </script>

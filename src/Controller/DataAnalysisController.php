@@ -35,9 +35,11 @@ class DataAnalysisController extends AppController
         $products = TableRegistry::get('products');
         $answers = TableRegistry::get('answers');
         $connection = ConnectionManager::get('default');
-        $results1 = $connection->execute('SELECT distinct product_image as pimage, product_name as pname, product_model_no as pmodel_no from `answers`, `products` WHERE products.id=answers.product_id and
-         answers.rating>3')->fetchAll('assoc');
-        // echo ($results1);
+        /* $results1 = $connection->execute('SELECT distinct image as pimage, name as pname, model_no as pmodel_no from `answers`, `products` WHERE products.id=answers.product_id and
+         answers.rating>3')->fetchAll('assoc'); */
+
+        $results1 = $connection->execute('SELECT distinct image as pimage, name as pname, model_no as pmodel_no from `products`')->fetchAll('assoc');
+        // debug($results1);
 
         $this->set('product_list', $results1);
     }
