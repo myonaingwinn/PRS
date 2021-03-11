@@ -1,21 +1,3 @@
-<?php
-
-/**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
-
-$cakeDescription = 'PRS';
-?>
 <!DOCTYPE html>
 <html>
 
@@ -32,7 +14,6 @@ $cakeDescription = 'PRS';
 
     <?= $this->Html->css('materialize.min.css') ?>
     <?= $this->Html->script('jquery-3.5.1.min.js') ?>
-    <?= $this->Html->script('fusioncharts/fusioncharts.js') ?>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" /> -->
@@ -93,20 +74,18 @@ $cakeDescription = 'PRS';
         <li>
             <div class="user-view">
                 <div class="background">
-                    <img width="300" height="500" src="https://wallpapercave.com/wp/wp5086278.jpg">
+                    <img width="300" height="500" src="../img/chaungthar.jpg">
                 </div>
-                <a href="#user"><img class="circle" src="http://1.bp.blogspot.com/-oFBZLSILB48/TdV-TLATY1I/AAAAAAAACQE/2GUcBagIPWc/s1600/Liu+Yifei+%25286%2529.jpg"></a>
+                <a href="#user"><img class="circle" src="../img/user.png"></a>
                 <a href="#name"><span class="white-text name">John Doe</span></a>
                 <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
             </div>
         </li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+        <li><a href="#"><i class="material-icons">subject</i>User List</a></li>
+        <li><a href="<?= $this->Url->build(['controller'=>'Prizes','action'=>'spin']); ?>"><i class="material-icons">album</i>User Lucky Draw</a></li>
+        <li><a href="#!"><i class="material-icons">lock</i>Log Out</a></li>
+        
+        
     </ul>
 
 
