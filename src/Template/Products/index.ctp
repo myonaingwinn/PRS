@@ -10,7 +10,11 @@
 </script>
 
 <h4><?= __('Product List') ?></h4>
+<<<<<<< HEAD
 <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'waves-effect waves-light btn right  indigo']) ?>
+=======
+<?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'waves-effect waves-light btn right  green']) ?>
+>>>>>>> 10e90da1a823dd775e31cc9f4d419b4817eaa17a
 <table id="datatable" class="hightlight">
     <thead>
         <tr>

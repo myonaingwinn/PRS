@@ -1,171 +1,193 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Survey $survey
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Survey'), ['action' => 'edit', $survey->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Survey'), ['action' => 'delete', $survey->id], ['confirm' => __('Are you sure you want to delete # {0}?', $survey->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Surveys'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Survey'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Products'), ['controller' => 'Products', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Product'), ['controller' => 'Products', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Categories'), ['controller' => 'Categories', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Category'), ['controller' => 'Categories', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Admins'), ['controller' => 'Admins', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Admin'), ['controller' => 'Admins', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Answers'), ['controller' => 'Answers', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Answer'), ['controller' => 'Answers', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Options'), ['controller' => 'Options', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Option'), ['controller' => 'Options', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Questions'), ['controller' => 'Questions', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Question'), ['controller' => 'Questions', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="surveys view large-9 medium-8 columns content">
-    <h3><?= h($survey->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Product') ?></th>
-            <td><?= $survey->has('product') ? $this->Html->link($survey->product->id, ['controller' => 'Products', 'action' => 'view', $survey->product->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Category') ?></th>
-            <td><?= $survey->has('category') ? $this->Html->link($survey->category->id, ['controller' => 'Categories', 'action' => 'view', $survey->category->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Del Flg') ?></th>
-            <td><?= h($survey->del_flg) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Admin') ?></th>
-            <td><?= $survey->has('admin') ? $this->Html->link($survey->admin->id, ['controller' => 'Admins', 'action' => 'view', $survey->admin->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($survey->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($survey->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($survey->modified) ?></td>
-        </tr>
-    </table>
-    <div class="related">
-        <h4><?= __('Related Answers') ?></h4>
-        <?php if (!empty($survey->answers)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Product Id') ?></th>
-                <th scope="col"><?= __('Category Id') ?></th>
-                <th scope="col"><?= __('Question Id') ?></th>
-                <th scope="col"><?= __('Survey Id') ?></th>
-                <th scope="col"><?= __('Option Id') ?></th>
-                <th scope="col"><?= __('User Id') ?></th>
-                <th scope="col"><?= __('Answer') ?></th>
-                <th scope="col"><?= __('Remark') ?></th>
-                <th scope="col"><?= __('Rating') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($survey->answers as $answers): ?>
-            <tr>
-                <td><?= h($answers->id) ?></td>
-                <td><?= h($answers->product_id) ?></td>
-                <td><?= h($answers->category_id) ?></td>
-                <td><?= h($answers->question_id) ?></td>
-                <td><?= h($answers->survey_id) ?></td>
-                <td><?= h($answers->option_id) ?></td>
-                <td><?= h($answers->user_id) ?></td>
-                <td><?= h($answers->answer) ?></td>
-                <td><?= h($answers->remark) ?></td>
-                <td><?= h($answers->rating) ?></td>
-                <td><?= h($answers->created) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Answers', 'action' => 'view', $answers->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Answers', 'action' => 'edit', $answers->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Answers', 'action' => 'delete', $answers->id], ['confirm' => __('Are you sure you want to delete # {0}?', $answers->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
+<style type="text/css">
+    .card .card-content {
+        padding: 1.5rem;
+    }
+
+    .col .row {
+        margin-left: 0rem;
+        margin-right: 0rem;
+        margin-bottom: 0rem;
+    }
+
+    .my-submit,
+    .container {
+        margin-top: 2rem;
+    }
+
+    .row .col.s5 {
+        width: 26.6666666667%;
+        margin-right: 6%;
+        left: auto;
+        right: 0px;
+    }
+
+    .btn-large {
+        width: max-content;
+    }
+
+    .my-input-field {
+        margin-top: 0.5rem;
+        margin-bottom: -2rem;
+    }
+
+    .my-icon {
+        color: grey;
+    }
+
+    .my-card-action {
+        margin-top: 1.5rem;
+    }
+
+    p {
+        padding-bottom: 1rem;
+    }
+
+    h4 {
+        margin: 0rem 0 1rem 0;
+    }
+
+    h6 {
+        margin-top: -0.5rem;
+    }
+
+    /* span {
+        color: black;
+    } */
+</style>
+
+<form method="post" action="/surveys/view">
+    <input type="hidden" name="user_id" value="1" />
+    <input type="hidden" name="survey_id" value="<?= h($survey[0]->id) ?>" />
+    <input type="hidden" name="category_id" value="<?= h($survey[0]->category_id) ?>" />
+    <input type="hidden" name="product_id" value="<?= h($survey[0]->product_id) ?>" />
+    <!-- <input type="hidden" name="answers" id="answers" /> -->
+
+    <!-- Title Card -->
+    <div class="container" id="title-card">
+        <div class="col s3">
+            <div class="card hoverable">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col s12">
+                            <h4><?= h($survey[0]->title) ?></h4>
+                            <blockquote>
+                                <?= h($survey[0]->description) ?>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="related">
-        <h4><?= __('Related Options') ?></h4>
-        <?php if (!empty($survey->options)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Question Id') ?></th>
-                <th scope="col"><?= __('Survey Id') ?></th>
-                <th scope="col"><?= __('Option Description') ?></th>
-                <th scope="col"><?= __('Del Flg') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Admin Id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($survey->options as $options): ?>
-            <tr>
-                <td><?= h($options->id) ?></td>
-                <td><?= h($options->question_id) ?></td>
-                <td><?= h($options->survey_id) ?></td>
-                <td><?= h($options->option_description) ?></td>
-                <td><?= h($options->del_flg) ?></td>
-                <td><?= h($options->created) ?></td>
-                <td><?= h($options->modified) ?></td>
-                <td><?= h($options->admin_id) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Options', 'action' => 'view', $options->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Options', 'action' => 'edit', $options->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Options', 'action' => 'delete', $options->id], ['confirm' => __('Are you sure you want to delete # {0}?', $options->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
+
+    <!-- Check Card -->
+    <!-- <div class="container" id="card-2">
+        <div class="col s3">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <h6 id="txt-text-Question-' + cardCount + '">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum beatae inventore ducimus cupiditate ex nam recusandae reprehenderit odio ea totam molestiae quisquam excepturi rerum amet officiis tempora aut, optio, consequuntur expedita minus. Pariatur blanditiis dolorem inventore! Quas perspiciatis libero suscipit ut? Natus veniam dolor culpa itaque ipsum tempore ducimus iste.</h6>
+                        </div>
+                    </div>
+                    <div id="card-1-child-1" class="row check-child">
+                        <div class="input-field col s6">
+                            <p>
+                                <label>
+                                    <input type="checkbox" />
+                                    <span>Filled in Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum, quam!</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input type="checkbox" />
+                                    <span>Filled in</span>
+                                </label>
+                            </p>
+                        </div>
+                        <div class="input-field col s6">
+                            <p>
+                                <label>
+                                    <input type="checkbox" />
+                                    <span>Filled in / out Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa,</span>
+                                </label>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="row center my-submit">
+        <div class="col s6"></div>
+        <div class="col s6">
+            <button id="btnSave" class="btn waves-effect waves-light btn-medium indigo" type="submit" name="action">back
+                <i class="material-icons left">arrow_back</i>
+            </button>
+        </div>
     </div>
-    <div class="related">
-        <h4><?= __('Related Questions') ?></h4>
-        <?php if (!empty($survey->questions)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Question Type') ?></th>
-                <th scope="col"><?= __('Question Description') ?></th>
-                <th scope="col"><?= __('Del Flg') ?></th>
-                <th scope="col"><?= __('Admin Id') ?></th>
-                <th scope="col"><?= __('Survey Id') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($survey->questions as $questions): ?>
-            <tr>
-                <td><?= h($questions->id) ?></td>
-                <td><?= h($questions->question_type) ?></td>
-                <td><?= h($questions->question_description) ?></td>
-                <td><?= h($questions->del_flg) ?></td>
-                <td><?= h($questions->admin_id) ?></td>
-                <td><?= h($questions->survey_id) ?></td>
-                <td><?= h($questions->created) ?></td>
-                <td><?= h($questions->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Questions', 'action' => 'view', $questions->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Questions', 'action' => 'edit', $questions->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Questions', 'action' => 'delete', $questions->id], ['confirm' => __('Are you sure you want to delete # {0}?', $questions->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
-</div>
+</form>
+
+<script>
+    var cardCount = 0;
+    // load data from PHP
+    var survey = <?php echo json_encode($survey); ?>;
+    var questions = <?php echo json_encode($questions); ?>;
+    var options = <?php echo json_encode($options); ?>;
+
+    questions.forEach(element => {
+        createCard(element.id, element.type, element.description);
+        options.forEach(elem => {
+            if (element.id === elem.question_id) {
+                addOption(element.type, elem.description, cardCount, elem.id);
+            }
+        });
+    });
+
+    // Create Card
+    function createCard(qID, type, description) {
+        // get last card
+        var lastCardID = $(".container:last").attr('id');
+        var cardTotal = $(".container").length - 2; //default container and title container
+
+        if (cardTotal > cardCount) {
+            cardCount = cardTotal;
+            cardCount++;
+        } else {
+            cardCount++;
+        }
+
+        var ID = 'card-' + cardCount;
+        var container = $('<div class="container" id="' + ID + '"></div>');
+        container.insertAfter($("#" + lastCardID));
+        var card = "";
+
+        if (type === 'text') {
+            card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6  id="question-text-' + cardCount + '-' + qID + '" >' + description + '</h6></div></div><div class="row"><div class="input-field col s12"><input id="answer-text-' + cardCount + '-' + qID + '" placeholder="Your answer" type="text" class="validate"></div></div></div></div></div></div>');
+        } else if (type === 'check') {
+            card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6 id="question-check-' + cardCount + '-' + qID + '">' + description + '</h6></div></div><div id="crd-' + cardCount + '-check-child-1" class="row check-child"> <div id="crd-' + cardCount + '-check-child-2" class="input-field col s12"></div></div></div></div></div></div> ');
+        } else if (type === 'radio') {
+            card = $('<div class="col s3"><div class="card hoverable"><div class="card-content"><div class="row"><div class="input-field col s12"><h6 id="question-radio-' + cardCount + '-' + qID + '">' + description + '</h6></div></div><div id="crd-' + cardCount + '-radio-child-1" class="row radio-child"> <div id="crd-' + cardCount + '-radio-child-2" class="input-field col s12"></div></div></div></div></div></div>');
+        }
+
+        container.append(card);
+    }
+
+    // add Check/Radio Option
+    function addOption(optionType, description, cardNo, ID) {
+        var parentID = 'crd-' + cardNo + '-' + optionType + '-child-2';
+
+        var option = '';
+
+        if (optionType == 'check') {
+            option = '<p><label><input type="checkbox" value="' + ID + '"/><span>' + description + '</span></label></p>';
+        } else if (optionType == 'radio') {
+            option = '<p><label><input class="with-gap" name="group' + cardNo + '" type="radio" value="' + ID + '"/><span>' + description + '</span></label></p>';
+        }
+
+        if (option != '') {
+            $('#' + parentID).append(option);
+        }
+    }
+</script>

@@ -67,6 +67,7 @@ return [
         'salt' => env('SECURITY_SALT', '73409fc7bc3c1ab4b7cfb7425e3e285181d3801006b48b9d334d63a583058fa0'),
     ],
 
+
     /**
      * Apply timestamps with the last modified time to static assets (js, css, images).
      * Will append a querystring parameter containing the time the file was modified.
@@ -178,16 +179,26 @@ return [
      * 'YourTransport.php', where 'Your' is the name of the transport.
      */
     'EmailTransport' => [
-        'default' => [
+          'default' => [
             'className' => 'Mail',
             // The following keys are used in SMTP transports
             'host' => 'localhost',
             'port' => 25,
             'timeout' => 30,
-            'username' => 'user',
-            'password' => 'secret',
+            'username' => 'ecctester2222@gmail.com',
+            'password' => 'ECCtester@2222',
             'client' => null,
             'tls' => null,
+            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+          ],
+        'mailForget' => [
+            'host' => 'smtp.gmail.com',
+            'port' => 587,
+            'username' => 'ecctester2222@gmail.com', //eg: sender email
+            'password' => 'ECCtester@2222', //email password
+            'className' => 'Smtp',
+            'tls' => true,
+            'client' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
     ],
@@ -208,6 +219,10 @@ return [
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
+        'mailForget' => [
+            'transport' => 'mailForget',
+            'from' => ['ecctester2222@gmail.com' => 'Password Forget'],
+        ], 
     ],
 
     /**
@@ -228,14 +243,14 @@ return [
              * CakePHP will use the default DB port based on the driver selected
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
-             */
+             */ 
             //'port' => 'non_standard_port_number',
             'port' => '3308',
-            'username' => 'root',
+            'username' => 'root', 
             'password' => 'root',
-            'database' => 'products_ranking_system',
+            'database' => 'product_ranking_system',
             'encoding' => 'utf8',
-            'timezone' => 'UTC',
+            'timezone' => 'UTC',  
             'flags' => [],
             'cacheMetadata' => true,
             'log' => false,

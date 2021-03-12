@@ -2,17 +2,13 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\SurveysController;
-use Cake\TestSuite\IntegrationTestTrait;
-use Cake\TestSuite\TestCase;
+use Cake\TestSuite\IntegrationTestCase;
 
 /**
  * App\Controller\SurveysController Test Case
- *
- * @uses \App\Controller\SurveysController
  */
-class SurveysControllerTest extends TestCase
+class SurveysControllerTest extends IntegrationTestCase
 {
-    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -20,13 +16,13 @@ class SurveysControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Surveys',
-        'app.Products',
-        'app.Categories',
-        'app.Admins',
-        'app.Answers',
-        'app.Options',
-        'app.Questions',
+        'app.surveys',
+        'app.products',
+        'app.categories',
+        'app.admins',
+        'app.answers',
+        'app.options',
+        'app.questions'
     ];
 
     /**

@@ -10,6 +10,7 @@ use Cake\TestSuite\TestCase;
  */
 class SurveysTableTest extends TestCase
 {
+
     /**
      * Test subject
      *
@@ -23,13 +24,10 @@ class SurveysTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Surveys',
-        'app.Products',
-        'app.Categories',
-        'app.Admins',
-        'app.Answers',
-        'app.Options',
-        'app.Questions',
+        'app.surveys',
+        'app.products',
+        'app.categories',
+        'app.admins'
     ];
 
     /**
@@ -40,8 +38,8 @@ class SurveysTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Surveys') ? [] : ['className' => SurveysTable::class];
-        $this->Surveys = TableRegistry::getTableLocator()->get('Surveys', $config);
+        $config = TableRegistry::exists('Surveys') ? [] : ['className' => SurveysTable::class];
+        $this->Surveys = TableRegistry::get('Surveys', $config);
     }
 
     /**

@@ -9,18 +9,17 @@ use Cake\Validation\Validator;
 /**
  * Surveys Model
  *
- * @property \App\Model\Table\ProductsTable&\Cake\ORM\Association\BelongsTo $Products
- * @property \App\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $Categories
- * @property \App\Model\Table\AdminsTable&\Cake\ORM\Association\BelongsTo $Admins
- * @property \App\Model\Table\AnswersTable&\Cake\ORM\Association\HasMany $Answers
- * @property \App\Model\Table\OptionsTable&\Cake\ORM\Association\HasMany $Options
- * @property \App\Model\Table\QuestionsTable&\Cake\ORM\Association\HasMany $Questions
+ * @property \App\Model\Table\ProductsTable|\Cake\ORM\Association\BelongsTo $Products
+ * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
+ * @property \App\Model\Table\AdminsTable|\Cake\ORM\Association\BelongsTo $Admins
+ * @property |\Cake\ORM\Association\HasMany $Answers
+ * @property |\Cake\ORM\Association\HasMany $Options
+ * @property |\Cake\ORM\Association\HasMany $Questions
  *
  * @method \App\Model\Entity\Survey get($primaryKey, $options = [])
  * @method \App\Model\Entity\Survey newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Survey[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Survey|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Survey saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Survey|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Survey patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Survey[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Survey findOrCreate($search, callable $callback = null, $options = [])
@@ -29,6 +28,7 @@ use Cake\Validation\Validator;
  */
 class SurveysTable extends Table
 {
+
     /**
      * Initialize method
      *
@@ -40,29 +40,29 @@ class SurveysTable extends Table
         parent::initialize($config);
 
         $this->setTable('surveys');
-        $this->setDisplayField('id');
+        $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Products', [
-            'foreignKey' => 'product_id',
+            'foreignKey' => 'product_id'
         ]);
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
-            'joinType' => 'INNER',
+            'joinType' => 'INNER'
         ]);
         $this->belongsTo('Admins', [
-            'foreignKey' => 'admin_id',
+            'foreignKey' => 'admin_id'
         ]);
         $this->hasMany('Answers', [
-            'foreignKey' => 'survey_id',
+            'foreignKey' => 'survey_id'
         ]);
         $this->hasMany('Options', [
-            'foreignKey' => 'survey_id',
+            'foreignKey' => 'survey_id'
         ]);
         $this->hasMany('Questions', [
-            'foreignKey' => 'survey_id',
+            'foreignKey' => 'survey_id'
         ]);
     }
 
@@ -76,11 +76,19 @@ class SurveysTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('del_flg')
-            ->notEmptyString('del_flg');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
+
+        $validator
+            ->requirePresence('description', 'create')
+            ->notEmpty('description');
+
+        $validator
+            ->requirePresence('del_flg', 'create')
+            ->notEmpty('del_flg');
 
         return $validator;
     }

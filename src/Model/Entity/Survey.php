@@ -7,22 +7,23 @@ use Cake\ORM\Entity;
  * Survey Entity
  *
  * @property int $id
- * @property int|null $product_id
+ * @property string $name
+ * @property string $description
+ * @property int $product_id
  * @property int $category_id
  * @property string $del_flg
- * @property int|null $admin_id
- * @property \Cake\I18n\FrozenTime|null $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property int $admin_id
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
+ * @property \App\Model\Entity\Survey $survey
  * @property \App\Model\Entity\Product $product
  * @property \App\Model\Entity\Category $category
  * @property \App\Model\Entity\Admin $admin
- * @property \App\Model\Entity\Answer[] $answers
- * @property \App\Model\Entity\Option[] $options
- * @property \App\Model\Entity\Question[] $questions
  */
 class Survey extends Entity
 {
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -33,18 +34,7 @@ class Survey extends Entity
      * @var array
      */
     protected $_accessible = [
-        'product_id' => true,
-        'category_id' => true,
-        'del_flg' => true,
-        'admin_id' => true,
-        'created' => true,
-        'modified' => true,
-        'product' => true,
-        'category' => true,
-        'admin' => true,
-        'answers' => true,
-        'options' => true,
-        'questions' => true,
-        
+        '*' => true,
+        'id' => false
     ];
 }

@@ -5,9 +5,11 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * AnswersFixture
+ *
  */
 class AnswersFixture extends TestFixture
 {
+
     /**
      * Fields
      *
@@ -20,11 +22,11 @@ class AnswersFixture extends TestFixture
         'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'question_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'survey_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'option_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'option_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'answer' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'remark' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'rating' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'answer' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'remark' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'rating' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         '_indexes' => [
             'product_key4ans' => ['type' => 'index', 'columns' => ['product_id'], 'length' => []],
@@ -49,28 +51,25 @@ class AnswersFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
+
     /**
-     * Init method
+     * Records
      *
-     * @return void
+     * @var array
      */
-    public function init()
-    {
-        $this->records = [
-            [
-                'id' => 1,
-                'product_id' => 1,
-                'category_id' => 1,
-                'question_id' => 1,
-                'survey_id' => 1,
-                'option_id' => 1,
-                'user_id' => 1,
-                'answer' => 'Lorem ipsum dolor sit amet',
-                'remark' => 'Lorem ipsum dolor sit amet',
-                'rating' => 1,
-                'created' => '2021-03-09 19:11:33',
-            ],
-        ];
-        parent::init();
-    }
+    public $records = [
+        [
+            'id' => 1,
+            'product_id' => 1,
+            'category_id' => 1,
+            'question_id' => 1,
+            'survey_id' => 1,
+            'option_id' => 1,
+            'user_id' => 1,
+            'answer' => 'Lorem ipsum dolor sit amet',
+            'remark' => 'Lorem ipsum dolor sit amet',
+            'rating' => 1,
+            'created' => '2021-03-01 03:54:38'
+        ],
+    ];
 }

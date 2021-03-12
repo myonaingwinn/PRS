@@ -1,8 +1,7 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Survey $survey
- */
+  * @var \App\View\AppView $this
+  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
@@ -33,6 +32,8 @@
     <fieldset>
         <legend><?= __('Edit Survey') ?></legend>
         <?php
+            echo $this->Form->control('name');
+            echo $this->Form->control('description');
             echo $this->Form->control('product_id', ['options' => $products, 'empty' => true]);
             echo $this->Form->control('category_id', ['options' => $categories]);
             echo $this->Form->control('del_flg');
