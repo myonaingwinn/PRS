@@ -1,4 +1,4 @@
-<?= $this->Html->link(__('Back'), ['action' => 'index'], ['class' => 'waves-effect waves-light btn green right']) ?>
+<?= $this->Html->link(__('Back'), ['action' => 'index'], ['class' => 'waves-effect waves-light btn indigo right']) ?>
 <h4><?= __('Product Registration') ?></h4>
 <hr>
 <div class="row">
@@ -10,9 +10,9 @@
         <hr>    
         <div class="row">
             <div class="input-field col s11">
-                <i class="material-icons prefix">badge</i>
+            <i class="material-icons prefix">badge</i>
                 <?= $this->Form->text('product_name', ['id' => 'product_name', 'autofocus', 'size' => '100', 'maxlength' => '100']) ?>                
-                <?= $this->Form->label('product_name *') ?>    
+                <?= $this->Form->label('product_name') ?>   
             </div>
             <div class="input-field col s11">
                 <i class="material-icons prefix">tag</i>
@@ -22,20 +22,20 @@
             <div class="input-field col s11">
                 <i class="material-icons prefix">attach_money</i>
                 <?= $this->Form->number('product_price', ['id' => 'product_price', 'min' => '0', 'max' => '999999999999999', 'title' => 'Please insert MMK currency']) ?>
-                <?= $this->Form->label('product_price *') ?>  
+                <?= $this->Form->label('product_price') ?>  
             </div>
             <div class="row">
                 <div class="file-field input-field col s6">
-                    <div class="btn green">
+                    <div class="btn indigo">
                         <span class="material-icons">wallpaper</span>
                         <?= $this->Form->file('product_image', ['accept' => 'image/jpeg']) ?>
                     </div>
                     <div class="file-path-wrapper">
                         <?= $this->Form->text('product_image', ['class' => 'file-path validate', 'placeholder' => 'Please choose single image file']) ?>
-                    </div>    
+                    </div>
                 </div>
                 <div class="file-field input-field col s6">
-                    <div class="btn green">
+                    <div class="btn indigo">
                         <span class="material-icons">movie</span>
                         <?= $this->Form->file('product_video', ['accept' => 'video/mp4']) ?>
                     </div>
@@ -52,7 +52,7 @@
             <?= __('Product Category') ?>
             </div>
             <div class="col s8">
-                <?= $this->Form->select('category_id', ['empty' => '(choose one)', '1' => 'Drinks', '2' => 'Snacks', '3' => 'Bake'], ['class' => 'btn green']) ?>       
+                <?= $this->Form->select('category_id', $options_cat, ['class' => 'btn indigo']) ?>
             </div>
         </div>
         <h5><?= __('Company Infomation') ?></h5>
@@ -62,11 +62,11 @@
             <?= __('Product Company') ?>
             </div>
             <div class="col s8">
-            <?= $this->Form->select('company_id', ['empty' => '(choose one)', '1' => 'GIC', '2' => 'LG', '3' => 'မြင့်မြင့်ခင်'], ['class' => 'btn green']) ?>       
+            <?= $this->Form->select('company_id', $options_com, ['class' => 'btn indigo']) ?>       
             </div>
         </div> 
         <div align="center">
-            <?= $this->Form->button(__('Register'), ['class' => 'btn-large waves-effect waves-light green']) ?>            
+            <?= $this->Form->button(__('Register'), ['class' => 'btn-large waves-effect waves-light indigo center']) ?>            
         </div>
         <?= $this->Form->end() ?>
     </div>

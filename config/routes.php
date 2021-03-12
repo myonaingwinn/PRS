@@ -73,7 +73,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
-    $routes->connect('/', ['controller' => 'Products', 'action' => 'index']);
+    $routes->connect('/products', ['controller' => 'Products', 'action' => 'index']);
     $routes->connect('/survey-summary', ['controller' => 'Surveys', 'action' => 'index']);
     // $routes->connect('/add', ['controller' => 'Products', 'action' => 'add']);
     // $routes->connect('/edit/*', ['controller' => 'Products', 'action' => 'edit']);

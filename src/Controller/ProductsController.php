@@ -54,13 +54,25 @@ class ProductsController extends AppController
         if ($this->request->is('post')) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
             
-            $fileimage = $this->request->getData('product_image');
-            $filevideo = $this->request->getData('product_video');
-            $uploadPath = 'http://localhost/PRS/upload/';
-            $destinationImage = $uploadPath.'images/'.$fileimage;
-            $destinationVideo = $uploadPath.'videos/'.$filevideo;
-            $target = WWW_ROOT . 'img' . DS . 'product' . DS;
-            //move_uploaded_file($product['product_image']['tmp_name'], $target);
+            // $fileimage = $this->request->data('product_image');
+            // var_dump($fileimage);
+            // $nameimage = $fileimage['name'];
+            // $target_image = WWW_ROOT . 'upload' . DS . 'images' . DS . $nameimage;
+            // if (move_uploaded_file($fileimage['tmp_name'], $target_image)) {
+            //     if (!empty($nameimage)) {
+            //         $product->product_image = $nameimage;
+            //     }
+            // }
+
+            // $filevideo = $this->request->data('product_video');
+            // var_dump($filevideo);
+            // $namevideo = $filevideo['name'];
+            // $target_video = WWW_ROOT . 'upload' . DS . 'videos' . DS . $namevideo;
+            // if (move_uploaded_file($filevideo['tmp_name'], $target_video)) {
+            //     if (!empty($namevideo)) {
+            //         $product->product_video = $namevideo;
+            //     }
+            // }
             
             if ($this->Products->save($product)) {
                 
@@ -73,7 +85,10 @@ class ProductsController extends AppController
         $companies = $this->Products->Companies->find('list', ['limit' => 200]);
         $categories = $this->Products->Categories->find('list', ['limit' => 200]);
         $admins = $this->Products->Admins->find('list', ['limit' => 200]);
-        $this->set(compact('product', 'companies', 'categories', 'admins'));
+        $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name']);
+        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);        
+        $this->set(compact('product', 'companies', 'categories', 'admins'));        
+        $this->set(compact('options_com', 'options_cat'));
     }
 
     /**

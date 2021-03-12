@@ -11,9 +11,10 @@
 
 <h4><?= __('Product List') ?></h4>
 <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'waves-effect waves-light btn right  green']) ?>
-<table id="datatable" class="striped">
+<table id="datatable" class="hightlight">
     <thead>
         <tr>
+            <th>#</th>
             <th>Product</th>
             <th>Price</th>
             <th>Status</th>
@@ -23,8 +24,9 @@
         </tr>
     </thead>
     <tbody>
-    <?php foreach($products as $product) : ?>
+    <?php $var = 1; foreach($products as $product) : ?>
         <tr>
+            <td><?= $this->Number->format($var++) ?></td>
             <td><?= $product['product_image'] ?>&nbsp;&nbsp;&nbsp;&nbsp;<?= $product['product_name'] ?></td>
             <td><?= $product['product_price'] ?></td>
             <td> <input type="text" value="<?= ($product['rating']/5)*100?>" id="pp" hidden >
