@@ -55,8 +55,8 @@
     } */
 </style>
 
-<form method="post" action="/PRS/answer">
-    
+<form method="post" action="/answer">
+
 
     <!-- Title Card -->
     <div class="container" id="title-card">
@@ -69,7 +69,7 @@
                             <blockquote>
                                 <?= h($survey[0]->description) ?>
                             </blockquote>
-                            
+
                         </div>
                     </div>
                 </div>
