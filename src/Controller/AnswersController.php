@@ -125,7 +125,7 @@ class AnswersController extends AppController
                     $answer = $this->Answers->newEntity();
                 }
             }
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect('/user/spin');
             /*             if ($this->Answers->save($answer)) {
                 $this->Flash->success(__('The answer has been saved.'));
 
@@ -207,7 +207,7 @@ class AnswersController extends AppController
     public function saveAnswer($answer)
     {
         if ($this->Answers->save($answer)) {
-            $this->Flash->success(__('The answer has been saved.'));
+            // $this->Flash->success(__('The answer has been saved.'));
         } else
             $this->Flash->error(__('The answer could not be saved. Please, try again.'));
     }

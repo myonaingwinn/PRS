@@ -77,7 +77,7 @@ use PhpParser\Node\Stmt\Label;
             ?>
         </fieldset>
         <div class="btnPos">
-            <?= $this->Form->button(__(' Save '), ['class' => 'indigo waves-effect waves-light btn']) ?>
+            <?= $this->Form->button(__(' Register '), ['class' => 'indigo waves-effect waves-light btn']) ?>
         </div>
         <?= $this->Form->end() ?>
         <script>

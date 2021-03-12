@@ -50,8 +50,8 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
- 
-   $routes->connect('/prizelist', ['controller' => 'Prize', 'action' => 'prizelist']);
+
+    $routes->connect('/prizelist', ['controller' => 'Prize', 'action' => 'prizelist']);
 
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/data_analysis', ['controller' => 'DataAnalysis', 'action' => 'index']);
@@ -67,7 +67,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/login', ['controller' => 'UserLogin', 'action' => 'login']);
 
-    $routes->connect('/spin', ['controller' => 'Luckydraw', 'action' => 'spin']);
+    // $routes->connect('/spin', ['controller' => 'Luckydraw', 'action' => 'spin']);
 
     $routes->connect('/add_answer', ['controller' => 'Answers', 'action' => 'add']);
 
@@ -99,25 +99,25 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 
 Router::prefix('admin', function (RouteBuilder $routes) {
-  
+
     $routes->connect('/', ['controller' => 'Luckydraw', 'action' => 'index']);
     $routes->fallbacks(DashedRoute::class);
 });
 
 Router::prefix('admin', function (RouteBuilder $routes) {
-  
+
     $routes->connect('/prize', ['controller' => 'Prizes', 'action' => 'prizelist']);
     $routes->fallbacks(DashedRoute::class);
 });
 
 Router::prefix('user', function (RouteBuilder $routes) {
-  
+
     $routes->connect('/dashboard', ['controller' => 'Prizes', 'action' => 'dashboard']);
     $routes->fallbacks(DashedRoute::class);
 });
 Router::prefix('user', function (RouteBuilder $routes) {
-  
-    $routes->connect('/', ['controller' => 'Prizes', 'action' => 'spin']);
+
+    $routes->connect('/spin', ['controller' => 'Prizes', 'action' => 'spin']);
     $routes->fallbacks(DashedRoute::class);
 });
 

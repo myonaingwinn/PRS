@@ -107,7 +107,7 @@
             </select>
             <label>Select Category</label>
         </div>
-
+    
         <div class="input-field col s4">
             <select id="selProduct" class="selProduct" name="product_id">
                 <option value="0" disabled selected>Choose your product</option>
@@ -150,7 +150,7 @@
     <div class="row center my-submit">
         <div class="col s6"></div>
         <div class="col s6">
-            <button id="btnSave" class="btn waves-effect waves-light btn-medium" type="submit" name="action">Save
+            <button id="btnSave" class="btn waves-effect waves-light btn-medium indigo" type="submit" name="action">Save
                 <i class="material-icons left">save</i>
             </button>
         </div>
