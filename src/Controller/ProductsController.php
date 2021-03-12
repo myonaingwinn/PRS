@@ -23,8 +23,10 @@ class ProductsController extends AppController
             'contain' => ['Companies', 'Categories', 'Admins'],
         ];
         $products = $this->paginate($this->Products);
-
+        $answers = $this->Products->Answers->find()->contain(['Answers' => ['rating']]);
+       
         $this->set(compact('products'));
+        $this->set(compact('answers'));
     }
 
     /**
@@ -138,30 +140,30 @@ class ProductsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
-    public function productlist(){
+    // public function productlist(){
 
-        $this->viewBuilder()->setLayout('ajax');
+    //     $this->viewBuilder()->setLayout('ajax');
      
     
     
-        $connection = ConnectionManager::get('default');
-        $products = $connection->execute('SELECT 
-        products.product_image,products.product_name,products.product_price,users.name,answers.rating
+    //     $connection = ConnectionManager::get('default');
+    //     $products = $connection->execute('SELECT 
+    //     products.product_image,products.product_name,products.product_price,users.name,answers.rating
        
-       FROM products
-       JOIN answers
-        ON products.id=answers.product_id
-       JOIN users
-        ON users.id = answers.user_id GROUP BY products.product_name;')->fetchAll('assoc');
+    //    FROM products
+    //    JOIN answers
+    //     ON products.id=answers.product_id
+    //    JOIN users
+    //     ON users.id = answers.user_id GROUP BY products.product_name;')->fetchAll('assoc');
     
-       // $this->loadModel('products');
-       //$products = $this->products->find('all');
-       //$this->paginate=['contain'=>['answer'],];
-       //$products = $this->Product->find('all',array('fields'=>array('products.product_image','products.product_name','products.product_price','products.product_name','products.product_name','products.product_name'),'conditions'=>array('del_flg'=>1)));
+    //    // $this->loadModel('products');
+    //    //$products = $this->products->find('all');
+    //    //$this->paginate=['contain'=>['answer'],];
+    //    //$products = $this->Product->find('all',array('fields'=>array('products.product_image','products.product_name','products.product_price','products.product_name','products.product_name','products.product_name'),'conditions'=>array('del_flg'=>1)));
        
-       $this->set('products',$products);
+    //    $this->set('products',$products);
     
     
-    }
+    // }
     
 }
