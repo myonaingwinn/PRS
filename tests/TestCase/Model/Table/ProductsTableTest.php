@@ -10,6 +10,7 @@ use Cake\TestSuite\TestCase;
  */
 class ProductsTableTest extends TestCase
 {
+
     /**
      * Test subject
      *
@@ -23,7 +24,16 @@ class ProductsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Products',
+        'app.products',
+        'app.companies',
+        'app.categories',
+        'app.answers',
+        'app.users',
+        'app.admins',
+        'app.scores',
+        'app.surveys',
+        'app.options',
+        'app.questions'
     ];
 
     /**
@@ -34,8 +44,8 @@ class ProductsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Products') ? [] : ['className' => ProductsTable::class];
-        $this->Products = TableRegistry::getTableLocator()->get('Products', $config);
+        $config = TableRegistry::exists('Products') ? [] : ['className' => ProductsTable::class];
+        $this->Products = TableRegistry::get('Products', $config);
     }
 
     /**
@@ -56,6 +66,26 @@ class ProductsTableTest extends TestCase
      * @return void
      */
     public function testInitialize()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test validationDefault method
+     *
+     * @return void
+     */
+    public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

@@ -245,7 +245,6 @@ return [
              * the following line and set the port accordingly
              */ 
             //'port' => 'non_standard_port_number',
-            'port' => '3308',
             'username' => 'root', 
             'password' => 'root',
             'database' => 'products_ranking_system',

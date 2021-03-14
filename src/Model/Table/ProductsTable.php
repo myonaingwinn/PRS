@@ -9,17 +9,16 @@ use Cake\Validation\Validator;
 /**
  * Products Model
  *
- * @property &\Cake\ORM\Association\BelongsTo $Companies
- * @property &\Cake\ORM\Association\BelongsTo $Categories
- * @property &\Cake\ORM\Association\BelongsTo $Admins
- * @property &\Cake\ORM\Association\HasMany $Answers
- * @property &\Cake\ORM\Association\HasMany $Surveys
+ * @property \App\Model\Table\CompaniesTable|\Cake\ORM\Association\BelongsTo $Companies
+ * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
+ * @property \App\Model\Table\AdminsTable|\Cake\ORM\Association\BelongsTo $Admins
+ * @property \App\Model\Table\AnswersTable|\Cake\ORM\Association\HasMany $Answers
+ * @property \App\Model\Table\SurveysTable|\Cake\ORM\Association\HasMany $Surveys
  *
  * @method \App\Model\Entity\Product get($primaryKey, $options = [])
  * @method \App\Model\Entity\Product newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Product[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Product|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Product saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Product|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Product patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Product[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Product findOrCreate($search, callable $callback = null, $options = [])
@@ -28,6 +27,7 @@ use Cake\Validation\Validator;
  */
 class ProductsTable extends Table
 {
+
     /**
      * Initialize method
      *
@@ -45,20 +45,20 @@ class ProductsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Companies', [
-            'foreignKey' => 'company_id',
+            'foreignKey' => 'company_id'
         ]);
         $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
+            'foreignKey' => 'category_id'
         ]);
         $this->belongsTo('Admins', [
             'foreignKey' => 'admin_id',
-            'joinType' => 'INNER',
+            'joinType' => 'INNER'
         ]);
         $this->hasMany('Answers', [
-            'foreignKey' => 'product_id',
+            'foreignKey' => 'product_id'
         ]);
         $this->hasMany('Surveys', [
-            'foreignKey' => 'product_id',
+            'foreignKey' => 'product_id'
         ]);
     }
 
@@ -72,38 +72,28 @@ class ProductsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('product_model_no')
-            ->maxLength('product_model_no', 100)
-            ->allowEmptyString('product_model_no');
+            ->allowEmpty('model_no');
 
         $validator
-            ->scalar('product_name')
-            ->maxLength('product_name', 100)
-            ->requirePresence('product_name', 'create')
-            ->notEmptyString('product_name');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
 
         $validator
-            ->scalar('product_price')
-            ->maxLength('product_price', 50)
-            ->requirePresence('product_price', 'create')
-            ->notEmptyString('product_price');
+            ->requirePresence('price', 'create')
+            ->notEmpty('price');
 
         $validator
-            ->scalar('product_image')
-            ->maxLength('product_image', 500)
-            ->allowEmptyFile('product_image');
+            ->allowEmpty('image');
 
         $validator
-            ->scalar('product_video')
-            ->maxLength('product_video', 500)
-            ->allowEmptyString('product_video');
+            ->allowEmpty('video');
 
         $validator
-            ->scalar('del_flg')
-            ->notEmptyString('del_flg');
+            ->requirePresence('del_flg', 'create')
+            ->notEmpty('del_flg');
 
         return $validator;
     }
