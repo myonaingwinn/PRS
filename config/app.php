@@ -248,7 +248,7 @@ return [
             'port' => '3308',
             'username' => 'root', 
             'password' => 'root',
-            'database' => 'product_ranking_system',
+            'database' => 'products_ranking_system',
             'encoding' => 'utf8',
             'timezone' => 'UTC',  
             'flags' => [],

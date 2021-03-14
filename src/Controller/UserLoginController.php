@@ -101,4 +101,9 @@ class UserLoginController extends AppController
             }
         }
     }
+
+    public function register()
+    {
+        $this->redirect('/register');
+    }
 }

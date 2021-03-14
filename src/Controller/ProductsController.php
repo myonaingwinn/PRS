@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -55,7 +56,7 @@ class ProductsController extends AppController
         $product = $this->Products->newEntity();
         if ($this->request->is('post')) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
-            
+
             // $fileimage = $this->request->data('product_image');
             // var_dump($fileimage);
             // $nameimage = $fileimage['name'];
@@ -75,15 +76,23 @@ class ProductsController extends AppController
             //         $product->product_video = $namevideo;
             //     }
             // }
-            
+         
+            $fileimage = $this->request->getData('product_image');
+            $filevideo = $this->request->getData('product_video');
+            $uploadPath = 'http://localhost/PRS/upload/';
+            $destinationImage = $uploadPath . 'images/' . $fileimage;
+            $destinationVideo = $uploadPath . 'videos/' . $filevideo;
+            $target = WWW_ROOT . 'img' . DS . 'product' . DS;
+            //move_uploaded_file($product['product_image']['tmp_name'], $target);
+
             if ($this->Products->save($product)) {
-                
+
                 $this->Flash->success(__('The product has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The product could not be saved. Please, try again.'));    
-        }        
+            $this->Flash->error(__('The product could not be saved. Please, try again.'));
+        }
         $companies = $this->Products->Companies->find('list', ['limit' => 200]);
         $categories = $this->Products->Categories->find('list', ['limit' => 200]);
         $admins = $this->Products->Admins->find('list', ['limit' => 200]);
@@ -168,5 +177,29 @@ class ProductsController extends AppController
     
     
     // }
-    
+
+    public function productlist()
+    {
+
+        $this->viewBuilder()->setLayout('ajax');
+
+
+
+        $connection = ConnectionManager::get('default');
+        $products = $connection->execute('SELECT 
+        products.image as product_image,products.name as product_name,products.price as product_price,users.name,answers.rating
+       
+       FROM products
+       JOIN answers
+        ON products.id=answers.product_id
+       JOIN users
+        ON users.id = answers.user_id GROUP BY product_name;')->fetchAll('assoc');
+
+        // $this->loadModel('products');
+        //$products = $this->products->find('all');
+        //$this->paginate=['contain'=>['answer'],];
+        //$products = $this->Product->find('all',array('fields'=>array('products.product_image','products.product_name','products.product_price','products.product_name','products.product_name','products.product_name'),'conditions'=>array('del_flg'=>1)));
+
+        $this->set('products', $products);
+    }
 }
