@@ -63,6 +63,7 @@
                         <?= $this->Html->link(__('View'), ['action' => 'view', $survey->id]) ?>
                         <!-- <?= $this->Html->link(__('Edit'), ['action' => 'edit', $survey->id]) ?> -->
                         <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $survey->id], ['confirm' => __('Are you sure you want to delete "{0}"?', $survey->name)]) ?>
+                        <?= ($survey->public == 'N') ? $this->Html->link(__('Publish'), ['action' => 'publish', $survey->id]) : '<i>Published</i>' ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
