@@ -194,4 +194,18 @@ class SurveysController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function publish($id = null)
+    {
+        // $this->request->allowMethod(['patch', 'post', 'put']);
+        $survey = $this->Surveys->get($id);
+        $survey->public = 'Y';
+        if ($this->Surveys->save($survey)) {
+            $this->Flash->success(__('The survey has been published.'));
+        } else {
+            $this->Flash->error(__('The survey could not be publish. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
 }
