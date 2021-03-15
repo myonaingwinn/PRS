@@ -26,8 +26,8 @@ $cakeDescription = 'PRS';
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
-    <!-- <?= $this->Html->meta('icon') ?> -->
-    <!-- <?= $this->Html->css('base.css') ?>
+    <!-- <?= $this->Html->meta('icon') ?> 
+     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('cake.css') ?> -->
 
     <?= $this->Html->css('materialize.min.css') ?>
@@ -100,13 +100,16 @@ $cakeDescription = 'PRS';
                 <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
             </div>
         </li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
+        <li><a class="subheader">Profile</a></li>
+        <li><a href="#!"><i class="material-icons">person</i>My Profile</a></li>
+        <li><a href="#!"><i class="material-icons">edit</i>Update Profile</a></li>
         <li>
             <div class="divider"></div>
         </li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+        <li><a class="subheader">Others</a></li>
+        <li><a class="waves-effect" href="#!"><i class="material-icons">monetization_on</i>Scores & Awards</a></li>
+        <li><a class="waves-effect" href="#!"><i class="material-icons">local_play</i>Surveys</a></li>
+        <li><a class="waves-effect" href="#!"><i class="material-icons">pages</i>Surveys History</a></li>
     </ul>
 
 
