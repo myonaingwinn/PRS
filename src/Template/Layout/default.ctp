@@ -110,6 +110,7 @@ $cakeDescription = 'PRS';
         <li><a class="waves-effect" href="#!"><i class="material-icons">monetization_on</i>Scores & Awards</a></li>
         <li><a class="waves-effect" href="#!"><i class="material-icons">local_play</i>Surveys</a></li>
         <li><a class="waves-effect" href="#!"><i class="material-icons">pages</i>Surveys History</a></li>
+        <li><a class="waves-effect" href="#!"><i class="material-icons">pages</i>Logout</a></li>
     </ul>
 
 
