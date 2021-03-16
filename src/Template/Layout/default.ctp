@@ -79,11 +79,8 @@ $cakeDescription = 'PRS';
             <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
                 <i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="left hide-on-med-and-down right">
-                <!-- <li><a href="#" data-target="slide-out" class="sidenav-trigger">
-                        <i class="material-icons">menu</i></a></li> -->
-                <!-- <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li> -->
-                <li><a href="#" class="badge1" data-badge="27"><i class="material-icons left">notifications</i></a></li>
+                <!-- notification -->
+                <!-- <li><a href="#" class="badge1" data-badge="27"><i class="material-icons left">notifications</i></a></li> -->
             </ul>
         </div>
     </nav>
@@ -93,26 +90,22 @@ $cakeDescription = 'PRS';
         <li>
             <div class="user-view">
                 <div class="background">
-                    <img width="300" height="500" src="https://wallpapercave.com/wp/wp5086278.jpg">
+                    <img width="300" height="500" src="/img/profile_img/background.jpg">
                 </div>
-                <a href="#user"><img class="circle" src="http://1.bp.blogspot.com/-oFBZLSILB48/TdV-TLATY1I/AAAAAAAACQE/2GUcBagIPWc/s1600/Liu+Yifei+%25286%2529.jpg"></a>
-                <a href="#name"><span class="white-text name">John Doe</span></a>
-                <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                <a href="#user"><img class="circle" src="/img/profile_img/default.png"></a>
+                <a href="#name"><span class="white-text name">Myo Naing Winn</span></a>
+                <a href="#email"><span class="white-text email">mnw@gmail.com</span></a>
             </div>
         </li>
-        <li><a class="subheader">Profile</a></li>
-        <li><a href="#!"><i class="material-icons">person</i>My Profile</a></li>
-        <li><a href="#!"><i class="material-icons">edit</i>Update Profile</a></li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="subheader">Others</a></li>
-        <li><a class="waves-effect" href="#!"><i class="material-icons">monetization_on</i>Scores & Awards</a></li>
-        <li><a class="waves-effect" href="#!"><i class="material-icons">local_play</i>Surveys</a></li>
-        <li><a class="waves-effect" href="#!"><i class="material-icons">pages</i>Surveys History</a></li>
-        <li><a class="waves-effect" href="#!"><i class="material-icons">pages</i>Logout</a></li>
+        <!-- <li><a class="subheader">Profile</a></li> -->
+        <li><a href="/users/view/1"><i class="material-icons teal-text text-lighten-1">person</i>My Profile</a></li>
+        <li><a href="/users/edit/1"><i class="material-icons grey-text">edit</i>Update Profile</a></li>
+        <!-- <li><a class="subheader">Others</a></li> -->
+        <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Awards</a></li>
+        <li><a class="waves-effect" href="#!"><i class="material-icons green-text">local_play</i>Surveys</a></li>
+        <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
+        <li><a class="waves-effect" href="/login"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
     </ul>
-
 
     <?= $this->Flash->render() ?>
     <div class="container clearfix">

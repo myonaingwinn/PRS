@@ -25,6 +25,7 @@
 </nav> -->
 <div class="surveys index large-9 medium-8 columns content">
     <h3><?= __('Surveys') ?></h3>
+    <a href="/add_survey" class="btn indigo right">New Survey</a>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>

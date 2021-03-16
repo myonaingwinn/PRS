@@ -56,7 +56,6 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/data_analysis', ['controller' => 'DataAnalysis', 'action' => 'index']);
     //$routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-    // $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
     $routes->connect('/new_survey', ['controller' => 'Admins', 'action' => 'new_survey', 'new_survey']);
 
@@ -65,7 +64,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'add']);
 
-    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('/login', ['controller' => 'UserLogin', 'action' => 'login']);
 
     // $routes->connect('/spin', ['controller' => 'Luckydraw', 'action' => 'spin']);
 
@@ -75,7 +74,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/answer', ['controller' => 'Answer', 'action' => 'index']);
 
     $routes->connect('/products', ['controller' => 'Products', 'action' => 'index']);
-    $routes->connect('/survey-summary', ['controller' => 'Surveys', 'action' => 'index']);
+    // $routes->connect('/survey-summary', ['controller' => 'Surveys', 'action' => 'index']);
     // $routes->connect('/add', ['controller' => 'Products', 'action' => 'add']);
     // $routes->connect('/edit/*', ['controller' => 'Products', 'action' => 'edit']);
 
