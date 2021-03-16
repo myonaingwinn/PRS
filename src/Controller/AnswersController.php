@@ -55,8 +55,6 @@ class AnswersController extends AppController
      */
     public function add($surveyID = null)
     {
-        // FIXME: dynamic $surveyID
-        $surveyID = 88;
         $this->loadModel('Surveys');
         $this->loadModel('Questions');
         $this->loadModel('Options');
@@ -100,7 +98,7 @@ class AnswersController extends AppController
 
             if (!empty($answers)) {
                 foreach ($answers as $ans) {
-                    $answer->user_id = $this->request->getData('user_id');
+                    $answer->user_id = $this->Auth->user('id');
                     $answer->category_id = $this->request->getData('category_id');
                     $answer->product_id = $this->request->getData('product_id');
                     $answer->survey_id = $this->request->getData('survey_id');

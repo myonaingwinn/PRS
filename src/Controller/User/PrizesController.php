@@ -20,7 +20,7 @@ class PrizesController extends AppController
      */
     public function index()
     {
-
+        $id = $this->Auth->user('id');
         $prizes = $this->paginate($this->Prizes);
 
         $this->set(compact('prizes'));
@@ -28,7 +28,7 @@ class PrizesController extends AppController
 
 
         $this->loadModel('Scores');
-        $scores = $this->Scores->find('all')->where(['user_id' => 1]);
+        $scores = $this->Scores->find('all')->where(['user_id' => $id]);
         $this->set('scores', $scores);
     }
 
@@ -40,7 +40,7 @@ class PrizesController extends AppController
 
         // $prizes = $this->Prizes->find('all')->where(['id' => 3]);
         $tbl_score = $this->loadModel('Scores');
-        $scores = $this->Scores->find()->where(['user_id' => 1])->first();
+        $scores = $this->Scores->find()->where(['user_id' => $id])->first();
 
         $pr_score = $prizes->scores;
         $user_score = $scores->score;
@@ -86,13 +86,12 @@ class PrizesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function getscores()
+    public function getscores($id = null)
     {
-        //FIXME:dynamically user_id
         if ($this->request->is('post')) {
             $get_scores = $_POST['custom_scores'];
             $user_tbl = $this->loadModel('Scores');
-            $user_result = $this->Scores->find()->where(['id' => 1])->first();
+            $user_result = $this->Scores->find()->where(['id' => $id])->first();
             if ($user_result != null) {
                 $user_scores = $user_result->score;
                 $user_result->score = $user_scores + $get_scores;
@@ -100,7 +99,7 @@ class PrizesController extends AppController
             } else {
                 $score = $this->Scores->newEntity();
                 $score->score = $get_scores;
-                $score->user_id = 1;
+                $score->user_id = $id;
                 //TODO:add expire_datetime
                 $user_tbl->save($score);
             }

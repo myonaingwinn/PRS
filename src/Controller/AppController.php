@@ -46,7 +46,7 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
-        /* $this->loadComponent('Auth', [
+        $this->loadComponent('Auth', [
             'authorize' => 'Controller',
             'authenticate' => [
                 'Form' => [
@@ -60,13 +60,19 @@ class AppController extends Controller
                 'controller' => 'Users',
                 'action' => 'login'
             ],
+            'loginRedirect' => [
+                'controller' => 'Surveys',
+                'action' => 'index'
+            ],
             // If unauthorized, return them to page they were just on
-            'unauthorizedRedirect' => $this->referer()
-        ]); */
+            'unauthorizedRedirect' => 'login'
+        ]);
 
         // Allow the display action so our PagesController
         // continues to work. Also enable the read only actions.
-        // $this->Auth->allow(['display', 'view', 'index', 'add', 'edit', 'delete']);
+        $this->Auth->allow(); //['login', 'surveys', 'logout', 'add_survey']
+        $this->Auth->deny('register');
+        // $this->Auth->addUnauthenticatedActions(['login', 'forgot', 'resetpassword', 'add']);
     }
 
     /**
@@ -102,5 +108,11 @@ class AppController extends Controller
         $article = $this->Articles->findBySlug($slug)->first();
 
         return $article->user_id === $user['id'];
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        $this->set('user', $this->Auth->user());
+        $this->Auth->config('authError', "Oops, you are not authorized to access this area.");
     }
 }
