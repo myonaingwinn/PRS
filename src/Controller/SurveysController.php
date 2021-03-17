@@ -103,7 +103,7 @@ class SurveysController extends AppController
                         $question->modified = $currDateTime;
 
                         if ($QResult = $this->Questions->save($question)) {
-                            $this->Flash->success(__('The question has been saved.'));
+                            // $this->Flash->success(__('The question has been saved.'));
 
                             // save option
                             $options = $card['options'];
@@ -117,7 +117,7 @@ class SurveysController extends AppController
                                     $Option->modified = $currDateTime;
 
                                     if ($this->Options->save($Option)) {
-                                        $this->Flash->success(__('The options have been saved.'));
+                                        // $this->Flash->success(__('The options have been saved.'));
                                     } else {
                                         $this->Flash->error(__('The options could not be saved. Please, try again.'));
                                     }

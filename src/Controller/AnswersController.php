@@ -23,9 +23,12 @@ class AnswersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Products', 'Categories', 'Questions', 'Surveys', 'Options', 'Users']
+            'contain' => ['Surveys']
         ];
-        $answers = $this->paginate($this->Answers);
+        $Answer = $this->Answers->find('all')->where(['user_id' => $this->Auth->user('id')])->group('survey_id');
+
+        // $surveys = $this->paginate($Surveys);
+        $answers = $this->paginate($Answer);
 
         $this->set(compact('answers'));
         $this->set('_serialize', ['answers']);
@@ -40,12 +43,26 @@ class AnswersController extends AppController
      */
     public function view($id = null)
     {
-        $answer = $this->Answers->get($id, [
+        /* $answer = $this->Answers->get($id, [
             'contain' => ['Products', 'Categories', 'Questions', 'Surveys', 'Options', 'Users']
         ]);
 
         $this->set('answer', $answer);
-        $this->set('_serialize', ['answer']);
+        $this->set('_serialize', ['answer']); */
+        $answers = $this->Answers->find('all')->where(['user_id' => $this->Auth->user('id'), 'survey_id' => $id]);
+        $this->loadModel('Surveys');
+        $this->loadModel('Questions');
+        $this->loadModel('Options');
+        if ($this->request->is('post')) {
+            return $this->redirect(['action' => 'index']);
+        }
+        $survey = $this->Surveys->find()->select(['id', 'title' => 'name', 'description', 'category_id', 'product_id'])->where(['id' => $id, 'del_flg' => 'not'])->toArray();
+
+        $questions = $this->Questions->find()->select(['id', 'type', 'description'])->where(['survey_id' => $id, 'del_flg' => 'not']);
+
+        $options = $this->Options->find()->select(['id', 'question_id', 'description'])->where(['survey_id' => $id, 'del_flg' => 'not']);
+
+        $this->set(compact('survey', 'questions', 'options', 'answers'));
     }
 
     /**

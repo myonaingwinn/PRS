@@ -19,8 +19,8 @@ class NotificationsController extends AppController
         $this->paginate = [
             'contain' => ['Products', 'Categories', 'Admins']
         ];
-        $user_id = $this->Auth->user('id');;
-        $data = $this->Surveys->find('all')
+        $user_id = $this->Auth->user('id');
+        $data = $this->Surveys->find('all')->where(['public' => 'Y'])
             ->notMatching(
                 "Answers",
                 function ($q) use ($user_id) {

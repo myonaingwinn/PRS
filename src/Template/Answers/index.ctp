@@ -1,40 +1,40 @@
-<div class="answers index large-9 medium-8 columns content">
-    <h3><?= __('Answers') ?></h3>
+<?php
+
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Survey[]|\Cake\Collection\CollectionInterface $surveys
+ */
+?>
+<div class="surveys index large-9 medium-8 columns content">
+    <h3><?= __('Surveys History') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('product_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('category_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('question_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('survey_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('option_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('answer') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('remark') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('rating') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('no') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('description') ?></th>
+                <!-- <th scope="col"><?= $this->Paginator->sort('product_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('category_id') ?></th> -->
+                <th scope="col"><?= $this->Paginator->sort('answered date') ?></th>
+                <!-- <th scope="col"><?= $this->Paginator->sort('modified') ?></th> -->
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
+            <?php $page = $this->Paginator->counter(['format' => __('{{page}}')]);
+            $no = 1;
+            if ($page > 2)
+                $no = $page * 20 - 19;
+            else if ($page == 2)
+                $no = $page * 10 + 1; ?>
             <?php foreach ($answers as $answer) : ?>
                 <tr>
-                    <td><?= $this->Number->format($answer->id) ?></td>
-                    <td><?= $answer->has('product') ? $this->Html->link($answer->product->id, ['controller' => 'Products', 'action' => 'view', $answer->product->id]) : '' ?></td>
-                    <td><?= $answer->has('category') ? $this->Html->link($answer->category->id, ['controller' => 'Categories', 'action' => 'view', $answer->category->id]) : '' ?></td>
-                    <td><?= $answer->has('question') ? $this->Html->link($answer->question->id, ['controller' => 'Questions', 'action' => 'view', $answer->question->id]) : '' ?></td>
-                    <td><?= $answer->has('survey') ? $this->Html->link($answer->survey->name, ['controller' => 'Surveys', 'action' => 'view', $answer->survey->id]) : '' ?></td>
-                    <td><?= $answer->has('option') ? $this->Html->link($answer->option->id, ['controller' => 'Options', 'action' => 'view', $answer->option->id]) : '' ?></td>
-                    <td><?= $answer->has('user') ? $this->Html->link($answer->user->name, ['controller' => 'Users', 'action' => 'view', $answer->user->id]) : '' ?></td>
-                    <td><?= h($answer->answer) ?></td>
-                    <td><?= h($answer->remark) ?></td>
-                    <td><?= $this->Number->format($answer->rating) ?></td>
-                    <td><?= h($answer->created) ?></td>
+                    <td><?= $no++ ?></td>
+                    <td><?= h($answer->survey->name) ?></td>
+                    <td><?= h($answer->survey->description) ?></td>
+                    <td><?= h($answer->created->i18nFormat('yyyy-MM-dd HH:mm:ss')) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $answer->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $answer->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $answer->id], ['confirm' => __('Are you sure you want to delete # {0}?', $answer->id)]) ?>
+                        <?= $this->Html->link(__('View'), ['action' => 'view', $answer->survey->id]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
