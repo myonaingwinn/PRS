@@ -54,7 +54,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/prizelist', ['controller' => 'Prize', 'action' => 'prizelist']);
 
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-    $routes->connect('/data_analysis', ['controller' => 'DataAnalysis', 'action' => 'index']);
+    $routes->connect('/data_analysis', ['controller' => 'DataAnalysis', 'action' => 'menu']);
     //$routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
     $routes->connect('/new_survey', ['controller' => 'Admins', 'action' => 'new_survey', 'new_survey']);

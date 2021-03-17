@@ -60,18 +60,14 @@ class AppController extends Controller
                 'controller' => 'Users',
                 'action' => 'login'
             ],
-            'loginRedirect' => [
-                'controller' => 'Surveys',
-                'action' => 'index'
-            ],
+            'loginRedirect' => '/data_analysis',
             // If unauthorized, return them to page they were just on
             'unauthorizedRedirect' => 'login'
         ]);
 
         // Allow the display action so our PagesController
         // continues to work. Also enable the read only actions.
-        $this->Auth->allow(); //['login', 'surveys', 'logout', 'add_survey']
-        $this->Auth->deny('register');
+        // $this->Auth->allow(); //['login', 'surveys', 'logout', 'add_survey']
         // $this->Auth->addUnauthenticatedActions(['login', 'forgot', 'resetpassword', 'add']);
     }
 
@@ -90,29 +86,19 @@ class AppController extends Controller
             $this->set('_serialize', true);
         }
     }
-    public function isAuthorized($user)
+    public function isAuthorized()
     {
-        $action = $this->request->getParam('action');
-        // The add and tags actions are always allowed to logged in users.
-        if (in_array($action, ['add', 'tags'])) {
+        if ($this->Auth->user('name')) {
+            $this->Auth->deny();
             return true;
         }
-
-        // All other actions require a slug.
-        $slug = $this->request->getParam('pass.0');
-        if (!$slug) {
-            return false;
-        }
-
-        // Check that the article belongs to the current user.
-        $article = $this->Articles->findBySlug($slug)->first();
-
-        return $article->user_id === $user['id'];
     }
 
     public function beforeFilter(Event $event)
     {
         $this->set('user', $this->Auth->user());
         $this->Auth->config('authError', "Oops, you are not authorized to access this area.");
+        // $this->Auth->deny(['register', 'surveys']);
+        $this->Auth->allow(['login', 'logout', 'register']);
     }
 }

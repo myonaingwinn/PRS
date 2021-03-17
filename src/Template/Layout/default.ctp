@@ -77,7 +77,7 @@ $cakeDescription = 'PRS';
 
     <nav>
         <div class="nav-wrapper indigo z-depth-1">
-            <a href="#" class="brand-logo center">PRS</a>
+            <a href=" <?= ($user['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">PRS</a>
             <?php if ($user['id']) : ?>
                 <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
                     <i class="material-icons">menu</i>
@@ -98,9 +98,9 @@ $cakeDescription = 'PRS';
                     <div class="background">
                         <img width="300" height="500" src="/img/profile_img/background.jpg">
                     </div>
-                    <a href="#user"><img class="circle" src="/img/profile_img/default.png"></a>
-                    <a href="#name"><span class="white-text name"><?= $user['name'] ?></span></a>
-                    <a href="#email"><span class="white-text email"><?= $user['email'] ?></span></a>
+                    <a><img class="circle" src="<?= ($user['profile_img']) ? '/img/profile_img/' . $user['profile_img'] : '/img/profile_img/default.png'  ?>"></a>
+                    <a><span class="white-text name"><?= $user['name'] ?></span></a>
+                    <a><span class="white-text email"><?= $user['email'] ?></span></a>
                 </div>
             </li>
             <!-- <li><a class="subheader">Profile</a></li> -->
