@@ -5,18 +5,18 @@
  * @var \App\Model\Entity\Survey[]|\Cake\Collection\CollectionInterface $surveys
  */
 ?>
+
 <div class="surveys index large-9 medium-8 columns content">
-    <h3><?= __('Surveys History') ?></h3>
+    <h3><?= __('Surveys') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('no') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('No') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('description') ?></th>
-                <!-- <th scope="col"><?= $this->Paginator->sort('product_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('category_id') ?></th> -->
-                <th scope="col"><?= $this->Paginator->sort('answered date') ?></th>
-                <!-- <th scope="col"><?= $this->Paginator->sort('modified') ?></th> -->
+                <th scope="col"><?= $this->Paginator->sort('product_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('category_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -27,14 +27,16 @@
                 $no = $page * 20 - 19;
             else if ($page == 2)
                 $no = $page * 10 + 1; ?>
-            <?php foreach ($answers as $answer) : ?>
+            <?php foreach ($surveys as $survey) : ?>
                 <tr>
                     <td><?= $no++ ?></td>
-                    <td><?= h($answer->survey->name) ?></td>
-                    <td><?= h($answer->survey->description) ?></td>
-                    <td><?= h($answer->created->i18nFormat('yyyy-MM-dd HH:mm:ss')) ?></td>
+                    <td><?= h($survey->name) ?></td>
+                    <td><?= h($survey->description) ?></td>
+                    <td><?= $survey->has('product') ? $survey->product->name : '' ?></td>
+                    <td><?= $survey->has('category') ? $survey->category->name : '' ?></td>
+                    <td><?= h($survey->created) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $answer->survey->id]) ?>
+                        <?= $this->Html->link(__('Answer'), ['action' => 'answer', $survey->id]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

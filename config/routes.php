@@ -54,7 +54,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/prizelist', ['controller' => 'Prize', 'action' => 'prizelist']);
 
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-    $routes->connect('/data_analysis', ['controller' => 'DataAnalysis', 'action' => 'index']);
+    $routes->connect('/data_analysis', ['controller' => 'DataAnalysis', 'action' => 'menu']);
     //$routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
     $routes->connect('/new_survey', ['controller' => 'Admins', 'action' => 'new_survey', 'new_survey']);
@@ -63,15 +63,20 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/view_survey/*', ['controller' => 'Surveys', 'action' => 'view']);
 
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'add']);
+    $routes->connect('/view_user/*', ['controller' => 'Users', 'action' => 'view']);
+    $routes->connect('/edit_user/*', ['controller' => 'Users', 'action' => 'edit']);
 
-    $routes->connect('/login', ['controller' => 'UserLogin', 'action' => 'login']);
+    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 
     // $routes->connect('/spin', ['controller' => 'Luckydraw', 'action' => 'spin']);
 
-    $routes->connect('/add_answer', ['controller' => 'Answers', 'action' => 'add']);
+    $routes->connect('/add_answer/*', ['controller' => 'Answers', 'action' => 'add']);
 
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
     $routes->connect('/answer', ['controller' => 'Answer', 'action' => 'index']);
+
+    $routes->connect('/notifications', ['controller' => 'Notifications', 'action' => 'index']);
 
     $routes->connect('/products', ['controller' => 'Products', 'action' => 'index']);
     // $routes->connect('/survey-summary', ['controller' => 'Surveys', 'action' => 'index']);

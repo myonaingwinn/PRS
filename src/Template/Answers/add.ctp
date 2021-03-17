@@ -99,7 +99,7 @@
 </style>
 
 <form method="post" action="/answers/add">
-    <input type="hidden" name="user_id" value="1" />
+    <!-- <input type="hidden" name="user_id" value="1" /> -->
     <input type="hidden" name="survey_id" value="<?= h($survey[0]->id) ?>" />
     <input type="hidden" name="category_id" value="<?= h($survey[0]->category_id) ?>" />
     <input type="hidden" name="product_id" value="<?= h($survey[0]->product_id) ?>" />

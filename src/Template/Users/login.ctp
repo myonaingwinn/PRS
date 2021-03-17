@@ -1,17 +1,43 @@
-<div class="row">
-    <?php
-    echo $this->Form->create();
-    echo $this->Form->controls(
-        [
-            'email' => ['required' => true, 'placeholder' => 'Enter your Email', 'type' => 'email'],
-            'password' => ['required' => true, 'placeholder' => 'Enter your password'],
-        ],
-        ['legend' => 'Login Here']
-    );
-    echo $this->Form->submit(__('Login'));
-    echo "Don't have an account?";
-    echo $this->Html->link("Sign up", ['action' => 'register']);
-    echo $this->Form->end();
-    ?>
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <div class="row">
+                <form action="login" method="post">
+                    <span class="card-title">Login</span>
+                    <div class="input-field col s12">
+                        <input placeholder="Your Email" name="email" type="email" class="validate" required>
+                    </div>
+                    <div class="input-field col s12">
+                        <input placeholder="Your Password" name="password" type="password" class="validate" required>
+                    </div>
+
+            </div>
+        </div>
+        <div class="card-action">
+            <div class="row">
+                <div class="col s6">
+                    Don't you have an account? &ensp;
+                    <a href="/register">Register</a>
+                </div>
+                <div class="col s6">
+                    <button type="submit" class="waves-effect waves-light btn indigo right">Login</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-<?php
+
+<style>
+    .card {
+        margin-top: 5rem;
+    }
+
+    .input {
+        margin: 1rem;
+    }
+
+    .row {
+        margin-bottom: -.2rem;
+    }
+</style>

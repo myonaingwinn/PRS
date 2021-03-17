@@ -1,0 +1,263 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style type="text/css">
+    g[class^='raphael-group-'][class$='-creditgroup'] {
+        display: none !important;
+    }
+
+    table {
+        display: block;
+        max-width: -moz-fit-content;
+        max-width: fit-content;
+        margin: 0 auto;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .hline {
+        text-align: center;
+        background-color: #CEF6CE;
+        border: 2px solid green;
+    }
+
+    h3 {
+        color: #298A08;
+
+    }
+
+    .button {
+        border: 2px;
+        width: 200px;
+        height: 50px;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        background-color: #4CAF50;
+
+    }
+
+    .striped-border {
+        border: 1px dashed #000;
+        width: 50%;
+        margin: auto;
+        margin-top: 5%;
+        margin-bottom: 5%;
+        background-color: #4CAF50;
+
+    }
+
+    .checked {
+        color: orange;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .topnav {
+        overflow: hidden;
+        background-color: #5c6bc0;
+    }
+
+    .topnav a:hover {
+        background-color: #9fa8da;
+        color: black;
+    }
+
+    .topnav a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+<?php
+
+use Cake\Core\App;
+
+require_once(ROOT . DS . 'vendor' . DS  . 'fusioncharts' . DS . 'fusioncharts.php');
+
+use Cake\ORM\TableRegistry;
+use Cake\Datasource\ConnectionManager;
+use Cake\Core\Plugin;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
+use Cake\Routing\Route\DashedRoute;
+
+$productType = 1;
+$categoryType = 1;
+$pid = 2;
+//$pList = displayProducts($categoryType);
+$prodFeed = getFeedback($pid);
+
+if (isset($_POST['showproduct'])) {
+
+    foreach ($_POST['Pro'] as $select) {
+
+        $prodFeed = getFeedback($select);
+        getColunCharts($select);
+    }
+}
+
+getColunCharts(1);
+
+function getColunCharts($productID)
+{
+    $chart_product_name = "";
+    $proData = TableRegistry::get('products');
+
+    $pquery = $proData->find('all')->where(['id' => $productID]);
+    foreach ($pquery as $result1) {
+        $chart_product_name = $result1->name;
+    }
+    $dataChart = getAvgRating($productID);
+
+    $arrData1 = array(
+        "chart" => array(
+            "animation" => "0",
+            "caption" => "Review by Age for Product: " . $chart_product_name,
+            // "subCaption" => "No. Of Visitors Last Week",
+            "xAxisName" => "Age",
+            "yAxisName" => "No. Of Rating",
+            "showValues" => "0",
+            // "paletteColors"=> "#81BB76", 
+            "useDataPlotColorForLabels" => "1",
+            "showHoverEffect" => "1",
+            "use3DLighting" => "0",
+            "showaxislines" => "1",
+            "baseFontSize" => "13",
+            "theme" => "fint"
+        )
+    );
+
+    $arrData1["data"] = $dataChart;
+
+    $jsonEncodedData1 = json_encode($arrData1);
+    //echo "$jsonEncodedData1 ";
+    $columnChart1 = new FusionCharts("column2d", "chart-2", "600", "300", "chart-container2", "json", $jsonEncodedData1);
+
+    // Render the chart
+    $columnChart1->render();
+}
+
+function getAvgRating(int $pid)
+{
+    $connection = ConnectionManager::get('default');
+    $results1 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE age<=16)', [$pid])->fetchAll('assoc');
+    $results2 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 16<age<=30)', [$pid])->fetchAll('assoc');
+    $results3 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 30<age<=50)', [$pid])->fetchAll('assoc');
+    $results4 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE age>50)', [$pid])->fetchAll('assoc');
+
+    $avg1 = getAvgResult($results1);
+    $avg2 = getAvgResult($results2);
+    $avg3 = getAvgResult($results3);
+    $avg4 = getAvgResult($results4);
+
+    $data = array();
+    $labels = array("age<=16", "16<age<=30", "30<age<=50", "age>50");
+    $avg = array($avg1, $avg2, $avg3, $avg4);
+    for ($i = 0; $i <= 3; $i++) {
+        array_push(
+            $data,
+            array(
+                "label" => $labels[$i],
+                "value" => $avg[$i]
+            )
+        );
+    }
+    return $data;
+}
+function getAvgResult($results)
+{
+
+    foreach ($results as $results) {
+        $average_rating = $results['rating'];
+        if ($average_rating == null) {
+            $average_rating = 0;
+        }
+    }
+    return $average_rating;
+}
+function getFeedback($pid)
+{
+    //echo ("product_id" . $pid);
+    $connection = ConnectionManager::get('default');
+    $prodFeed = $connection->execute('SELECT users.name as fname, answers.remark as fremark , answers.rating as frating, answers.created as fdate FROM answers,users where product_id=? and users.id=answers.user_id', [$pid])->fetchAll('assoc');
+    return $prodFeed;
+}
+?>
+
+<div class="topnav">
+    <a href="/DataAnalysis/menu">Data Analysis Result</a>
+    <a href="/DataAnalysis/category">Category</a>
+    <a class="active" href="/DataAnalysis/product">Product</a>
+</div>
+<br><br>
+
+<form method="post">
+    <div class="row">
+        <div class="col s4">
+            <select id="ptype" name="Pro[]">
+                <option value="">Select Product</option>
+                <?php foreach ($products_list as $p) : ?>
+                    <option value="<?= h($p->id) ?>"><?= h($p->name) ?></option>
+
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col s2">
+            <button type="submit" name="showproduct" class="btn waves-effect indigo" />View Results</button>
+        </div>
+    </div>
+</form>
+<div class="row">
+
+    <div id="chart-container2" class="col"></div>
+</div>
+<br>
+<div>
+    Rating and Reviews
+
+    <?php foreach ($prodFeed as $p) : ?>
+        <?php if ($p['fremark'] != "") : ?>
+
+            <div class="row">
+                <p><?= $p['fname'] ?>
+                </p>
+            </div>
+            <div class="row">
+
+                <?php for ($i = 0; $i < $p['frating']; $i++)
+                    echo '<span class="fa fa-star checked"></span>';
+                ?>
+            </div>
+            <div class="row">
+                <p><?= $p['fdate'] ?></p>
+            </div>
+
+            <div class="row">
+                <p><?= $p['fremark'] ?></p>
+            </div>
+            <br>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $('select').formSelect();
+    });
+</script>

@@ -1,5 +1,7 @@
 <?php
 
+use Cake\Controller\Component\AuthComponent;
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -75,38 +77,42 @@ $cakeDescription = 'PRS';
 
     <nav>
         <div class="nav-wrapper indigo z-depth-1">
-            <a href="#" class="brand-logo center">PRS</a>
-            <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
-                <i class="material-icons">menu</i></a>
-            <ul id="nav-mobile" class="left hide-on-med-and-down right">
-                <!-- notification -->
-                <!-- <li><a href="#" class="badge1" data-badge="27"><i class="material-icons left">notifications</i></a></li> -->
-            </ul>
+            <a href=" <?= ($user['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">PRS</a>
+            <?php if ($user['id']) : ?>
+                <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
+                    <i class="material-icons">menu</i>
+                </a>
+            <?php endif ?>
+            <!-- notification -->
+            <!-- <ul id="nav-mobile" class="left hide-on-med-and-down right">
+                 <li><a href="#" class="badge1" data-badge="27"><i class="material-icons left">notifications</i></a></li> 
+            </ul>-->
         </div>
     </nav>
 
     <!-- side nav -->
-    <ul id="slide-out" class="sidenav">
-        <li>
-            <div class="user-view">
-                <div class="background">
-                    <img width="300" height="500" src="/img/profile_img/background.jpg">
+    <?php if ($user['id']) : ?>
+        <ul id="slide-out" class="sidenav">
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                        <img width="300" height="500" src="/img/profile_img/background.jpg">
+                    </div>
+                    <a><img class="circle" src="<?= ($user['profile_img']) ? '/img/profile_img/' . $user['profile_img'] : '/img/profile_img/default.png'  ?>"></a>
+                    <a><span class="white-text name"><?= $user['name'] ?></span></a>
+                    <a><span class="white-text email"><?= $user['email'] ?></span></a>
                 </div>
-                <a href="#user"><img class="circle" src="/img/profile_img/default.png"></a>
-                <a href="#name"><span class="white-text name">Myo Naing Winn</span></a>
-                <a href="#email"><span class="white-text email">mnw@gmail.com</span></a>
-            </div>
-        </li>
-        <!-- <li><a class="subheader">Profile</a></li> -->
-        <li><a href="/users/view/1"><i class="material-icons teal-text text-lighten-1">person</i>My Profile</a></li>
-        <li><a href="/users/edit/1"><i class="material-icons grey-text">edit</i>Update Profile</a></li>
-        <!-- <li><a class="subheader">Others</a></li> -->
-        <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Awards</a></li>
-        <li><a class="waves-effect" href="#!"><i class="material-icons green-text">local_play</i>Surveys</a></li>
-        <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
-        <li><a class="waves-effect" href="/login"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
-    </ul>
-
+            </li>
+            <!-- <li><a class="subheader">Profile</a></li> -->
+            <li><a href="/view_user/<?= $user['id'] ?>"><i class="material-icons teal-text">person</i>My Profile</a></li>
+            <li><a href="/edit_user/<?= $user['id'] ?>"><i class="material-icons grey-text text-darken-2">edit</i>Update Profile</a></li>
+            <!-- <li><a class="subheader">Others</a></li> -->
+            <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Awards</a></li>
+            <li><a class="waves-effect" href="/notifications"><i class="material-icons green-text">local_play</i>Surveys</a></li>
+            <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
+            <li><a class="waves-effect" href="/logout"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
+        </ul>
+    <?php endif ?>
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
         <?= $this->fetch('content') ?>

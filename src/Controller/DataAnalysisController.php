@@ -35,12 +35,49 @@ class DataAnalysisController extends AppController
         $products = TableRegistry::get('products');
         $answers = TableRegistry::get('answers');
         $connection = ConnectionManager::get('default');
-        /* $results1 = $connection->execute('SELECT distinct image as pimage, name as pname, model_no as pmodel_no from `answers`, `products` WHERE products.id=answers.product_id and
-         answers.rating>3')->fetchAll('assoc'); */
-
-        $results1 = $connection->execute('SELECT distinct image as pimage, name as pname, model_no as pmodel_no from `products`')->fetchAll('assoc');
-        // debug($results1);
+        $results1 = $connection->execute('SELECT distinct image as pimage, name as pname, model_no as pmodel_no from `answers`, `products` WHERE products.id=answers.product_id and
+         answers.rating>3 GroupBy survey_id')->fetchAll('assoc');
+        // echo ($results1);
 
         $this->set('product_list', $results1);
+    }
+    public function menu()
+    {
+        $categories = TableRegistry::get('categories');
+
+        $query = $categories->find('all');
+        $this->set('categories_list', $query);
+
+        $products = TableRegistry::get('products');
+        $answers = TableRegistry::get('answers');
+        $connection = ConnectionManager::get('default');
+        $results1 = $connection->execute('SELECT distinct image as pimage,name as pname, model_no as pmodel_no from `answers`, `products` WHERE products.id=answers.product_id and
+         answers.rating>3')->fetchAll('assoc');
+        // echo ($results1);
+
+        $this->set('product_list', $results1);
+    }
+    public function category()
+    {
+        $categories = TableRegistry::get('categories');
+
+        $query = $categories->find('all');
+        $this->set('categories_list', $query);
+    }
+    public function product()
+    {
+        $categories = TableRegistry::get('categories');
+        $products = TableRegistry::get('products');
+
+        $query = $categories->find('all');
+        $this->set('categories_list', $query);
+
+        $query = $products->find(
+            'all',
+            array(
+                'order' => array('Products.name ASC')
+            )
+        );
+        $this->set('products_list', $query);
     }
 }
