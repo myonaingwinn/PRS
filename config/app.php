@@ -194,12 +194,19 @@ return [
         'mailForget' => [
             'host' => 'smtp.gmail.com',
             'port' => 587,
-            'username' => 'ecctester2222@gmail.com', //eg: sender email
-            'password' => 'ECCtester@2222', //email password
+            'username' => 'testtesttest4me@gmail.com', //eg: sender email
+            'password' => 'Gmail.com@2020', //email password
             'className' => 'Smtp',
             'tls' => true,
             'client' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+        ],
+        'mailTrap'=>[
+            'host' => 'smtp.mailtrap.io',
+            'port' => 2525,
+            'username' => '98830b8ca87fde',
+            'password' => 'bff560e080d19f',
+            'className' => 'Smtp'
         ],
     ],
 
@@ -221,8 +228,12 @@ return [
         ],
         'mailForget' => [
             'transport' => 'mailForget',
-            'from' => ['ecctester2222@gmail.com' => 'Password Forget'],
+            'from' => ['ecctester2222@gmail.com' => 'Products Ranking System'],
         ], 
+        'mailTrap'=>[
+            'transport'=>'mailTrap',
+            'from'=>['testtesttest4me@gmail.com'=>'Products Ranking System'],
+        ],
     ],
 
     /**

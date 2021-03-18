@@ -67,8 +67,8 @@ class AppController extends Controller
 
         // Allow the display action so our PagesController
         // continues to work. Also enable the read only actions.
-        // $this->Auth->allow(); //['login', 'surveys', 'logout', 'add_survey']
-        // $this->Auth->addUnauthenticatedActions(['login', 'forgot', 'resetpassword', 'add']);
+        $this->Auth->allow('register'); //['login', 'surveys', 'logout', 'add_survey']
+        $this->Auth->allow(['login', 'add', 'forgotpassword', 'resetpassword', 'verification']);
     }
 
     /**
@@ -88,8 +88,8 @@ class AppController extends Controller
     }
     public function isAuthorized()
     {
-        if ($this->Auth->user('name')) {
-            $this->Auth->deny();
+        if (!$this->Auth->user('name')) {
+            // $this->Auth->deny();
             return true;
         }
     }
@@ -97,8 +97,8 @@ class AppController extends Controller
     public function beforeFilter(Event $event)
     {
         $this->set('user', $this->Auth->user());
+        $this->Auth->allow(['register', 'login', 'logout']);
         $this->Auth->config('authError', "Oops, you are not authorized to access this area.");
         // $this->Auth->deny(['register', 'surveys']);
-        $this->Auth->allow(['login', 'logout', 'register']);
     }
 }
