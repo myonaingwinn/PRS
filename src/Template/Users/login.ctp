@@ -7,17 +7,21 @@
                     <div class="input-field col s12">
                         <input placeholder="Your Email" name="email" type="email" class="validate" required>
                     </div>
-                    <div class="input-field col s12">
+                    <div class="input-field col s12 my-input">
                         <input placeholder="Your Password" name="password" type="password" class="validate" required>
                     </div>
-
             </div>
         </div>
         <div class="card-action">
             <div class="row">
                 <div class="col s6">
-                    Don't you have an account? &ensp;
-                    <a href="/register">Register</a>
+                    <div class="row my-row1">
+                        <a href="/forgotPassword">Forgot Password?</a>
+                    </div>
+                    <div class="row my-row2">
+                        Don't you have an account?&nbsp;
+                        <a href="/register">Register</a>
+                    </div>
                 </div>
                 <div class="col s6">
                     <button type="submit" class="waves-effect waves-light btn indigo right">Login</button>
@@ -26,18 +30,29 @@
             </div>
         </div>
     </div>
-</div>
 
-<style>
-    .card {
-        margin-top: 5rem;
-    }
+    <style>
+        .card {
+            margin-top: 5rem;
+        }
 
-    .input {
-        margin: 1rem;
-    }
+        .input {
+            margin: 1rem;
+        }
 
-    .row {
-        margin-bottom: -.2rem;
-    }
-</style>
+        .row {
+            margin-bottom: -.1rem;
+        }
+
+        .my-input {
+            margin-top: 0rem;
+        }
+
+        .my-row1 {
+            margin-top: -.2rem;
+        }
+
+        .my-row2 {
+            margin-top: .1rem;
+        }
+    </style>

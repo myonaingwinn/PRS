@@ -1,5 +1,5 @@
 /vendor/*
-/config/*
+/config/app.php
 /tmp/*
 /logs/*
 /src/Shell/*

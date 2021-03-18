@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Symfony\Component\VarDumper\Cloner\Data;
 use Cake\Utility\Security;
 use Cake\Auth\DefaultPasswordHasher;
-use Cake\Routing\Router;
-use DateTime;
-use LengthException;
+use Cake\Mailer\Email;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -258,5 +256,52 @@ class UsersController extends AppController
     public function logout()
     {
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function forgotPassword()
+    {
+        if ($this->request->is('post')) {
+            $email = $this->request->getData('email');
+            $token = Security::hash(Security::randomBytes(25));
+
+            $userTable = TableRegistry::get('Users');
+            if ($email == NULL) {
+                $this->Flash->error(__('Please insert your email address'));
+            }
+            if ($user = $userTable->find('all')->where(['email' => $email])->first()) {
+                $user->token = $token;
+
+                if ($userTable->save($user)) {
+                    // $mail = new Email('mailForget');
+                    $mail = new Email('mailTrap');
+                    /* $mail->from(['ecctester2222@gmail.com' => 'Products Ranking System'])
+                        ->to($email)
+                        ->subject('Reset your password.')
+                        ->send('Hello! Please follow the link below to reset your password <a href="/resetPassword/' . $token . '"></a>'); */
+                    $mail->setTo($email)
+                        ->setSubject('Reset your password.')
+                        ->setEmailFormat('html')
+                        ->send('Hi ' . $user->name . ',<br/>You can reset your password by clicking link below<br/><a href="http://localhost:8765/resetPassword/' . $token . '">Reset Password</a>.');
+                }
+                $this->Flash->success('Reset password link has been sent to your email (' . $email . '), please check your email');
+            }
+            if ($userTable->find('all')->where(['email' => $email])->count() == 0) {
+                $this->Flash->error(__('Email is not registered in system'));
+            }
+        }
+    }
+    public function resetPassword($token)
+    {
+        if ($this->request->is('post')) {
+            $newPass = $this->request->getData('password');
+
+            $userTable = TableRegistry::get('Users');
+            $user = $userTable->find('all')->where(['token' => $token])->first();
+            $user->password = $newPass;
+            if ($userTable->save($user)) {
+                $this->Flash->success('Password successfully reset. Please login using your new password.');
+                return $this->redirect(['action' => 'login']);
+            }
+        }
     }
 }
