@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Utility\Security;
-use Cake\Auth\DefaultPasswordHasher;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
 
@@ -68,17 +67,16 @@ class UsersController extends AppController
      */
     public function add()
     {
-        $user = $this->Users->newEntity();
+        $newUser = $this->Users->newEntity();
         if ($this->request->is('post') || $this->request->is('put')) {
 
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user = $this->Users->patchEntity($newUser, $this->request->getData());
             //img upload
             $userImage = $this->request->getData('profile_img');
             $name = $userImage['name'];
 
             $type = pathinfo($name, PATHINFO_EXTENSION);
             $targetPath = WWW_ROOT . 'img' . DS . 'profile_img' . DS . $name;
-            $hasher = new DefaultPasswordHasher();
             $token = Security::hash(Security::randomBytes(32));
             $premium_flg = "normal";
             $reward = "no reward";
@@ -102,7 +100,7 @@ class UsersController extends AppController
             $user->score = $score;
             $user->token = $token;
             $user->age = $age;
-            $user->password = $hasher->hash($password);
+            $user->password = $password;
 
             //image upload while file type is jpeg jpg and png
             if ($type == 'jpeg' || $type == 'jpg' || $type == 'png') {
@@ -122,7 +120,7 @@ class UsersController extends AppController
                     $user->phone = $phone_no;
                     if ($this->Users->save($user)) {
                         $this->Flash->success(__('The user has been saved.'));
-                        return $this->redirect(['action' => 'index']);
+                        return $this->redirect('login');
                     } else {
                         $this->Flash->error(__('The user could not be saved. Please, try again.'));
                     }
@@ -133,9 +131,9 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user is not allowed to use the System.Only User age between age 15 and 100 allow.'));
             }
         }
-        $admins = $this->Users->Admins->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'admins'));
-        $this->set('_serialize', ['user']);
+
+        $this->set(compact('newUser', $newUser));
+        $this->set('_serialize', ['newUser']);
     }
 
     /**
@@ -147,7 +145,6 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $hasher = new DefaultPasswordHasher();
         $user = $this->Users->get($id, [
             'contain' => [], 'formatted_date' => 'DATE_FORMAT(birthdate,"Y-m-d")'
         ]);
@@ -180,7 +177,7 @@ class UsersController extends AppController
             $targetPath = WWW_ROOT . 'img' . DS . 'profile_img' . DS . $name;
             $password = $this->request->getData('password');
             if (strlen($password) < 25) {
-                $user->password = $hasher->hash($password);
+                $user->password = $password;
             }
             if ($new_img != null) {
                 if ($type == 'jpeg' || $type == 'jpg' || $type == 'png') {
@@ -203,7 +200,7 @@ class UsersController extends AppController
                     if ($this->Users->save($user)) {
                         $this->Flash->success(__('The user has been saved.'));
 
-                        return $this->redirect(['action' => 'index']);
+                        return $this->redirect('data_analysis');
                     }
                 } else {
                     $this->Flash->error(__('Your phone number is too long not longer than 15 digit'));
@@ -273,11 +270,7 @@ class UsersController extends AppController
 
                 if ($userTable->save($user)) {
                     // $mail = new Email('mailForget');
-                    $mail = new Email('mailTrap');
-                    /* $mail->from(['ecctester2222@gmail.com' => 'Products Ranking System'])
-                        ->to($email)
-                        ->subject('Reset your password.')
-                        ->send('Hello! Please follow the link below to reset your password <a href="/resetPassword/' . $token . '"></a>'); */
+                    $mail = new Email('mailGmail');
                     $mail->setTo($email)
                         ->setSubject('Reset your password.')
                         ->setEmailFormat('html')
@@ -290,6 +283,7 @@ class UsersController extends AppController
             }
         }
     }
+
     public function resetPassword($token)
     {
         if ($this->request->is('post')) {

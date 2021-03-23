@@ -199,7 +199,7 @@ function getFeedback($pid)
 }
 ?>
 
-<div class="topnav">
+<div class="topnav z-depth-2">
     <a href="/DataAnalysis/menu">Data Analysis Result</a>
     <a href="/DataAnalysis/category">Category</a>
     <a class="active" href="/DataAnalysis/product">Product</a>
