@@ -191,11 +191,11 @@ return [
             'tls' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
           ],
-        'mailForget' => [
+        'mailGmail' => [
             'host' => 'smtp.gmail.com',
             'port' => 587,
-            'username' => 'testtesttest4me@gmail.com', //eg: sender email
-            'password' => 'Gmail.com@2020', //email password
+            'username' => 'testtesttest4me@gmail.com',
+            'password' => 'testMe20!',
             'className' => 'Smtp',
             'tls' => true,
             'client' => null,
@@ -232,7 +232,11 @@ return [
         ], 
         'mailTrap'=>[
             'transport'=>'mailTrap',
-            'from'=>['testtesttest4me@gmail.com'=>'Products Ranking System'],
+            'from'=>['no-reply@prs.com'=>'Products Ranking System'],
+        ],
+        'mailGmail' => [
+            'transport' => 'mailGmail',
+            'from' => ['no-reply@prs.com' => 'Products Ranking System'],
         ],
     ],
 

@@ -24,7 +24,7 @@ use PhpParser\Node\Stmt\Label;
 <div style="margin-top: 5px;">
     <!-- <a class="waves-effect waves-light indigo btn right" href="/users/index">User List</a> -->
 
-    <?= $this->Form->create($user, [
+    <?= $this->Form->create($newUser, [
         'class' => 'was-validated', 'enctype' => 'multipart/form-data'
     ]) ?>
     <div>

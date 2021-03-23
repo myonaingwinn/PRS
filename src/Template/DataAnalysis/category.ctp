@@ -210,7 +210,7 @@ function getAvgResult($results)
 ?>
 
 
-<div class="topnav">
+<div class="topnav z-depth-2">
     <a href="/DataAnalysis/menu">Data Analysis Result</a>
     <a class="active" href="/DataAnalysis/category">Category</a>
     <a href="/DataAnalysis/product">Product</a>
