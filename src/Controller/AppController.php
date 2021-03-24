@@ -67,7 +67,6 @@ class AppController extends Controller
 
         // Allow the display action so our PagesController
         // continues to work. Also enable the read only actions.
-        $this->Auth->deny('register'); //['login', 'surveys', 'logout', 'add_survey']
         // $this->Auth->allow(['forgotPassword', 'resetPassword']);
     }
 
@@ -97,7 +96,7 @@ class AppController extends Controller
     public function beforeFilter(Event $event)
     {
         $this->set('user', $this->Auth->user());
-        $this->Auth->allow(['login', 'logout', 'forgotPassword', 'resetPassword', 'register']);
+        $this->Auth->allow(['add', 'login', 'forgotPassword', 'resetPassword']);
         $this->Auth->setConfig('authError', "Oops, you are not authorized to access this area.");
     }
 }

@@ -83,18 +83,19 @@
         color: white;
     }
 </style>
-<?php
 
-use Cake\Core\App;
+<div class="topnav z-depth-2">
+    <a href="/DataAnalysis/menu">Data Analysis Result</a>
+    <a href="/DataAnalysis/category">Category</a>
+    <a class="active" href="/DataAnalysis/product">Product</a>
+</div>
+
+<?php
 
 require_once(ROOT . DS . 'vendor' . DS  . 'fusioncharts' . DS . 'fusioncharts.php');
 
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
-use Cake\Core\Plugin;
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
-use Cake\Routing\Route\DashedRoute;
 
 $productType = 1;
 $categoryType = 1;
@@ -104,14 +105,21 @@ $prodFeed = getFeedback($pid);
 
 if (isset($_POST['showproduct'])) {
 
-    foreach ($_POST['Pro'] as $select) {
+    $jsPid = $_POST['Pro'];
+    if ($jsPid[0] != "") {
 
-        $prodFeed = getFeedback($select);
-        getColunCharts($select);
+        $prodFeed = getFeedback($jsPid[0]);
+        getColunCharts($jsPid[0]);
+    } else {
+        getColunCharts(1);
+        echo '<div class="error-alert">
+<span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>
+<center><strong>Please Choose the Product Name!</strong> </center>
+</div>';
     }
+} else {
+    getColunCharts(1);
 }
-
-getColunCharts(1);
 
 function getColunCharts($productID)
 {
@@ -179,6 +187,7 @@ function getAvgRating(int $pid)
     }
     return $data;
 }
+
 function getAvgResult($results)
 {
 
@@ -190,6 +199,7 @@ function getAvgResult($results)
     }
     return $average_rating;
 }
+
 function getFeedback($pid)
 {
     //echo ("product_id" . $pid);
@@ -199,14 +209,7 @@ function getFeedback($pid)
 }
 ?>
 
-<div class="topnav z-depth-2">
-    <a href="/DataAnalysis/menu">Data Analysis Result</a>
-    <a href="/DataAnalysis/category">Category</a>
-    <a class="active" href="/DataAnalysis/product">Product</a>
-</div>
-<br><br>
-
-<form method="post">
+<form method="post" style="margin-top: 2rem;">
     <div class="row">
         <div class="col s4">
             <select id="ptype" name="Pro[]">
@@ -223,13 +226,11 @@ function getFeedback($pid)
     </div>
 </form>
 <div class="row">
-
     <div id="chart-container2" class="col"></div>
 </div>
 <br>
 <div>
     Rating and Reviews
-
     <?php foreach ($prodFeed as $p) : ?>
         <?php if ($p['fremark'] != "") : ?>
 

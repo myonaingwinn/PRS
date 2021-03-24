@@ -152,4 +152,99 @@ $cakeDescription = 'PRS';
         border-radius: 50%;
         box-shadow: 0 0 1px #333;
     }
+
+    .error-alert {
+        padding: 10px;
+        background-color: #F78181;
+        color: white;
+    }
+
+    .success-alert {
+        padding: 10px;
+        background-color: #3CC099;
+        color: white;
+    }
+
+    .warning-alert {
+        padding: 10px;
+        background-color: #FFBB34;
+        color: white;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+
+    div.message {
+        text-align: center !important;
+        cursor: pointer;
+        display: block;
+        font-weight: normal !important;
+        padding: 0 1.5rem 0 1.5rem;
+        transition: height 300ms ease-out 0s;
+        background-color: #a0d3e8;
+        color: #626262;
+        top: 15px;
+        right: 15px;
+        z-index: 999;
+        overflow: hidden;
+        height: 50px;
+        line-height: 3.2em;
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+    }
+
+    /*     div.message:before {
+        line-height: 0px;
+        font-size: 20px;
+        height: 12px;
+        width: 12px;
+        border-radius: 15px;
+        text-align: center;
+        vertical-align: middle;
+        display: inline-block;
+        position: relative;
+        left: -11px;
+        background-color: #FFF;
+        padding: 12px 14px 12px 10px;
+        content: "i";
+        color: #a0d3e8;
+    } */
+
+    div.message.error {
+        background-color: #F78181;
+        color: #FFF;
+    }
+
+    /*     div.message.error:before {
+        padding: 11px 16px 14px 7px;
+        color: #C3232D;
+        content: "x";
+    } */
+
+    div.message.success {
+        background-color: #3CC099;
+        color: #FFF;
+    }
+
+    /*     div.message.success:before {
+        padding: 11px 16px 14px 7px;
+        color: #C3232D;
+        content: "✓";
+    } */
+
+    div.message.hidden {
+        height: 0;
+    }
 </style>
