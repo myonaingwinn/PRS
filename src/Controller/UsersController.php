@@ -109,9 +109,9 @@ class UsersController extends AppController
                         $user->profile_img = $name;
                     }
                 }
-            } else {
+            } /* else {
                 $this->Flash->error(__('The file type could not be saved. Please, choose image file.'));
-            }
+            } */
             //when user age is less than 15 and greater than 100 we are not allow the user registeration
             if ($age >= 15 and $age <= 100) {
                 $phone_no = $this->request->getData('phone');
@@ -119,7 +119,9 @@ class UsersController extends AppController
                 if (strlen($phone_no) < 15) {
                     $user->phone = $phone_no;
                     if ($this->Users->save($user)) {
-                        $this->Flash->success(__('The user has been saved.'));
+                        $this->Flash->success(__('Successfully registered, login now.'));
+                        /* echo '<div class="success-alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span><center><strong>You\'re successfully register, login now.</strong> </center></div>'; */
                         return $this->redirect('login');
                     } else {
                         $this->Flash->error(__('The user could not be saved. Please, try again.'));

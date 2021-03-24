@@ -263,6 +263,7 @@ return [
             'username' => 'root', 
             'password' => 'root',
             'database' => 'products_ranking_system',
+            // 'database' => 'prs_slpp',
             'encoding' => 'utf8',
             'timezone' => 'UTC',  
             'flags' => [],
