@@ -36,10 +36,10 @@ $cakeDescription = 'PRS';
     <?= $this->Html->script('jquery-3.5.1.min.js') ?>
     <?= $this->Html->script('fusioncharts/fusioncharts.js') ?>
 
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" /> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
-    <!-- <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -47,34 +47,6 @@ $cakeDescription = 'PRS';
 </head>
 
 <body class="blue-grey lighten-5">
-    <!-- default -->
-    <!-- <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="http://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav> -->
-
-    <!-- fixed nav -->
-    <!-- <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">Logo</a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="sass.html">Sass</a></li>
-                    <li><a href="badges.html">Components</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div> -->
-
     <nav>
         <div class="nav-wrapper indigo z-depth-1">
             <a href=" <?= ($user['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">PRS</a>
@@ -107,7 +79,7 @@ $cakeDescription = 'PRS';
             <li><a href="/view_user/<?= $user['id'] ?>"><i class="material-icons teal-text">person</i>My Profile</a></li>
             <li><a href="/edit_user/<?= $user['id'] ?>"><i class="material-icons grey-text text-darken-2">edit</i>Update Profile</a></li>
             <!-- <li><a class="subheader">Others</a></li> -->
-            <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Awards</a></li>
+            <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Rewards</a></li>
             <li><a class="waves-effect" href="/notifications"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
             <li><a class="waves-effect" href="/logout"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
@@ -133,7 +105,12 @@ $cakeDescription = 'PRS';
 </script>
 
 <style>
-    .badge1 {
+    html {
+        font-family: 'Raleway', "Open Sans";
+    }
+
+    /* for notification */
+    /* .badge1 {
         position: relative;
     }
 
@@ -151,7 +128,7 @@ $cakeDescription = 'PRS';
         line-height: 18px;
         border-radius: 50%;
         box-shadow: 0 0 1px #333;
-    }
+    } */
 
     .error-alert {
         padding: 10px;

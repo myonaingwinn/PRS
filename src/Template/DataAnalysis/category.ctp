@@ -1,7 +1,3 @@
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-</head>
 <style type="text/css">
     g[class^='raphael-group-'][class$='-creditgroup'] {
         display: none !important;
@@ -53,11 +49,6 @@
 
     .checked {
         color: orange;
-    }
-
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
     }
 
     .topnav a {

@@ -103,7 +103,7 @@ class UsersController extends AppController
             $user->password = $password;
 
             //image upload while file type is jpeg jpg and png
-            if ($type == 'jpeg' || $type == 'jpg' || $type == 'png') {
+            if ($type == 'jpeg' || $type == 'jpg' || $type == 'png' || $type == 'PNG' || $type == 'JPG' || $type == 'JPEG') {
                 if (move_uploaded_file($userImage['tmp_name'], $targetPath)) {
                     if (!empty($name)) {
                         $user->profile_img = $name;
@@ -182,7 +182,7 @@ class UsersController extends AppController
                 $user->password = $password;
             }
             if ($new_img != null) {
-                if ($type == 'jpeg' || $type == 'jpg' || $type == 'png') {
+                if ($type == 'jpeg' || $type == 'jpg' || $type == 'png' || $type == 'PNG' || $type == 'JPG' || $type == 'JPEG') {
                     if (move_uploaded_file($userImage['tmp_name'], $targetPath)) {
                         if (!empty($name)) {
                             $user->profile_img = $name;

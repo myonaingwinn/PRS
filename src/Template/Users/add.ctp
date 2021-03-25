@@ -13,32 +13,38 @@
     }
 
     .btnPos {
-        margin-top: 2rem;
+        margin-top: 1rem;
         margin-left: 45%;
         margin-right: 45%;
     }
 
-    h4 {
-        padding-top: 1rem;
+    h5 {
+        padding-top: 1.5rem;
+    }
+
+    .col.s12 {
+        margin-bottom: -2rem;
+    }
+
+    td,
+    th {
+        padding: 10px 5px;
+        display: table-cell;
+        text-align: left;
+        vertical-align: middle;
+        border-radius: 2px;
     }
 </style>
 
-<div style="margin-top: 5px;">
-    <!-- <a class="waves-effect waves-light indigo btn right" href="/users/index">User List</a> -->
+<div class="container" style="margin-top: 5px;">
 
     <?= $this->Form->create($newUser, [
         'class' => 'was-validated', 'enctype' => 'multipart/form-data'
     ]) ?>
     <div class="card">
-        <h4 class="center">Register</h4>
-        <!-- <fieldset> -->
-        <!-- <legend>
-                <h4>Register</h4>
-            </legend> -->
+        <h5 class="center">Register</h5>
         <?php
-
-        // echo $this->Html->image($profile_img, array('width' => '120px', 'height' => '120px'));
-        echo "<div class='card-content'><table><tr><th>";
+        echo "<div class='card-content'><div class='row'><div class='col s12'><table><tr><th>";
         echo $this->Form->control('profile_img', ['type' => 'file', 'label' => '']);
         echo "</th><th></th></tr><tr ><th>User Name</th><th class='input-field '>";
         echo $this->Form->control('name', array('label' => '', 'class' => 'validate'));
@@ -47,7 +53,6 @@
         echo "</th></tr><tr ><th>User Password</th><th class='input-field '>";
         echo $this->Form->control('password', ['label' => '', 'maxlength' => '20', 'class' => 'validate']);
         echo "</th></tr><tr ><th >Gender</th><th class='input-field '>";
-        // echo $this->Form->radio('gender', $options, array('label' => '', 'class' => 'with-gap'));
         echo "
             <p>
             <label>
@@ -63,8 +68,7 @@
             ";
         echo "</th></tr><tr ><th >Phone Number</th><th class='input-field '>";
         echo $this->Form->control('phone', array('label' => '', 'class' => 'validate', 'type' => 'number'));
-        echo "</th></tr><tr ><th>Date of Birth</th><th class='input-field'>";
-        // echo ' <input type="text" class="datepicker" name="birthdate" value=today("Y-m-d")>';
+        echo "</th></tr><tr><th>Date of Birth</th><th class='input-field'>";
         echo $this->Form->control(
             'birthdate',
             [
@@ -75,13 +79,12 @@
                 'default' => date('Y-m-d') #Set time for today
             ]
         );
-        echo "</th></tr><table></div>";
+        echo "</th></tr><table></div></div></div>";
 
         ?>
-        <!-- </fieldset> -->
-                <div class="btnPos">
-                    <?= $this->Form->button(__(' Register '), ['class' => 'indigo waves-effect waves-light btn']) ?>
-                </div>
+        <div class="btnPos">
+            <?= $this->Form->button(__(' Register '), ['class' => 'indigo waves-effect waves-light btn']) ?>
+        </div>
         <?= $this->Form->end() ?>
     </div>
 </div>
