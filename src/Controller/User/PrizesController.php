@@ -28,7 +28,7 @@ class PrizesController extends AppController
 
 
         $this->loadModel('Scores');
-        $scores = $this->Scores->find('all')->where(['user_id' => $id]);
+        $scores = $this->Scores->find('all')->where(['user_id' => $id, 'del_flg' => 'not']);
         $this->set('scores', $scores);
     }
 
@@ -91,7 +91,8 @@ class PrizesController extends AppController
         if ($this->request->is('post')) {
             $get_scores = $_POST['custom_scores'];
             $user_tbl = $this->loadModel('Scores');
-            $user_result = $this->Scores->find()->where(['id' => $id])->first();
+            $user_result = $this->Scores->find()->where(['user_id' => $id, 'del_flg' => 'not'])->first();
+            debug($user_result);
             if ($user_result != null) {
                 $user_scores = $user_result->score;
                 $user_result->score = $user_scores + $get_scores;

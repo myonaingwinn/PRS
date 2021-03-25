@@ -70,19 +70,20 @@
 </style>
 
 <body>
-    <div align="center">
-
-        <table cellpadding="0" cellspacing="0" border="0">
-            <tr>
-                <td></td>
-                <td width="465" height="540" class="the_wheel" onClick="startSpin();">
-                    <canvas id="canvas" width="465" height="480">
-                        <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
-                    </canvas>
-                </td>
-                <td></td>
-            </tr>
-        </table>
+    <div align="center" style="margin-top: 1rem;" class="card">
+        <div class="card-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td></td>
+                    <td width="465" height="540" class="the_wheel" onClick="startSpin();">
+                        <canvas style="margin-top:1rem" class="clickable" id="canvas" width="465" height="480">
+                            <p style="color: white;" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+                        </canvas>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
     </div><br><br>
 
     <form action=" <?php
