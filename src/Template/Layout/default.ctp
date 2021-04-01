@@ -75,10 +75,8 @@ $cakeDescription = 'PRS';
                     <a><span class="white-text email"><?= $user['email'] ?></span></a>
                 </div>
             </li>
-            <!-- <li><a class="subheader">Profile</a></li> -->
-            <li><a href="/view_user/<?= $user['id'] ?>"><i class="material-icons teal-text">person</i>My Profile</a></li>
-            <li><a href="/edit_user/<?= $user['id'] ?>"><i class="material-icons grey-text text-darken-2">edit</i>Update Profile</a></li>
-            <!-- <li><a class="subheader">Others</a></li> -->
+            <li><a href="/view_user/<?= $user['id'] ?>"><i class="material-icons light-blue-text">person</i>My Profile</a></li>
+            <li><a href="/edit_user/<?= $user['id'] ?>"><i class="material-icons pink-text text-lighten-2">edit</i>Update Profile</a></li>
             <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Rewards</a></li>
             <li><a class="waves-effect" href="/notifications"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
@@ -182,44 +180,15 @@ $cakeDescription = 'PRS';
         margin-top: 0px !important;
     }
 
-    /*     div.message:before {
-        line-height: 0px;
-        font-size: 20px;
-        height: 12px;
-        width: 12px;
-        border-radius: 15px;
-        text-align: center;
-        vertical-align: middle;
-        display: inline-block;
-        position: relative;
-        left: -11px;
-        background-color: #FFF;
-        padding: 12px 14px 12px 10px;
-        content: "i";
-        color: #a0d3e8;
-    } */
-
     div.message.error {
         background-color: #F78181;
         color: #FFF;
     }
 
-    /*     div.message.error:before {
-        padding: 11px 16px 14px 7px;
-        color: #C3232D;
-        content: "x";
-    } */
-
     div.message.success {
         background-color: #3CC099;
         color: #FFF;
     }
-
-    /*     div.message.success:before {
-        padding: 11px 16px 14px 7px;
-        color: #C3232D;
-        content: "✓";
-    } */
 
     div.message.hidden {
         height: 0;

@@ -156,7 +156,11 @@ class UsersController extends AppController
             //img upload
             $img_name = $this->request->getData('img_name');
             $userImage = $this->request->getData('profile_img');
-            $new_img = $userImage['name'];
+            $new_img = '';
+            $image = '';
+            if ($userImage['name']) {
+                $new_img = $userImage['name'];
+            }
 
             if ($new_img != '') {
                 $image = $new_img;
@@ -200,20 +204,19 @@ class UsersController extends AppController
                 if (strlen($phone_no) < 15) {
                     $user->phone = $phone_no;
                     if ($this->Users->save($user)) {
-                        $this->Flash->success(__('The user has been saved.'));
+                        $this->Flash->success(__('Successfully Updated.'));
 
                         return $this->redirect('data_analysis');
                     }
                 } else {
-                    $this->Flash->error(__('Your phone number is too long not longer than 15 digit'));
+                    $this->Flash->error(__('Invalid phone number'));
                 }
             } elseif ($age < 15 or $age > 100) {
                 $this->Flash->error(__('The user is not allowed to use the System. Please, try again.'));
             }
-            $this->Flash->error(__('The user could not be Update. Please, try again.'));
+            $this->Flash->error(__('Could not be Updated. Please, try again.'));
         }
-        $admins = $this->Users->Admins->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'admins'));
+        $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
 
