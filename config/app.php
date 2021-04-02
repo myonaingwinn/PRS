@@ -229,7 +229,7 @@ return [
         'mailForget' => [
             'transport' => 'mailForget',
             'from' => ['ecctester2222@gmail.com' => 'Products Ranking System'],
-        ], 
+        ],
         'mailTrap'=>[
             'transport'=>'mailTrap',
             'from'=>['no-reply@prs.com'=>'Products Ranking System'],
@@ -258,14 +258,14 @@ return [
              * CakePHP will use the default DB port based on the driver selected
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
-             */ 
+             */
             //'port' => 'non_standard_port_number',
-            'username' => 'root', 
+            'username' => 'root',
             'password' => 'root',
             'database' => 'products_ranking_system',
             // 'database' => 'prs_slpp',
             'encoding' => 'utf8',
-            'timezone' => 'UTC',  
+            'timezone' => 'UTC',
             'flags' => [],
             'cacheMetadata' => true,
             'log' => false,
