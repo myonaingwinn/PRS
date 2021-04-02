@@ -40,25 +40,24 @@ class PrizesController extends AppController
 
         // $prizes = $this->Prizes->find('all')->where(['id' => 3]);
         $tbl_score = $this->loadModel('Scores');
-        $scores = $this->Scores->find()->where(['user_id' => $id])->first();
+        $scores = $this->Scores->find()->where(['user_id' => $this->Auth->user('id')])->first();
 
         $pr_score = $prizes->scores;
         $user_score = $scores->score;
 
-        if ($user_score > $pr_score) {
+        if ($user_score >= $pr_score) {
             $res = $user_score - $pr_score;
 
             $scores->score = $res;
             $tbl_score->save($scores);
+            $this->Flash->success(__('Taken Prize ' . $prizes->prize_name . ' successfully!'));
 
             return $this->redirect([
                 'controller' => 'Prizes',
                 'action' => 'index'
             ]);
         } else {
-
-
-            $this->Flash->success(__('The prize cannot unavilable.'));
+            $this->Flash->error(__('The prize cannot unavilable.'));
             return $this->redirect([
                 'controller' => 'Prizes',
                 'action' => 'index'
