@@ -8,8 +8,8 @@
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
                 __('Delete'),
-                ['action' => 'delete', $admin->admin_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $admin->admin_id)]
+                ['action' => 'delete', $admin->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $admin->id)]
             )
         ?></li>
         <li><?= $this->Html->link(__('List Admins'), ['action' => 'index']) ?></li>

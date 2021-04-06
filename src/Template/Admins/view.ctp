@@ -7,8 +7,8 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Admin'), ['action' => 'edit', $admin->admin_id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Admin'), ['action' => 'delete', $admin->admin_id], ['confirm' => __('Are you sure you want to delete # {0}?', $admin->admin_id)]) ?> </li>
+        <li><?= $this->Html->link(__('Edit Admin'), ['action' => 'edit', $admin->id]) ?> </li>
+        <li><?= $this->Form->postLink(__('Delete Admin'), ['action' => 'delete', $admin->id], ['confirm' => __('Are you sure you want to delete # {0}?', $admin->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Admins'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Admin'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Admins'), ['controller' => 'Admins', 'action' => 'index']) ?> </li>
@@ -18,10 +18,6 @@
 <div class="admins view large-9 medium-8 columns content">
     <h3><?= h($admin->admin_id) ?></h3>
     <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Admin') ?></th>
-            <td><?= $admin->has('admin') ? $this->Html->link($admin->admin->admin_id, ['controller' => 'Admins', 'action' => 'view', $admin->admin->admin_id]) : '' ?></td>
-        </tr>
         <tr>
             <th scope="row"><?= __('Email') ?></th>
             <td><?= h($admin->email) ?></td>
@@ -37,6 +33,10 @@
         <tr>
             <th scope="row"><?= __('Token') ?></th>
             <td><?= h($admin->token) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Id') ?></th>
+            <td><?= $this->Number->format($admin->id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>

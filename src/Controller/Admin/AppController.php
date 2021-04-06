@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,9 +13,10 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Controller;
 
-use Cake\Controller\Controller\Admin;
+namespace App\Controller\Admin;
+
+use Cake\Controller\Controller;
 use Cake\Event\Event;
 
 /**
@@ -44,6 +46,21 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        $this->loadComponent('Auth', [
+            'authorize' => 'Controller',
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password'
+                    ]
+                ]
+            ],
+            'loginRedirect' => '/data_analysis',
+            // If unauthorized, return them to page they were just on
+            'unauthorizedRedirect' => $this->referer()
+        ]);
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -60,10 +77,27 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        if (!array_key_exists('_serialize', $this->viewVars) &&
+        if (
+            !array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
+    }
+
+    public function isAuthorized()
+    {
+        if (!$this->Auth->user('name')) {
+            return true;
+        }
+        return false;
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        $this->Auth->loginAction = '/admin/login';
+        $this->set('user', $this->Auth->user());
+        $this->Auth->allow(['add', 'login', 'forgotPassword', 'resetPassword']);
+        $this->Auth->setConfig('authError', "Oops, you are not authorized to access this area.");
     }
 }

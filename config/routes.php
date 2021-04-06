@@ -67,7 +67,6 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/edit_user/*', ['controller' => 'Users', 'action' => 'edit']);
     $routes->connect('/forgotPassword', ['controller' => 'Users', 'action' => 'forgotPassword']);
     $routes->connect('/resetPassword/*', ['controller' => 'Users', 'action' => 'resetPassword']);
-
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 
@@ -106,22 +105,23 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 
 Router::prefix('admin', function (RouteBuilder $routes) {
-
-    $routes->connect('/', ['controller' => 'Luckydraw', 'action' => 'index']);
-    $routes->fallbacks(DashedRoute::class);
-});
-
-Router::prefix('admin', function (RouteBuilder $routes) {
-
+    $routes->connect('/:controller', ['action' => 'index']);
+    $routes->connect('/:controller/:action/*');
+    $routes->connect('/', ['controller' => 'Admins', 'action' => 'index']);
+    $routes->connect('/login', ['controller' => 'Admins', 'action' => 'login']);
+    $routes->connect('/register', ['controller' => 'Admins', 'action' => 'add']);
+    $routes->connect('/resetPassword/*', ['controller' => 'Admins', 'action' => 'resetPassword']);
+    $routes->connect('/forgotPassword', ['controller' => 'Admins', 'action' => 'forgotPassword']);
     $routes->connect('/prize', ['controller' => 'Prizes', 'action' => 'prizelist']);
     $routes->fallbacks(DashedRoute::class);
 });
 
-Router::prefix('user', function (RouteBuilder $routes) {
+/* Router::prefix('user', function (RouteBuilder $routes) {
 
     $routes->connect('/dashboard', ['controller' => 'Prizes', 'action' => 'dashboard']);
     $routes->fallbacks(DashedRoute::class);
-});
+}); */
+
 Router::prefix('user', function (RouteBuilder $routes) {
 
     $routes->connect('/spin', ['controller' => 'Prizes', 'action' => 'spin']);
