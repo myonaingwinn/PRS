@@ -23,7 +23,7 @@ class ProductsController extends AppController
         $this->paginate = [
             'contain' => ['Companies', 'Categories', 'Admins'],
         ];
-        $products = $this->paginate($this->Products);
+        $products = $this->paginate($this->Products->find('all', array('conditions' => array('Products.del_flg' => 'not'))));
         $answers = $this->Products->Answers->find()->contain(['Answers' => ['rating']]);
        
         $this->set(compact('products'));
@@ -148,7 +148,11 @@ class ProductsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $product = $this->Products->get($id);
-        if ($this->Products->delete($product)) {
+
+        //Delete Flag
+        $product->del_flg = "deleted";
+
+        if ($this->Products->save($product)) {
             $this->Flash->success(__('The product has been deleted.'));
         } else {
             $this->Flash->error(__('The product could not be deleted. Please, try again.'));
