@@ -5,7 +5,7 @@
     <div class="col s1"></div>
     <div class="col s10">
         <!-- <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', 16], ['confirm' => __('Are you sure you want to delete # {0}?', 16), 'class' => 'waves-effect waves-light btn red right']) ?> -->
-        <?= $this->Form->create($product) ?>
+        <?= $this->Form->create($product, ['class' => 'was-validated', 'enctype' => 'multipart/form-data']) ?>
         <h5><?= __('Product Infomation') ?></h5>
         <hr>
         <div class="row">
