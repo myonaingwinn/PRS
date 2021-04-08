@@ -51,10 +51,10 @@ class AppController extends Controller
             'authenticate' => [
                 'Form' => [
                     'fields' => [
-                        'username' => 'email',
+                        'email' => 'email',
                         'password' => 'password'
-                    ]
-                ]
+                    ],
+                ],
             ],
             'loginRedirect' => '/data_analysis',
             // If unauthorized, return them to page they were just on
@@ -95,6 +95,7 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event)
     {
+        // $this->Auth->userModel = 'Admin';
         $this->Auth->loginAction = '/admin/login';
         $this->set('user', $this->Auth->user());
         $this->Auth->allow(['add', 'login', 'forgotPassword', 'resetPassword']);

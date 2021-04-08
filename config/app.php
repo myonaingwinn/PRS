@@ -264,6 +264,7 @@ return [
             'password' => 'root',
             'database' => 'products_ranking_system',
             // 'database' => 'prs_slpp',
+            // 'database' => 'prs_skeleton',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],

@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Controller\Admin;
 
 use App\Controller\Admin\AppController;
 use Cake\Utility\Security;
 use Cake\Mailer\Email;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * Admins Controller
@@ -114,12 +116,28 @@ class AdminsController extends AppController
     public function login()
     {
         if ($this->request->is('post')) {
-            $admin = $this->Auth->identify();
-            // return debug($admin);
-            if ($admin) {
-                $this->Auth->setUser($admin);
+            // $admin = $this->Auth->identify();
+
+            $adminPwd = '';
+            $ID = '';
+            $Admin = $this->Admins->newEntity();
+            $hasher = new DefaultPasswordHasher();
+
+            $pwd = $this->request->getData('password');
+            $email = $this->request->getData('email');
+            $admin = $this->Admins->findByEmail($email);
+            $Admin = $this->Admins->findByEmail($email)->first();
+            $data = $this->paginate($admin);
+
+            foreach ($data as $d) {
+                $adminPwd = $d->password ? $d->password : '';
+            }
+
+            if ($hasher->check($pwd, $adminPwd)) {
+                $this->Auth->setUser($Admin);
                 // return debug($this->Auth->getUser());
-                return $this->redirect($this->Auth->redirectUrl());
+                return $this->redirect('/data_analysis');
+                // return $this->redirect($this->Auth->redirectUrl());
             } else {
                 $this->Flash->error(__('Username or password is incorrect'));
             }
@@ -128,7 +146,9 @@ class AdminsController extends AppController
 
     public function logout()
     {
-        return $this->redirect($this->Auth->logout());
+        $this->Auth->setUser(null);
+        // return $this->redirect($this->Auth->logout());
+        return $this->redirect('/admin/login');
     }
 
     public function forgotPassword()

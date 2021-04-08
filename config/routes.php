@@ -109,6 +109,7 @@ Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->connect('/:controller/:action/*');
     $routes->connect('/', ['controller' => 'Admins', 'action' => 'index']);
     $routes->connect('/login', ['controller' => 'Admins', 'action' => 'login']);
+    $routes->connect('/logout', ['controller' => 'Admins', 'action' => 'logout']);
     $routes->connect('/register', ['controller' => 'Admins', 'action' => 'add']);
     $routes->connect('/resetPassword/*', ['controller' => 'Admins', 'action' => 'resetPassword']);
     $routes->connect('/forgotPassword', ['controller' => 'Admins', 'action' => 'forgotPassword']);
