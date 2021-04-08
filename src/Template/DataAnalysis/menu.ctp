@@ -91,7 +91,7 @@
             <tr>
                 <?php foreach ($product_list as $p) : ?>
                     <?php if ($p['pimage'] != null) ?>
-                    <td width="20"><?= @$this->HTML->image($p['pimage']) ?></td>
+                    <td width="20"><?= @$this->HTML->image($p['pimage'], array('width' => '200px')) ?></td>
                     <td width="20">
 
                         Product Model No: <span style="color:red"><?= h($p['pmodel_no']) ?></span><br>
