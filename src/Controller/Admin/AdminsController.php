@@ -113,7 +113,7 @@ class AdminsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function login()
+    /*     public function login()
     {
         if ($this->request->is('post')) {
             // $admin = $this->Auth->identify();
@@ -142,13 +142,28 @@ class AdminsController extends AppController
                 $this->Flash->error(__('Username or password is incorrect'));
             }
         }
+    } */
+
+    public function login()
+    {
+        if ($this->request->is('post')) {
+            $admin = $this->Auth->identify();
+            // return debug($admin);
+            if ($admin) {
+                $this->Auth->setUser($admin);
+                // return debug($this->Auth->getUser());
+                return $this->redirect($this->Auth->redirectUrl());
+            } else {
+                $this->Flash->error(__('Username or password is incorrect'));
+            }
+        }
     }
 
     public function logout()
     {
-        $this->Auth->setUser(null);
-        // return $this->redirect($this->Auth->logout());
-        return $this->redirect('/admin/login');
+        // $this->Auth->setUser(null);
+        return $this->redirect($this->Auth->logout());
+        // return $this->redirect('/admin/login');
     }
 
     public function forgotPassword()

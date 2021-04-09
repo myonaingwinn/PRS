@@ -18,6 +18,9 @@ namespace App\Controller\Admin;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Controller\Component\AuthComponent;
+use Cake\Network\Exception\NotFoundException;
+use Cake\Network\Exception\UnauthorizedException;
 
 /**
  * Application Controller
@@ -51,10 +54,15 @@ class AppController extends Controller
             'authenticate' => [
                 'Form' => [
                     'fields' => [
-                        'email' => 'email',
+                        'username' => 'email',
                         'password' => 'password'
                     ],
+                    'userModel' => 'Admins'
                 ],
+            ],
+            'loginAction' => [
+                'controller' => 'Admins',
+                'action' => 'login'
             ],
             'loginRedirect' => '/data_analysis',
             // If unauthorized, return them to page they were just on
@@ -85,19 +93,30 @@ class AppController extends Controller
         }
     }
 
+    protected function isPrefix($prefix)
+    {
+        $params = $this->request->params;
+        return isset($params['prefix']) && $params['prefix'] === $prefix;
+    }
+
+
     public function isAuthorized()
     {
-        if (!$this->Auth->user('name')) {
+        if ($this->isPrefix('admin')) {
             return true;
         }
-        return false;
+        return true;
     }
 
     public function beforeFilter(Event $event)
     {
-        // $this->Auth->userModel = 'Admin';
-        $this->Auth->loginAction = '/admin/login';
-        $this->set('user', $this->Auth->user());
+        if ($this->Auth->user('name')) {
+            $this->set('user', $this->Auth->user());
+            $this->set('admin', null);
+        } else {
+            $this->set('user', null);
+            $this->set('admin', $this->Auth->user());
+        }
         $this->Auth->allow(['add', 'login', 'forgotPassword', 'resetPassword']);
         $this->Auth->setConfig('authError', "Oops, you are not authorized to access this area.");
     }

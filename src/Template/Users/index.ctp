@@ -7,7 +7,7 @@
 ?>
 <!-- <a class="waves-effect waves-light btn indigo right" href="/users/add" style="margin-top: 5px;">New User</a> -->
 <div class="users index large-9 medium-8 columns content">
-
+    <h3><?= __('Users') ?></h3>
     <table>
         <thead>
             <tr>

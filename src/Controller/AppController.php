@@ -95,7 +95,13 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event)
     {
-        $this->set('user', $this->Auth->user());
+        if ($this->Auth->user('name')) {
+            $this->set('user', $this->Auth->user());
+            $this->set('admin', null);
+        } else {
+            $this->set('user', null);
+            $this->set('admin', $this->Auth->user());
+        }
         $this->Auth->allow(['add', 'login', 'forgotPassword', 'resetPassword']);
         $this->Auth->setConfig('authError', "Oops, you are not authorized to access this area.");
     }

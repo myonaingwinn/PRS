@@ -57,8 +57,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/data_analysis', ['controller' => 'DataAnalysis', 'action' => 'menu']);
     //$routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
-    $routes->connect('/new_survey', ['controller' => 'Admins', 'action' => 'new_survey', 'new_survey']);
-
+    $routes->connect('/surveys_home', ['controller' => 'Surveys', 'action' => 'index']);
     $routes->connect('/add_survey', ['controller' => 'Surveys', 'action' => 'add']);
     $routes->connect('/view_survey/*', ['controller' => 'Surveys', 'action' => 'view']);
 
@@ -114,6 +113,8 @@ Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->connect('/resetPassword/*', ['controller' => 'Admins', 'action' => 'resetPassword']);
     $routes->connect('/forgotPassword', ['controller' => 'Admins', 'action' => 'forgotPassword']);
     $routes->connect('/prize', ['controller' => 'Prizes', 'action' => 'prizelist']);
+    $routes->connect('/luckydraw', ['controller' => 'Luckydraw', 'action' => 'index']);
+    $routes->connect('/u', ['controller' => 'Users', 'action' => 'index']);
     $routes->fallbacks(DashedRoute::class);
 });
 
