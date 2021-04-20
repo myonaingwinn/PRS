@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
+use Cake\Event\Event;
 
 /**
  * DataAnalysis Controller
@@ -79,5 +80,11 @@ class DataAnalysisController extends AppController
             )
         );
         $this->set('products_list', $query);
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['menu', 'product', 'index']);
     }
 }

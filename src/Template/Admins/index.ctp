@@ -15,7 +15,7 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('admin_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('password') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('del_flg') ?></th>
@@ -28,7 +28,7 @@
         <tbody>
             <?php foreach ($admins as $admin): ?>
             <tr>
-                <td><?= $admin->has('admin') ? $this->Html->link($admin->admin->admin_id, ['controller' => 'Admins', 'action' => 'view', $admin->admin->admin_id]) : '' ?></td>
+                <td><?= $this->Number->format($admin->id) ?></td>
                 <td><?= h($admin->email) ?></td>
                 <td><?= h($admin->password) ?></td>
                 <td><?= h($admin->del_flg) ?></td>
@@ -36,9 +36,9 @@
                 <td><?= h($admin->modified) ?></td>
                 <td><?= h($admin->token) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $admin->admin_id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $admin->admin_id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $admin->admin_id], ['confirm' => __('Are you sure you want to delete # {0}?', $admin->admin_id)]) ?>
+                    <?= $this->Html->link(__('View'), ['action' => 'view', $admin->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $admin->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $admin->id], ['confirm' => __('Are you sure you want to delete # {0}?', $admin->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

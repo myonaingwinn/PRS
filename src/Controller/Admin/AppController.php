@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,10 +13,14 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Controller;
 
-use Cake\Controller\Controller\Admin;
+namespace App\Controller\Admin;
+
+use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Controller\Component\AuthComponent;
+use Cake\Network\Exception\NotFoundException;
+use Cake\Network\Exception\UnauthorizedException;
 
 /**
  * Application Controller
@@ -44,6 +49,26 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        $this->loadComponent('Auth', [
+            'authorize' => 'Controller',
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password'
+                    ],
+                    'userModel' => 'Admins'
+                ],
+            ],
+            'loginAction' => [
+                'controller' => 'Admins',
+                'action' => 'login'
+            ],
+            'loginRedirect' => '/data_analysis',
+            // If unauthorized, return them to page they were just on
+            'unauthorizedRedirect' => $this->referer()
+        ]);
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -60,10 +85,39 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        if (!array_key_exists('_serialize', $this->viewVars) &&
+        if (
+            !array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
+    }
+
+    protected function isPrefix($prefix)
+    {
+        $params = $this->request->params;
+        return isset($params['prefix']) && $params['prefix'] === $prefix;
+    }
+
+
+    public function isAuthorized()
+    {
+        if ($this->isPrefix('admin')) {
+            return true;
+        }
+        return true;
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        if ($this->Auth->user('name')) {
+            $this->set('user', $this->Auth->user());
+            $this->set('admin', null);
+        } else {
+            $this->set('user', null);
+            $this->set('admin', $this->Auth->user());
+        }
+        $this->Auth->allow(['add', 'login', 'forgotPassword', 'resetPassword']);
+        $this->Auth->setConfig('authError', "Oops, you are not authorized to access this area.");
     }
 }

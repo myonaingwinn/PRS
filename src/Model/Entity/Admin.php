@@ -2,11 +2,12 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * Admin Entity
  *
- * @property int $admin_id
+ * @property int $id
  * @property string $email
  * @property string $password
  * @property string $del_flg
@@ -30,7 +31,7 @@ class Admin extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'admin_id' => false
+        'id' => false
     ];
 
     /**
@@ -42,4 +43,11 @@ class Admin extends Entity
         'password',
         'token'
     ];
+
+    protected function _setPassword($password)
+    {
+        if (strlen($password) > 0) {
+            return (new DefaultPasswordHasher)->hash($password);
+        }
+    }
 }

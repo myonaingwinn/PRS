@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Products Controller
@@ -25,7 +26,7 @@ class ProductsController extends AppController
         ];
         $products = $this->paginate($this->Products->find('all', array('conditions' => array('Products.del_flg' => 'not'))));
         $answers = $this->Products->Answers->find()->contain(['Answers' => ['rating']]);
-       
+
         $this->set(compact('products'));
         $this->set(compact('answers'));
     }
@@ -92,6 +93,7 @@ class ProductsController extends AppController
         $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);        
         
         $this->set(compact('product', 'companies', 'categories', 'admins'));        
+
         $this->set(compact('options_com', 'options_cat'));
     }
 
@@ -160,31 +162,31 @@ class ProductsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-    
+
     // public function productlist(){
 
     //     $this->viewBuilder()->setLayout('ajax');
-     
-    
-    
+
+
+
     //     $connection = ConnectionManager::get('default');
     //     $products = $connection->execute('SELECT 
     //     products.product_image,products.product_name,products.product_price,users.name,answers.rating
-       
+
     //    FROM products
     //    JOIN answers
     //     ON products.id=answers.product_id
     //    JOIN users
     //     ON users.id = answers.user_id GROUP BY products.product_name;')->fetchAll('assoc');
-    
+
     //    // $this->loadModel('products');
     //    //$products = $this->products->find('all');
     //    //$this->paginate=['contain'=>['answer'],];
     //    //$products = $this->Product->find('all',array('fields'=>array('products.product_image','products.product_name','products.product_price','products.product_name','products.product_name','products.product_name'),'conditions'=>array('del_flg'=>1)));
-       
+
     //    $this->set('products',$products);
-    
-    
+
+
     // }
 
     public function productlist()
@@ -210,5 +212,11 @@ class ProductsController extends AppController
         //$products = $this->Product->find('all',array('fields'=>array('products.product_image','products.product_name','products.product_price','products.product_name','products.product_name','products.product_name'),'conditions'=>array('del_flg'=>1)));
 
         $this->set('products', $products);
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['productlist', 'delete', 'add', 'index', 'edit', 'view']);
     }
 }

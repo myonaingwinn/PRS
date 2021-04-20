@@ -49,8 +49,8 @@ $cakeDescription = 'PRS';
 <body class="blue-grey lighten-5">
     <nav>
         <div class="nav-wrapper indigo z-depth-1">
-            <a href=" <?= ($user['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">PRS</a>
-            <?php if ($user['id']) : ?>
+            <a href=" <?= ($user['id'] || $admin['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">PRS</a>
+            <?php if ($user['id'] || $admin['id']) : ?>
                 <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
                     <i class="material-icons">menu</i>
                 </a>
@@ -63,6 +63,7 @@ $cakeDescription = 'PRS';
     </nav>
 
     <!-- side nav -->
+    <!-- for UserPanel -->
     <?php if ($user['id']) : ?>
         <ul id="slide-out" class="sidenav">
             <li>
@@ -81,6 +82,29 @@ $cakeDescription = 'PRS';
             <li><a class="waves-effect" href="/notifications"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
             <li><a class="waves-effect" href="/logout"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
+        </ul>
+    <?php endif ?>
+
+    <!-- for AdminPanel -->
+    <?php if ($admin['id']) : ?>
+        <ul id="slide-out" class="sidenav">
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                        <img width="300" height="500" src="/img/profile_img/background.jpg">
+                    </div>
+                    <a><img class="circle" src="<?= '/img/profile_img/default.png'  ?>"></a>
+                    <a><span class="white-text name">Admin</span></a>
+                    <a><span class="white-text email"><?= $admin['email'] ?></span></a>
+                </div>
+            </li>
+            <li><a href="/admin/"><i class="material-icons orange-text text-darken-2">account_box</i>Admins</a></li>
+            <li><a href="/users"><i class="material-icons blue-text text-darken-2">group</i>Users</a></li>
+            <li><a class="waves-effect" href="/products"><i class="material-icons yellow-text text-darken-1">local_parking</i>Products</a></li>
+            <li><a class="waves-effect" href="/categories"><i class="material-icons cyan-text ">apps</i>Categories</a></li>
+            <li><a class="waves-effect" href="/surveys"><i class="material-icons green-text">local_play</i>Surveys</a></li>
+            <li><a class="waves-effect" href="/admin/luckydraw"><i class="material-icons purple-text text-lighten-1">card_giftcard</i>Lucky Draw</a></li>
+            <li><a class="waves-effect" href="/admin/logout"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
         </ul>
     <?php endif ?>
     <?= $this->Flash->render() ?>
