@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\AppController;
 use Cake\Utility\Security;
 use Cake\Mailer\Email;
-use Cake\Auth\DefaultPasswordHasher;
+use Cake\Event\Event;
 
 /**
  * Admins Controller
@@ -24,7 +24,7 @@ class AdminsController extends AppController
      */
     public function index()
     {
-        $admins = $this->paginate($this->Admins);
+        $admins = $this->paginate($this->Admins->find('all')->where(['Admins.del_flg' => 'not']));
 
         $this->set(compact('admins'));
         $this->set('_serialize', ['admins']);
@@ -37,7 +37,7 @@ class AdminsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+/*     public function view($id = null)
     {
         $admin = $this->Admins->get($id, [
             'contain' => ['Companies', 'Options', 'Products', 'Questions', 'Surveys', 'Users']
@@ -45,7 +45,7 @@ class AdminsController extends AppController
 
         $this->set('admin', $admin);
         $this->set('_serialize', ['admin']);
-    }
+    } */
 
     /**
      * Add method
@@ -75,7 +75,7 @@ class AdminsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+/*     public function edit($id = null)
     {
         $admin = $this->Admins->get($id, [
             'contain' => []
@@ -91,7 +91,7 @@ class AdminsController extends AppController
         }
         $this->set(compact('admin'));
         $this->set('_serialize', ['admin']);
-    }
+    } */
 
     /**
      * Delete method
@@ -102,9 +102,10 @@ class AdminsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->request->allowMethod(['patch', 'post', 'put']);
         $admin = $this->Admins->get($id);
-        if ($this->Admins->delete($admin)) {
+        $admin->del_flg = 'deleted';
+        if ($this->Admins->save($admin)) {
             $this->Flash->success(__('The admin has been deleted.'));
         } else {
             $this->Flash->error(__('The admin could not be deleted. Please, try again.'));
@@ -113,45 +114,12 @@ class AdminsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    /*     public function login()
-    {
-        if ($this->request->is('post')) {
-            // $admin = $this->Auth->identify();
-
-            $adminPwd = '';
-            $ID = '';
-            $Admin = $this->Admins->newEntity();
-            $hasher = new DefaultPasswordHasher();
-
-            $pwd = $this->request->getData('password');
-            $email = $this->request->getData('email');
-            $admin = $this->Admins->findByEmail($email);
-            $Admin = $this->Admins->findByEmail($email)->first();
-            $data = $this->paginate($admin);
-
-            foreach ($data as $d) {
-                $adminPwd = $d->password ? $d->password : '';
-            }
-
-            if ($hasher->check($pwd, $adminPwd)) {
-                $this->Auth->setUser($Admin);
-                // return debug($this->Auth->getUser());
-                return $this->redirect('/data_analysis');
-                // return $this->redirect($this->Auth->redirectUrl());
-            } else {
-                $this->Flash->error(__('Username or password is incorrect'));
-            }
-        }
-    } */
-
     public function login()
     {
         if ($this->request->is('post')) {
             $admin = $this->Auth->identify();
-            // return debug($admin);
             if ($admin) {
                 $this->Auth->setUser($admin);
-                // return debug($this->Auth->getUser());
                 return $this->redirect($this->Auth->redirectUrl());
             } else {
                 $this->Flash->error(__('Username or password is incorrect'));
@@ -161,9 +129,7 @@ class AdminsController extends AppController
 
     public function logout()
     {
-        // $this->Auth->setUser(null);
         return $this->redirect($this->Auth->logout());
-        // return $this->redirect('/admin/login');
     }
 
     public function forgotPassword()
@@ -172,7 +138,6 @@ class AdminsController extends AppController
             $email = $this->request->getData('email');
             $token = Security::hash(Security::randomBytes(25));
 
-            // $adminTable = $this->Admins;
             if ($email == NULL) {
                 $this->Flash->error(__('Please insert your email address'));
             }
@@ -206,5 +171,11 @@ class AdminsController extends AppController
                 return $this->redirect(['action' => 'login']);
             }
         }
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['delete', 'add', 'index']);
     }
 }

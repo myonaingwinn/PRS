@@ -98,11 +98,12 @@ $cakeDescription = 'PRS';
                     <a><span class="white-text email"><?= $admin['email'] ?></span></a>
                 </div>
             </li>
-            <li><a href="/view_user/<?= $admin['id'] ?>"><i class="material-icons light-blue-text">person</i>My Profile</a></li>
-            <li><a href="/users"><i class="material-icons pink-text text-lighten-2">edit</i>Users</a></li>
-            <li><a class="waves-effect" href="/products"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Products</a></li>
+            <li><a href="/admin/"><i class="material-icons orange-text text-darken-2">account_box</i>Admins</a></li>
+            <li><a href="/users"><i class="material-icons blue-text text-darken-2">group</i>Users</a></li>
+            <li><a class="waves-effect" href="/products"><i class="material-icons yellow-text text-darken-1">local_parking</i>Products</a></li>
+            <li><a class="waves-effect" href="/categories"><i class="material-icons cyan-text ">apps</i>Categories</a></li>
             <li><a class="waves-effect" href="/surveys"><i class="material-icons green-text">local_play</i>Surveys</a></li>
-            <li><a class="waves-effect" href="/admin/luckydraw"><i class="material-icons blue-text text-darken-2">pages</i>Lucky Draw</a></li>
+            <li><a class="waves-effect" href="/admin/luckydraw"><i class="material-icons purple-text text-lighten-1">card_giftcard</i>Lucky Draw</a></li>
             <li><a class="waves-effect" href="/admin/logout"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
         </ul>
     <?php endif ?>
