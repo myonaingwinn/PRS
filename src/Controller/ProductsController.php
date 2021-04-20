@@ -24,7 +24,7 @@ class ProductsController extends AppController
         $this->paginate = [
             'contain' => ['Companies', 'Categories', 'Admins'],
         ];
-        $products = $this->paginate($this->Products);
+        $products = $this->paginate($this->Products->find('all', array('conditions' => array('Products.del_flg' => 'not'))));
         $answers = $this->Products->Answers->find()->contain(['Answers' => ['rating']]);
 
         $this->set(compact('products'));
@@ -47,44 +47,34 @@ class ProductsController extends AppController
         $this->set('product', $product);
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
     public function add()
     {
         $product = $this->Products->newEntity();
         if ($this->request->is('post')) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
+            
+            //Delete Flag
+            $product->del_flg = "not";
+            
+            //Image Upload
+            $fileimage = $this->request->getData('image');
+            $nameimage = $fileimage['name'];
+            $target_image = WWW_ROOT . 'upload' . DS . 'images' . DS . $nameimage;
+            if (move_uploaded_file($fileimage['tmp_name'], $target_image)) {
+                if (!empty($nameimage)) {
+                    $product->image = $nameimage;
+                }
+            }
 
-            // $fileimage = $this->request->data('product_image');
-            // var_dump($fileimage);
-            // $nameimage = $fileimage['name'];
-            // $target_image = WWW_ROOT . 'upload' . DS . 'images' . DS . $nameimage;
-            // if (move_uploaded_file($fileimage['tmp_name'], $target_image)) {
-            //     if (!empty($nameimage)) {
-            //         $product->product_image = $nameimage;
-            //     }
-            // }
-
-            // $filevideo = $this->request->data('product_video');
-            // var_dump($filevideo);
-            // $namevideo = $filevideo['name'];
-            // $target_video = WWW_ROOT . 'upload' . DS . 'videos' . DS . $namevideo;
-            // if (move_uploaded_file($filevideo['tmp_name'], $target_video)) {
-            //     if (!empty($namevideo)) {
-            //         $product->product_video = $namevideo;
-            //     }
-            // }
-
-            $fileimage = $this->request->getData('product_image');
-            $filevideo = $this->request->getData('product_video');
-            $uploadPath = 'http://localhost/PRS/upload/';
-            $destinationImage = $uploadPath . 'images/' . $fileimage;
-            $destinationVideo = $uploadPath . 'videos/' . $filevideo;
-            $target = WWW_ROOT . 'img' . DS . 'product' . DS;
-            //move_uploaded_file($product['product_image']['tmp_name'], $target);
+            //Video Upload
+            $filevideo = $this->request->getdata('video');
+            $namevideo = $filevideo['name'];
+            $target_video = WWW_ROOT . 'upload' . DS . 'videos' . DS . $namevideo;
+            if (move_uploaded_file($filevideo['tmp_name'], $target_video)) {
+                if (!empty($namevideo)) {
+                    $product->video = $namevideo;
+                }
+            }
 
             if ($this->Products->save($product)) {
 
@@ -93,23 +83,20 @@ class ProductsController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
+            
         }
         $companies = $this->Products->Companies->find('list', ['limit' => 200]);
         $categories = $this->Products->Categories->find('list', ['limit' => 200]);
         $admins = $this->Products->Admins->find('list', ['limit' => 200]);
+        
         $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name']);
-        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);
-        $this->set(compact('product', 'companies', 'categories', 'admins'));
+        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);        
+        
+        $this->set(compact('product', 'companies', 'categories', 'admins'));        
+
         $this->set(compact('options_com', 'options_cat'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Product id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
         $product = $this->Products->get($id, [
@@ -117,34 +104,57 @@ class ProductsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
+            
+            //Delete Flag
+            $product->del_flg = "not";
+            
+            //Image Upload
+            $fileimage = $this->request->getData('image');
+            $nameimage = $fileimage['name'];
+            $target_image = WWW_ROOT . 'upload' . DS . 'images' . DS . $nameimage;
+            if (move_uploaded_file($fileimage['tmp_name'], $target_image)) {
+                if (!empty($nameimage)) {
+                    $product->image = $nameimage;
+                }
+            }
+
+            //Video Upload
+            $filevideo = $this->request->getdata('video');
+            $namevideo = $filevideo['name'];
+            $target_video = WWW_ROOT . 'upload' . DS . 'videos' . DS . $namevideo;
+            if (move_uploaded_file($filevideo['tmp_name'], $target_video)) {
+                if (!empty($namevideo)) {
+                    $product->video = $namevideo;
+                }
+            }
+
             if ($this->Products->save($product)) {
-                $this->Flash->success(__('The product has been saved.'));
+                $this->Flash->success(__('The product has been updated.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The product could not be saved. Please, try again.'));
+            $this->Flash->error(__('The product could not be updated. Please, try again.'));
         }
         $companies = $this->Products->Companies->find('list', ['limit' => 200]);
         $categories = $this->Products->Categories->find('list', ['limit' => 200]);
         $admins = $this->Products->Admins->find('list', ['limit' => 200]);
+        
         $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name']);
-        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);
-        $this->set(compact('product', 'companies', 'categories', 'admins'));
+        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);        
+        
+        $this->set(compact('product', 'companies', 'categories', 'admins'));        
         $this->set(compact('options_com', 'options_cat'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Product id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $product = $this->Products->get($id);
-        if ($this->Products->delete($product)) {
+
+        //Delete Flag
+        $product->del_flg = "deleted";
+
+        if ($this->Products->save($product)) {
             $this->Flash->success(__('The product has been deleted.'));
         } else {
             $this->Flash->error(__('The product could not be deleted. Please, try again.'));

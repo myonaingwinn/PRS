@@ -156,8 +156,8 @@ function getAvgRating(int $pid)
 {
     $connection = ConnectionManager::get('default');
     $results1 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE age<=16)', [$pid])->fetchAll('assoc');
-    $results2 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 16<age<=30)', [$pid])->fetchAll('assoc');
-    $results3 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 30<age<=50)', [$pid])->fetchAll('assoc');
+    $results2 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 16<age and age<=30)', [$pid])->fetchAll('assoc');
+    $results3 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 30<age and age<=50)', [$pid])->fetchAll('assoc');
     $results4 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE age>50)', [$pid])->fetchAll('assoc');
 
     $avg1 = getAvgResult($results1);
@@ -196,7 +196,7 @@ function getFeedback($pid)
 {
     //echo ("product_id" . $pid);
     $connection = ConnectionManager::get('default');
-    $prodFeed = $connection->execute('SELECT users.name as fname, answers.remark as fremark , answers.rating as frating, answers.created as fdate FROM answers,users where product_id=? and users.id=answers.user_id', [$pid])->fetchAll('assoc');
+    $prodFeed = $connection->execute('SELECT users.name as fname, answers.remark as fremark , answers.rating as frating, answers.created as fdate FROM answers,users where product_id=? and users.id=answers.user_id group by user_id', [$pid])->fetchAll('assoc');
     return $prodFeed;
 }
 ?>

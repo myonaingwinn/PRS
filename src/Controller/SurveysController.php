@@ -26,7 +26,7 @@ class SurveysController extends AppController
         $this->paginate = [
             'contain' => ['Products', 'Categories', 'Admins']
         ];
-        $surveys = $this->paginate($this->Surveys);
+        $surveys = $this->paginate($this->Surveys->find('all', array('conditions' => array('Surveys.del_flg' => 'not'))));
 
         $this->set(compact('surveys'));
         $this->set('_serialize', ['surveys']);
