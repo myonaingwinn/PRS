@@ -37,7 +37,7 @@ class AdminsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-/*     public function view($id = null)
+    /*     public function view($id = null)
     {
         $admin = $this->Admins->get($id, [
             'contain' => ['Companies', 'Options', 'Products', 'Questions', 'Surveys', 'Users']
@@ -75,7 +75,7 @@ class AdminsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-/*     public function edit($id = null)
+    /*     public function edit($id = null)
     {
         $admin = $this->Admins->get($id, [
             'contain' => []
@@ -176,6 +176,7 @@ class AdminsController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['delete', 'add', 'index']);
+        if ($this->Auth->user())
+            $this->Auth->allow(['delete', 'add', 'index']);
     }
 }

@@ -129,6 +129,7 @@ class PrizesController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['delete', 'prizeadd', 'edit', 'prizelist']);
+        if ($this->Auth->user())
+            $this->Auth->allow(['delete', 'prizeadd', 'edit', 'prizelist']);
     }
 }

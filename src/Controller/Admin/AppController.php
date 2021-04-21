@@ -105,7 +105,7 @@ class AppController extends Controller
         if ($this->isPrefix('admin')) {
             return true;
         }
-        return true;
+        return false;
     }
 
     public function beforeFilter(Event $event)

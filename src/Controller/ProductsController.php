@@ -217,6 +217,7 @@ class ProductsController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
+        if ($this->Auth->user())
         $this->Auth->allow(['productlist', 'delete', 'add', 'index', 'edit', 'view']);
     }
 }

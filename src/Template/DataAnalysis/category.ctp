@@ -7,7 +7,6 @@
         display: block;
         max-width: -moz-fit-content;
         max-width: fit-content;
-        margin: 0 auto;
         overflow-x: auto;
         white-space: nowrap;
     }
@@ -147,7 +146,7 @@ function getPieCharts($categoryType)
     //echo "$data";
     $jsonPieData = json_encode($arrData);
 
-    $columnChart = new FusionCharts("pie3d", "chart-1", "600", "300", "chart-container1", "json", $jsonPieData);
+    $columnChart = new FusionCharts("pie3d", "chart-1", "800", "500", "chart-container1", "json", $jsonPieData);
 
     // Render the chart
     $columnChart->render();
@@ -223,27 +222,27 @@ function getAvgResult($results)
     </div>
 </form>
 <br>
+
 <div class="row">
-    <div class="col">
-        <div id="chart-container1"></div>
-    </div>
-    <div class="col">
-        <table>
-            <tr>
-                <th>Product Name</th>
-                <th>Model No</th>
-                <th>Price</th>
-            </tr>
-            <?php foreach ($pinfo_query as $p) : ?>
-                <tr>
-                    <td width="20"><?= h($p->name) ?></td>
-                    <td width="20"><?= h($p->model_no) ?></td>
-                    <td width="20"><?= h($p->price) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    </div>
+    <div id="chart-container1"></div>
 </div>
+<div class="row">
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>Model No</th>
+            <th>Price</th>
+        </tr>
+        <?php foreach ($pinfo_query as $p) : ?>
+            <tr>
+                <td width="20"><?= h($p->name) ?></td>
+                <td width="20"><?= h($p->model_no) ?></td>
+                <td width="20"><?= h($p->price) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
+
 <script>
     $(document).ready(function() {
         $('select').formSelect();

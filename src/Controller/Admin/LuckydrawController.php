@@ -111,6 +111,7 @@ class LuckydrawController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['delete', 'add', 'index', 'edit', 'view']);
+        if ($this->Auth->user())
+            $this->Auth->allow(['delete', 'add', 'index', 'edit', 'view']);
     }
 }

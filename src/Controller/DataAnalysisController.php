@@ -85,6 +85,7 @@ class DataAnalysisController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['menu', 'product', 'index']);
+        if ($this->Auth->user())
+            $this->Auth->allow(['menu', 'product', 'index']);
     }
 }
