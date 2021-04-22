@@ -1,37 +1,42 @@
-<?php
-/**
-  * @var \App\View\AppView $this
-  */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Admins'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Companies'), ['controller' => 'Companies', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Company'), ['controller' => 'Companies', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Options'), ['controller' => 'Options', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Option'), ['controller' => 'Options', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Products'), ['controller' => 'Products', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Product'), ['controller' => 'Products', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Questions'), ['controller' => 'Questions', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Question'), ['controller' => 'Questions', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Surveys'), ['controller' => 'Surveys', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Survey'), ['controller' => 'Surveys', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="admins form large-9 medium-8 columns content">
-    <?= $this->Form->create($admin) ?>
-    <fieldset>
-        <legend><?= __('Add Admin') ?></legend>
-        <?php
-            echo $this->Form->control('email');
-            echo $this->Form->control('password');
-            echo $this->Form->control('del_flg');
-            echo $this->Form->control('token');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->Form->create($admin) ?>
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Register</span>
+            <div class="row">
+                <div class="input-field col s12 my-input">
+                    <input placeholder="Email" name="email" type="email" class="validate" required>
+                </div>
+                <div class="input-field col s12 my-input">
+                    <input placeholder="Password" name="password" type="password" class="validate" required>
+                </div>
+            </div>
+        </div>
+        <div class="card-action">
+            <div class="ca-row">
+                <button type="submit" class="waves-effect waves-light btn indigo right">Register</button>
+            </div>
+        </div>
+    </div>
 </div>
+<?= $this->Form->end() ?>
+
+
+<style>
+    .card {
+        margin-top: 5rem;
+    }
+
+    .input {
+        margin: 1rem;
+    }
+
+    .row {
+        margin-top: 1rem;
+        margin-bottom: -.1rem;
+    }
+
+    .ca-row {
+        padding-bottom: 2.5rem;
+    }
+</style>

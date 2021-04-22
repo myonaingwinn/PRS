@@ -57,12 +57,12 @@ class AdminsController extends AppController
         $admin = $this->Admins->newEntity();
         if ($this->request->is('post')) {
             $admin = $this->Admins->patchEntity($admin, $this->request->getData());
+            $admin->del_flg = 'not';
             if ($this->Admins->save($admin)) {
-                $this->Flash->success(__('The admin has been saved.'));
-
+                $this->Flash->success(__('The admin has been registered. You can login now.'));
                 return $this->redirect('/admin/login');
             }
-            $this->Flash->error(__('The admin could not be saved. Please, try again.'));
+            $this->Flash->error(__('The admin could not be registered. Please, try again.'));
         }
         $this->set(compact('admin'));
         $this->set('_serialize', ['admin']);
