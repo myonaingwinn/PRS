@@ -21,7 +21,7 @@ class DataAnalysisController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
+/*     public function index()
     {
         // 'value' => 'name'
 
@@ -41,7 +41,7 @@ class DataAnalysisController extends AppController
         // echo ($results1);
 
         $this->set('product_list', $results1);
-    }
+    } */
     public function menu()
     {
         $categories = TableRegistry::get('categories');
@@ -86,6 +86,6 @@ class DataAnalysisController extends AppController
     {
         parent::beforeFilter($event);
         if ($this->Auth->user())
-            $this->Auth->allow(['menu', 'product', 'index']);
+            $this->Auth->allow(['menu', 'category', 'product']);
     }
 }
