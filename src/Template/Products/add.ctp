@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <h5><?= __('Category Infomation') ?></h5>
+        <h5><?= __('Category Information') ?></h5>
         <hr>
         <div class="row">
             <div class="col s3">
@@ -55,7 +55,7 @@
                 <?= $this->Form->select('category_id', $options_cat, ['class' => 'btn indigo']) ?>
             </div>
         </div>
-        <h5><?= __('Company Infomation') ?></h5>
+        <h5><?= __('Company Information') ?></h5>
         <hr>
         <div class="row">
             <div class="col s3">

@@ -52,10 +52,10 @@ class ProductsController extends AppController
         $product = $this->Products->newEntity();
         if ($this->request->is('post')) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
-            
+
             //Delete Flag
             $product->del_flg = "not";
-            
+
             //Image Upload
             $fileimage = $this->request->getData('image');
             $nameimage = $fileimage['name'];
@@ -83,21 +83,20 @@ class ProductsController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
-            
         }
         $companies = $this->Products->Companies->find('list', ['limit' => 200]);
         $categories = $this->Products->Categories->find('list', ['limit' => 200]);
         $admins = $this->Products->Admins->find('list', ['limit' => 200]);
-        
+
         $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name']);
-        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);        
-        
-        $this->set(compact('product', 'companies', 'categories', 'admins'));        
+        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);
+
+        $this->set(compact('product', 'companies', 'categories', 'admins'));
 
         $this->set(compact('options_com', 'options_cat'));
     }
 
-    public function edit($id = null)
+    /*public function edit($id = null)
     {
         $product = $this->Products->get($id, [
             'contain' => [],
@@ -144,6 +143,64 @@ class ProductsController extends AppController
         
         $this->set(compact('product', 'companies', 'categories', 'admins'));        
         $this->set(compact('options_com', 'options_cat'));
+    }*/
+
+    public function edit($id = null)
+    {
+        $product = $this->Products->get($id, [
+            'contain' => [],
+        ]);
+
+        // image select query
+        $query = $this->Products->find()
+            ->select(['image'])
+            ->where(['id' => $id]);
+        $dbimage = $query->first();
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $product = $this->Products->patchEntity($product, $this->request->getData());
+
+            //Delete Flag
+            $product->del_flg = "not";
+
+            //Image Upload
+            $fileimage = $this->request->getData('image');
+            $nameimage = $fileimage['name'];
+            $target_image = WWW_ROOT . 'upload' . DS . 'images' . DS . $nameimage;
+            if (move_uploaded_file($fileimage['tmp_name'], $target_image)) {
+                if (!empty($nameimage)) {
+                    $product->image = $nameimage;
+                }
+            } else {
+                $product->image = $dbimage['image'];
+            }
+
+            //Video Upload
+            $filevideo = $this->request->getdata('video');
+            $namevideo = $filevideo['name'];
+            $target_video = WWW_ROOT . 'upload' . DS . 'videos' . DS . $namevideo;
+            if (move_uploaded_file($filevideo['tmp_name'], $target_video)) {
+                if (!empty($namevideo)) {
+                    $product->video = $namevideo;
+                }
+            }
+
+            if ($this->Products->save($product)) {
+                $this->Flash->success(__('The product has been updated.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The product could not be updated. Please, try again.'));
+        }
+        $companies = $this->Products->Companies->find('list', ['limit' => 200]);
+        $categories = $this->Products->Categories->find('list', ['limit' => 200]);
+        $admins = $this->Products->Admins->find('list', ['limit' => 200]);
+
+        $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name']);
+        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);
+
+        $this->set(compact('product', 'companies', 'categories', 'admins'));
+        $this->set(compact('options_com', 'options_cat'));
     }
 
     public function delete($id = null)
@@ -163,39 +220,9 @@ class ProductsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    // public function productlist(){
-
-    //     $this->viewBuilder()->setLayout('ajax');
-
-
-
-    //     $connection = ConnectionManager::get('default');
-    //     $products = $connection->execute('SELECT 
-    //     products.product_image,products.product_name,products.product_price,users.name,answers.rating
-
-    //    FROM products
-    //    JOIN answers
-    //     ON products.id=answers.product_id
-    //    JOIN users
-    //     ON users.id = answers.user_id GROUP BY products.product_name;')->fetchAll('assoc');
-
-    //    // $this->loadModel('products');
-    //    //$products = $this->products->find('all');
-    //    //$this->paginate=['contain'=>['answer'],];
-    //    //$products = $this->Product->find('all',array('fields'=>array('products.product_image','products.product_name','products.product_price','products.product_name','products.product_name','products.product_name'),'conditions'=>array('del_flg'=>1)));
-
-    //    $this->set('products',$products);
-
-
-    // }
-
     public function productlist()
     {
-
         $this->viewBuilder()->setLayout('ajax');
-
-
-
         $connection = ConnectionManager::get('default');
         $products = $connection->execute('SELECT 
         products.image as product_image,products.name as product_name,products.price as product_price,users.name,answers.rating
@@ -205,12 +232,6 @@ class ProductsController extends AppController
         ON products.id=answers.product_id
        JOIN users
         ON users.id = answers.user_id GROUP BY product_name;')->fetchAll('assoc');
-
-        // $this->loadModel('products');
-        //$products = $this->products->find('all');
-        //$this->paginate=['contain'=>['answer'],];
-        //$products = $this->Product->find('all',array('fields'=>array('products.product_image','products.product_name','products.product_price','products.product_name','products.product_name','products.product_name'),'conditions'=>array('del_flg'=>1)));
-
         $this->set('products', $products);
     }
 
@@ -218,6 +239,6 @@ class ProductsController extends AppController
     {
         parent::beforeFilter($event);
         if ($this->Auth->user())
-        $this->Auth->allow(['productlist', 'delete', 'add', 'index', 'edit', 'view']);
+            $this->Auth->allow(['productlist', 'delete', 'add', 'index', 'edit', 'view']);
     }
 }
