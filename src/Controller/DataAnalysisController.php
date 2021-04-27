@@ -21,7 +21,7 @@ class DataAnalysisController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-/*     public function index()
+    public function index()
     {
         // 'value' => 'name'
 
@@ -37,11 +37,11 @@ class DataAnalysisController extends AppController
         $answers = TableRegistry::get('answers');
         $connection = ConnectionManager::get('default');
         $results1 = $connection->execute('SELECT distinct image as pimage, name as pname, model_no as pmodel_no from `answers`, `products` WHERE products.id=answers.product_id and
-         answers.rating>3 GroupBy survey_id')->fetchAll('assoc');
+         answers.rating>3 and del_flg=\'not\' GroupBy survey_id')->fetchAll('assoc');
         // echo ($results1);
 
         $this->set('product_list', $results1);
-    } */
+    }
     public function menu()
     {
         $categories = TableRegistry::get('categories');
@@ -53,7 +53,7 @@ class DataAnalysisController extends AppController
         $answers = TableRegistry::get('answers');
         $connection = ConnectionManager::get('default');
         $results1 = $connection->execute('SELECT distinct image as pimage,name as pname, model_no as pmodel_no from `answers`, `products` WHERE products.id=answers.product_id and
-         answers.rating>3')->fetchAll('assoc');
+         answers.rating>3 and del_flg=\'not\'')->fetchAll('assoc');
         // echo ($results1);
 
         $this->set('product_list', $results1);

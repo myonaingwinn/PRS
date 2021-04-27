@@ -22,7 +22,7 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->paginate($this->Categories);
+        $categories = $this->paginate($this->Categories->find('all', array('conditions' => array('Categories.del_flg' => 'not'))));
 
         $this->set(compact('categories'));
         $this->set('_serialize', ['categories']);
@@ -100,12 +100,26 @@ class CategoriesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+    // public function delete($id = null)
+    // {
+    //     $this->request->allowMethod(['post', 'delete']);
+    //     $category = $this->Categories->get($id);
+    //     if ($this->Categories->delete($category)) {
+    //         $this->Flash->success(__('The category has been deleted.'));
+    //     } else {
+    //         $this->Flash->error(__('The category could not be deleted. Please, try again.'));
+    //     }
+
+    //     return $this->redirect(['action' => 'index']);
+    // }
+
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
-        if ($this->Categories->delete($category)) {
-            $this->Flash->success(__('The category has been deleted.'));
+        $category->del_flg = 'deleted';
+        if ($this->Categories->save($category)) {
+            $this->Flash->success(__('The category has been successfully deleted.'));
         } else {
             $this->Flash->error(__('The category could not be deleted. Please, try again.'));
         }

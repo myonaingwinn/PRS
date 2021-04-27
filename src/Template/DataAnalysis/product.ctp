@@ -89,11 +89,11 @@ require_once(ROOT . DS . 'vendor' . DS  . 'fusioncharts' . DS . 'fusioncharts.ph
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
 
-$productType = 1;
+/*$productType = 1;
 $categoryType = 1;
 $pid = 2;
 //$pList = displayProducts($categoryType);
-$prodFeed = getFeedback($pid);
+$prodFeed = getFeedback($pid);*/
 
 if (isset($_POST['showproduct'])) {
 
@@ -110,7 +110,22 @@ if (isset($_POST['showproduct'])) {
 </div>';
     }
 } else {
-    getColunCharts(1);
+    //getColunCharts(1);
+    $pid = getFirstPid();
+    getColunCharts($pid);
+    $prodFeed = getFeedback($pid);
+}
+
+function getFirstPid()
+{
+    $firstId = 1;
+    $proFirst = TableRegistry::get('products');
+    $pquery = $proFirst->find('all');
+    $pquery = $proFirst->find()->order(['id' => 'ASC']);
+    foreach ($pquery as $result1) {
+        $firstId = $result1->id;
+    }
+    return $firstId;
 }
 
 function getColunCharts($productID)
@@ -222,12 +237,13 @@ function getFeedback($pid)
 </div>
 <br>
 <div>
-    Rating and Reviews
+    <h5 style="font-weight:bold;">Rating and Reviews</h5>
+    <?php $var = 1; ?>
     <?php foreach ($prodFeed as $p) : ?>
         <?php if ($p['fremark'] != "") : ?>
 
             <div class="row">
-                <p><?= $p['fname'] ?>
+                <p><?= "<span style=\"font-weight:bold;\">" . $this->Number->format($var++) ?><?= ". " . $p['fname'] . "</span>" ?>
                 </p>
             </div>
             <div class="row">

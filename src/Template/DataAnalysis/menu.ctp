@@ -93,7 +93,7 @@
                     <?php if ($p['pimage'] != null) ?>
                     <?php $imgName = "/upload/images/" . $p['pimage']; ?>
                     <td width="20">
-                        <?php echo "<img src='" . $imgName . " ' width=\"200px\" height=\"200px\">"; ?>
+                        <?php echo "<img src='" . $imgName . " ' width=\"160px\" height=\"160px\">"; ?>
                     </td>
                     <td width="20">
 
