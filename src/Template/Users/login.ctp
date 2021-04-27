@@ -3,7 +3,7 @@
         <div class="card-content">
             <div class="row">
                 <form action="login" method="post">
-                    <span class="card-title">Login</span>
+                    <span class="card-title">User Login</span>
                     <div class="input-field col s12">
                         <input placeholder="Your Email" name="email" type="email" class="validate" required>
                     </div>
