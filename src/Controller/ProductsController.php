@@ -100,12 +100,19 @@ class ProductsController extends AppController
         $product = $this->Products->get($id, [
             'contain' => [],
         ]);
+
+        // image select query
+        $query = $this->Products->find()
+                ->select(['image'])
+                ->where(['id' => $id]);
+        $dbimage = $query->first();
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
             
             //Delete Flag
             $product->del_flg = "not";
-            
+
             //Image Upload
             $fileimage = $this->request->getData('image');
             $nameimage = $fileimage['name'];
@@ -113,7 +120,9 @@ class ProductsController extends AppController
             if (move_uploaded_file($fileimage['tmp_name'], $target_image)) {
                 if (!empty($nameimage)) {
                     $product->image = $nameimage;
-                }
+                }   
+            }else {
+                $product->image = $dbimage['image'];
             }
 
             //Video Upload
@@ -149,50 +158,29 @@ class ProductsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $product = $this->Products->get($id);
 
-        //Delete Flag
-        $product->del_flg = "deleted";
-
-        if ($this->Products->save($product)) {
-            $this->Flash->success(__('The product has been deleted.'));
+        // Delete Disable
+        $query = $this->Products->Answers->find('all', array('conditions' => array('Answers.product_id' => $id)))->select(['id']);
+        $data = $query->toArray();
+        $products =implode(' ',$data);
+        if (!empty($products)){
+            $this->Flash->error(__('The product is being used in survey so that could not be deleted.'));
         } else {
-            $this->Flash->error(__('The product could not be deleted. Please, try again.'));
+            // Delete Flag
+            $product->del_flg = "deleted";
+            if ($this->Products->save($product)) {
+                $this->Flash->success(__('The product has been deleted.'));
+            } else {
+                $this->Flash->error(__('The product could not be deleted. Please, try again.'));
+            }
         }
-
+        
         return $this->redirect(['action' => 'index']);
     }
-    
-    // public function productlist(){
-
-    //     $this->viewBuilder()->setLayout('ajax');
-     
-    
-    
-    //     $connection = ConnectionManager::get('default');
-    //     $products = $connection->execute('SELECT 
-    //     products.product_image,products.product_name,products.product_price,users.name,answers.rating
-       
-    //    FROM products
-    //    JOIN answers
-    //     ON products.id=answers.product_id
-    //    JOIN users
-    //     ON users.id = answers.user_id GROUP BY products.product_name;')->fetchAll('assoc');
-    
-    //    // $this->loadModel('products');
-    //    //$products = $this->products->find('all');
-    //    //$this->paginate=['contain'=>['answer'],];
-    //    //$products = $this->Product->find('all',array('fields'=>array('products.product_image','products.product_name','products.product_price','products.product_name','products.product_name','products.product_name'),'conditions'=>array('del_flg'=>1)));
-       
-    //    $this->set('products',$products);
-    
-    
-    // }
 
     public function productlist()
     {
 
         $this->viewBuilder()->setLayout('ajax');
-
-
 
         $connection = ConnectionManager::get('default');
         $products = $connection->execute('SELECT 
@@ -210,5 +198,23 @@ class ProductsController extends AppController
         //$products = $this->Product->find('all',array('fields'=>array('products.product_image','products.product_name','products.product_price','products.product_name','products.product_name','products.product_name'),'conditions'=>array('del_flg'=>1)));
 
         $this->set('products', $products);
+    }
+
+    public function search()
+    {
+
+        $this->request->allowMethod('ajax');
+   
+        $keyword = $this->request->query('keyword');
+
+        $query = $this->Products->find('all',[
+            'conditions' => ['name LIKE'=>'%'.$keyword.'%'],
+            'order' => ['id'=>'DESC'],
+            'limit' => 10
+        ]);
+
+        $this->set('products', $this->paginate($query));
+        $this->set('_serialize', ['products']);
+
     }
 }
