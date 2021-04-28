@@ -74,6 +74,10 @@
         background-color: #4CAF50;
         color: white;
     }
+
+    .left-row {
+        margin-left: 15px;
+    }
 </style>
 
 <div class="topnav z-depth-2">
@@ -88,12 +92,6 @@ require_once(ROOT . DS . 'vendor' . DS  . 'fusioncharts' . DS . 'fusioncharts.ph
 
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
-
-/*$productType = 1;
-$categoryType = 1;
-$pid = 2;
-//$pList = displayProducts($categoryType);
-$prodFeed = getFeedback($pid);*/
 
 if (isset($_POST['showproduct'])) {
 
@@ -237,7 +235,9 @@ function getFeedback($pid)
 </div>
 <br>
 <div>
-    <h5 style="font-weight:bold;">Rating and Reviews</h5>
+    <div class="row">
+        <h5 style="font-weight:bold;">Rating and Reviews</h5>
+    </div>
     <?php $var = 1; ?>
     <?php foreach ($prodFeed as $p) : ?>
         <?php if ($p['fremark'] != "") : ?>
@@ -245,21 +245,14 @@ function getFeedback($pid)
             <div class="row">
                 <p><?= "<span style=\"font-weight:bold;\">" . $this->Number->format($var++) ?><?= ". " . $p['fname'] . "</span>" ?>
                 </p>
+                <div class="left-row">
+                    <?php for ($i = 0; $i < $p['frating']; $i++)
+                        echo '<span class="fa fa-star checked"></span>';
+                    ?>
+                    <p><?= date('d.m.Y', strtotime($p['fdate'])); ?></p>
+                    <p><?= $p['fremark'] ?></p>
+                </div>
             </div>
-            <div class="row">
-
-                <?php for ($i = 0; $i < $p['frating']; $i++)
-                    echo '<span class="fa fa-star checked"></span>';
-                ?>
-            </div>
-            <div class="row">
-                <p><?= $p['fdate'] ?></p>
-            </div>
-
-            <div class="row">
-                <p><?= $p['fremark'] ?></p>
-            </div>
-            <br>
         <?php endif; ?>
     <?php endforeach; ?>
 </div>
