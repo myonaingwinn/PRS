@@ -86,8 +86,6 @@
 
 <form method="post" action="/surveys/add" id="form-id">
     <!-- TODO: handle Category and Products -->
-    <input type="hidden" name="del_flg" value="not">
-    <input type="hidden" name="admin_id" value="1" />
     <input type="hidden" name="card_total" id="card_total" value="0">
 
     <input type="hidden" name="card_array" id="card_array">

@@ -204,6 +204,7 @@ class UsersController extends AppController
                 $phone_no = $this->request->getData('phone');
                 if (strlen($phone_no) < 15) {
                     $user->phone = $phone_no;
+                    $user->admin_id = $this->Auth->user('id');
                     if ($this->Users->save($user)) {
                         $this->Flash->success(__('Successfully Updated.'));
 
@@ -233,6 +234,7 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         $user->del_flg = "deleted";
+        $user->admin_id = $this->Auth->user('id');
         if ($this->Users->save($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {

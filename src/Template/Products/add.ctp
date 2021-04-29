@@ -5,7 +5,6 @@
     <div class="col s1"></div>
     <div class="col s10">
         <?= $this->Form->create($product, ['class' => 'was-validated', 'enctype' => 'multipart/form-data']) ?>
-        <?= $this->Form->hidden('admin_id', ['value' => '1']) ?>
         <h5><?= __('Product Information') ?></h5>
         <hr>
         <div class="row">

@@ -55,6 +55,8 @@ class ProductsController extends AppController
 
             //Delete Flag
             $product->del_flg = "not";
+            //admin_id
+            $product->admin_id = $this->Auth->user('id');
 
             //Image Upload
             $fileimage = $this->request->getData('image');
@@ -113,6 +115,8 @@ class ProductsController extends AppController
 
             //Delete Flag
             $product->del_flg = "not";
+            //admin_id
+            $product->admin_id = $this->Auth->user('id');
 
             //Image Upload
             $fileimage = $this->request->getData('image');

@@ -82,7 +82,8 @@ class SurveysController extends AppController
             $survey = $this->Surveys->patchEntity($survey, $this->request->getData());
 
             $totalCard = $this->request->getData('card_array');
-            $admin_id = $this->request->getData('admin_id');
+            $admin_id = $this->Auth->user('id');
+            $survey->del_flg = 'not';
             $survey->created = $currDateTime;
             $survey->modified = $currDateTime;
 
@@ -154,7 +155,7 @@ class SurveysController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+/*     public function edit($id = null)
     {
         $survey = $this->Surveys->get($id, [
             'contain' => []
@@ -173,7 +174,7 @@ class SurveysController extends AppController
         $admins = $this->Surveys->Admins->find('list', ['limit' => 200]);
         $this->set(compact('survey', 'products', 'categories', 'admins'));
         $this->set('_serialize', ['survey']);
-    }
+    } */
 
     /**
      * Delete method
@@ -214,6 +215,6 @@ class SurveysController extends AppController
     {
         parent::beforeFilter($event);
         if ($this->Auth->user())
-            $this->Auth->allow(['publish', 'delete', 'add', 'index', 'edit', 'view']);
+            $this->Auth->allow(['publish', 'delete', 'add', 'index', 'view']);
     }
 }
