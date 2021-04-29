@@ -96,55 +96,6 @@ class ProductsController extends AppController
         $this->set(compact('options_com', 'options_cat'));
     }
 
-    /*public function edit($id = null)
-    {
-        $product = $this->Products->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $product = $this->Products->patchEntity($product, $this->request->getData());
-            
-            //Delete Flag
-            $product->del_flg = "not";
-            
-            //Image Upload
-            $fileimage = $this->request->getData('image');
-            $nameimage = $fileimage['name'];
-            $target_image = WWW_ROOT . 'upload' . DS . 'images' . DS . $nameimage;
-            if (move_uploaded_file($fileimage['tmp_name'], $target_image)) {
-                if (!empty($nameimage)) {
-                    $product->image = $nameimage;
-                }
-            }
-
-            //Video Upload
-            $filevideo = $this->request->getdata('video');
-            $namevideo = $filevideo['name'];
-            $target_video = WWW_ROOT . 'upload' . DS . 'videos' . DS . $namevideo;
-            if (move_uploaded_file($filevideo['tmp_name'], $target_video)) {
-                if (!empty($namevideo)) {
-                    $product->video = $namevideo;
-                }
-            }
-
-            if ($this->Products->save($product)) {
-                $this->Flash->success(__('The product has been updated.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The product could not be updated. Please, try again.'));
-        }
-        $companies = $this->Products->Companies->find('list', ['limit' => 200]);
-        $categories = $this->Products->Categories->find('list', ['limit' => 200]);
-        $admins = $this->Products->Admins->find('list', ['limit' => 200]);
-        
-        $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name']);
-        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);        
-        
-        $this->set(compact('product', 'companies', 'categories', 'admins'));        
-        $this->set(compact('options_com', 'options_cat'));
-    }*/
-
     public function edit($id = null)
     {
         $product = $this->Products->get($id, [
@@ -208,15 +159,22 @@ class ProductsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $product = $this->Products->get($id);
 
-        //Delete Flag
-        $product->del_flg = "deleted";
-
-        if ($this->Products->save($product)) {
-            $this->Flash->success(__('The product has been deleted.'));
+        // Delete Disable
+        $query = $this->Products->Answers->find('all', array('conditions' => array('Answers.product_id' => $id)))->select(['id']);
+        $data = $query->toArray();
+        $products =implode(' ',$data);
+        if (!empty($products)){
+            $this->Flash->error(__('The product is being used in survey so that could not be deleted.'));
         } else {
-            $this->Flash->error(__('The product could not be deleted. Please, try again.'));
+            // Delete Flag
+            $product->del_flg = "deleted";
+            if ($this->Products->save($product)) {
+                $this->Flash->success(__('The product has been deleted.'));
+            } else {
+                $this->Flash->error(__('The product could not be deleted. Please, try again.'));
+            }
         }
-
+        
         return $this->redirect(['action' => 'index']);
     }
 
@@ -234,6 +192,22 @@ class ProductsController extends AppController
         ON users.id = answers.user_id GROUP BY product_name;')->fetchAll('assoc');
         $this->set('products', $products);
     }
+  
+    public function search()
+    {
+
+        $this->request->allowMethod('ajax');
+   
+        $keyword = $this->request->query('keyword');
+
+        $query = $this->Products->find('all',[
+            'conditions' => ['name LIKE'=>'%'.$keyword.'%'],
+            'order' => ['id'=>'DESC'],
+            'limit' => 10
+        ]);
+
+        $this->set('products', $this->paginate($query));
+        $this->set('_serialize', ['products']);
 
     public function beforeFilter(Event $event)
     {

@@ -1,101 +1,100 @@
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"> -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
-<script>
-  $(document).ready(function() {
-    $('#datatable').DataTable();
-  });
-</script>
-
-<h4><?= __('Product List') ?></h4>
-
-<?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'waves-effect waves-light btn right indigo']) ?>
-
-<table id="datatable" class="hightlight">
-
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Product</th>
-      <th>Price</th>
-      <th>Status</th>
-      <th>User</th>
-      <th>Trending </th>
-      <th>Action </th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php $var = 1;
-    foreach ($products as $product) : ?>
-      <tr>
-        <td><?= $this->Number->format($var++) ?></td>
-        <td><?= $product['image'] ?>&nbsp;&nbsp;&nbsp;&nbsp;<?= $product['name'] ?></td>
-        <td><?= $product['price'] ?></td>
-        <td> <input type="text" value="<?= (6 / 5) * 100 ?>" id="pp" hidden>
-          <?php if ((3 / 5) * 100 > 50) {
-            echo "<i class='material-icons green-text'>arrow_upward</i>";
-          } elseif ((3 / 5) * 100 < 50) {
-            echo "<label>Down</label>";
-          } elseif ((3 / 5) * 100 == 50) {
-            echo "<label>Stabel</label>";
-          }
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Product[]|\Cake\Collection\CollectionInterface $products
+ */
+?>
+<div class="products index large-9 medium-8 columns content">
+  <h4><?= __('Product List') ?></h4>
+  <div class="row">
+    <div class="col s5">
+      <?= $this->Form->control('search');?>
+    </div>
+    <div class="col s4"></div>
+    <div class="col s3">
+      <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'waves-effect waves-light btn-large right indigo']) ?>  
+    </div>
+  </div>
+  <div class="table-content">
+    <table cellpadding="0" cellspacing="0">
+        <thead>
+          <tr>
+            <th scope="col"><?= $this->Paginator->sort('#') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('Product') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('Price') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('Status') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('User') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('Trending') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('Action') ?></th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php $page = $this->Paginator->counter(['format' => __('{{page}}')]);
+            $no = 1;
+            if ($page > 2)
+              $no = $page * 20 - 19;
+            else if ($page == 2)
+              $no = $page * 10 + 1;
           ?>
-        </td>
-        <td><?= $product['name'] ?></td>
-        <td><?= 4 / 5 * 100 ?>%<progress id="pp" value="<?= 4 / 5 * 100 ?>" max="100"> </progress></td>
-        <td>
-          <?= $this->Html->link(__('edit'), ['action' => 'edit', $product->id], ['class' => 'material-icons']) ?>
-          <?= $this->Form->postLink(__('delete'), ['action' => 'delete', $product->id], ['confirm' => __('Are you sure you want to delete # {0}?', $product->id), 'class' => 'material-icons']) ?>
-        </td>
-      </tr>
-    <?php endforeach;  ?>
+          <?php foreach ($products as $product) : ?>
+          <tr>
+            <td><?= $this->Number->format($no++) ?></td>
+            <td><?= $product['image'] ?>&nbsp;&nbsp;&nbsp;&nbsp;<?= $product['name'] ?></td>
+            <td><?= $product['price'] ?></td>
+            <td>
+              <input type="text" value="<?= (6 / 5) * 100 ?>" id="pp" hidden>
+              <?php if ((3 / 5) * 100 > 50) {
+                echo "<i class='material-icons green-text'>arrow_upward</i>";
+              } elseif ((3 / 5) * 100 < 50) {
+                echo "<label>Down</label>";
+              } elseif ((3 / 5) * 100 == 50) {
+                echo "<label>Stabel</label>";
+              }
+              ?>
+            </td>
+            <td><?= $product['name'] ?></td>
+            <td><?= 4 / 5 * 100 ?>%<progress id="pp" value="<?= 4 / 5 * 100 ?>" max="100"> </progress></td>
+            <td>
+              <?= $this->Html->link(__('edit'), ['action' => 'edit', $product->id], ['class' => 'material-icons']) ?>
+              <?= $this->Form->postLink(__('delete'), ['action' => 'delete', $product->id], ['confirm' => __('Are you sure you want to delete # {0}?', $product->id), 'class' => 'material-icons']) ?>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+    </table>
+  </div>
 
-</table>
+  <div class="paginator">
+    <ul class="pagination">
+      <?= $this->Paginator->first('<< ' . __('first')) ?>
+      <?= $this->Paginator->prev('< ' . __('previous')) ?>
+      <?= $this->Paginator->numbers() ?>
+      <?= $this->Paginator->next(__('next') . ' >') ?>
+      <?= $this->Paginator->last(__('last') . ' >>') ?>
+    </ul>
+    <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+  </div>
+</div>
+
 <script>
-  $("#progressbar").kendoProgressBar({
-    change: change
-  });
+    $('document').ready(function(){
+         $('#search').keyup(function(){
+            var searchkey = $(this).val();
+            searchProducts( searchkey );
+         });
 
-  function change(e) {
-    switch (true) {
-      case (e.value <= 25):
-        this.progressWrapper.css({
-          "background-color": "#e32424",
-          "border-color": "#e32424"
-        });
-        break;
+        function searchProducts( keyword ){
+        var data = keyword;
+        $.ajax({
+                    method: 'get',
+                    url : "<?php echo $this->Url->build( [ 'controller' => 'Products', 'action' => 'Search' ] ); ?>",
+                    data: {keyword:data},
 
-      case (e.value > 25 && e.value <= 50):
-        this.progressWrapper.css({
-          "background-color": "#e68e1c",
-          "border-color": "#e68e1c"
-        });
-        break;
-
-      case (e.value > 51 && e.value <= 75):
-        this.progressWrapper.css({
-          "background-color": "#e6dc1c",
-          "border-color": "#e6dc1c"
-        });
-        break;
-
-      case (e.value > 76 && e.value <= 100):
-        this.progressWrapper.css({
-          "background-color": "#32c728",
-          "border-color": "#32c728"
-        });
-        break;
-    }
-  }
-
-
-  $(document).ready(function() {
-    var x = 1;
-    while (x <= 100) {
-      x += 1;
-      $("#progressbar").data("kendoProgressBar").value(x);
-    }
-  });
+                    success: function( response )
+                    {       
+                       $( '.table-content' ).html(response);
+                    }
+                });
+        };
+    });
 </script>

@@ -4,15 +4,15 @@
 <div class="row">
     <div class="col s1"></div>
     <div class="col s10">
-        <!-- <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', 16], ['confirm' => __('Are you sure you want to delete # {0}?', 16), 'class' => 'waves-effect waves-light btn red right']) ?> -->
         <?= $this->Form->create($product, ['class' => 'was-validated', 'enctype' => 'multipart/form-data']) ?>
+        <?= $this->Form->hidden('id', ['id' => 'id']) ?>
         <h5><?= __('Product Infomation') ?></h5>
         <hr>
         <div class="row">
             <div class="input-field col s11">
                 <i class="material-icons prefix">badge</i>
                 <?= $this->Form->text('name', ['id' => 'name', 'autofocus', 'size' => '100', 'maxlength' => '100']) ?>
-                <?= $this->Form->label('name *') ?>
+                <?= $this->Form->label('name') ?>
             </div>
             <div class="input-field col s11">
                 <i class="material-icons prefix">tag</i>
@@ -22,16 +22,16 @@
             <div class="input-field col s11">
                 <i class="material-icons prefix">attach_money</i>
                 <?= $this->Form->number('price', ['id' => 'price', 'min' => '0', 'max' => '999999999999999', 'title' => 'Please insert MMK currency']) ?>
-                <?= $this->Form->label('price *') ?>
+                <?= $this->Form->label('price') ?>
             </div>
             <div class="row">
                 <div class="file-field input-field col s6">
                     <div class="btn indigo">
                         <span class="material-icons">wallpaper</span>
-                        <?= $this->Form->file('image', ['accept' => 'image/jpeg']) ?>
+                        <?= $this->Form->file('image', ['accept' => 'image/jpeg', 'id' => 'image']) ?>
                     </div>
                     <div class="file-path-wrapper">
-                        <?= $this->Form->text('image', ['class' => 'file-path validate', 'placeholder' => 'Please choose single image file']) ?>
+                        <?= $this->Form->text('image', ['class' => 'file-path validate', 'placeholder' => 'Please choose single image file', 'id' => 'image']) ?>
                     </div>
                 </div>
                 <div class="file-field input-field col s6">
