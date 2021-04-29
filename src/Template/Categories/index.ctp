@@ -16,7 +16,7 @@
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('del_flg') ?></th>
+                <!-- <th scope="col"><?= $this->Paginator->sort('del_flg') ?></th> -->
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -26,9 +26,9 @@
                 <tr>
                     <td><?= $this->Number->format($var++) ?></td>
                     <td><?= h($category->name) ?></td>
-                    <td><?= h($category->created) ?></td>
-                    <td><?= h($category->modified) ?></td>
-                    <td><?= h($category->del_flg) ?></td>
+                    <td><?= date('Y-m-d', strtotime(h($category->created))); ?></td>
+                    <td><?= date('Y-m-d', strtotime(h($category->modified))); ?></td>
+                    <!-- <td><?= h($category->del_flg) ?></td> -->
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $category->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id]) ?>

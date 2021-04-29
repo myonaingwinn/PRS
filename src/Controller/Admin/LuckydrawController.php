@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Luckydraw Controller
@@ -35,10 +37,10 @@ class LuckydrawController extends AppController
         $luckydraw = $this->Luckydraw->newEntity();
         if ($this->request->is('post')) {
             $custom_scores = $this->request->getData('scores');
-            $score_count = $this->Luckydraw->find()->where(['scores' => $custom_scores ])->count();
-            if($score_count>=1){
+            $score_count = $this->Luckydraw->find()->where(['scores' => $custom_scores])->count();
+            if ($score_count >= 1) {
                 $this->Flash->success(__('This score number is already existed.Try another one!'));
-            }else{
+            } else {
                 $luckydraw = $this->Luckydraw->patchEntity($luckydraw, $this->request->getData());
                 if ($this->Luckydraw->save($luckydraw)) {
                     $this->Flash->success(__('The luckydraw has been saved.'));
@@ -66,10 +68,10 @@ class LuckydrawController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $custom_scores = $this->request->getData('scores');
-            $score_count = $this->Luckydraw->find()->where(['scores' => $custom_scores ])->count();
-            if($score_count>1){
+            $score_count = $this->Luckydraw->find()->where(['scores' => $custom_scores])->count();
+            if ($score_count > 1) {
                 $this->Flash->success(__('This score number is already existed.Try another one!'));
-            }else{
+            } else {
                 $luckydraw = $this->Luckydraw->patchEntity($luckydraw, $this->request->getData());
                 if ($this->Luckydraw->save($luckydraw)) {
                     $this->Flash->success(__('The luckydraw has been updated.'));
@@ -97,7 +99,7 @@ class LuckydrawController extends AppController
         $luckydraw_tbl = $this->loadModel('Luckydraw');
         $luckydraw_result = $this->Luckydraw->find()->where(['id' => $id])->first();
         $luckydraw_result->del_flg = 'deleted';
-        
+
         if ($luckydraw_tbl->save($luckydraw_result)) {
             $this->Flash->success(__('The luckydraw has been deleted.'));
         } else {
@@ -105,5 +107,11 @@ class LuckydrawController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
-    
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->Auth->user())
+            $this->Auth->allow(['delete', 'add', 'index', 'edit', 'view']);
+    }
 }

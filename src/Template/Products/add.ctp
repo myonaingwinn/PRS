@@ -6,23 +6,23 @@
     <div class="col s10">
         <?= $this->Form->create($product, ['class' => 'was-validated', 'enctype' => 'multipart/form-data']) ?>
         <?= $this->Form->hidden('admin_id', ['value' => '1']) ?>
-        <h5><?= __('Product Infomation') ?></h5>
-        <hr>    
+        <h5><?= __('Product Information') ?></h5>
+        <hr>
         <div class="row">
             <div class="input-field col s11">
-            <i class="material-icons prefix">badge</i>
-                <?= $this->Form->text('name', ['id' => 'name', 'autofocus', 'size' => '100', 'maxlength' => '100']) ?>                
-                <?= $this->Form->label('product_name') ?>   
+                <i class="material-icons prefix">badge</i>
+                <?= $this->Form->text('name', ['id' => 'name', 'autofocus', 'size' => '100', 'maxlength' => '100']) ?>
+                <?= $this->Form->label('product_name') ?>
             </div>
             <div class="input-field col s11">
                 <i class="material-icons prefix">tag</i>
                 <?= $this->Form->text('model_no', ['id' => 'model_no', 'size' => '100', 'maxlength' => '100']) ?>
                 <?= $this->Form->label('product_model_no') ?>
-            </div>            
+            </div>
             <div class="input-field col s11">
                 <i class="material-icons prefix">attach_money</i>
                 <?= $this->Form->number('price', ['id' => 'price', 'min' => '0', 'max' => '999999999999999', 'title' => 'Please insert MMK currency']) ?>
-                <?= $this->Form->label('product_price') ?>  
+                <?= $this->Form->label('product_price') ?>
             </div>
             <div class="row">
                 <div class="file-field input-field col s6">
@@ -41,34 +41,34 @@
                     </div>
                     <div class="file-path-wrapper">
                         <?= $this->Form->text('video', ['class' => 'file-path validate', 'placeholder' => 'Please choose single video file']) ?>
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>
-        <h5><?= __('Category Infomation') ?></h5>
+        <h5><?= __('Category Information') ?></h5>
         <hr>
         <div class="row">
             <div class="col s3">
-            <?= __('Product Category') ?>
+                <?= __('Product Category') ?>
             </div>
             <div class="col s8">
                 <?= $this->Form->select('category_id', $options_cat, ['class' => 'btn indigo']) ?>
             </div>
         </div>
-        <h5><?= __('Company Infomation') ?></h5>
+        <h5><?= __('Company Information') ?></h5>
         <hr>
         <div class="row">
             <div class="col s3">
-            <?= __('Product Company') ?>
+                <?= __('Product Company') ?>
             </div>
             <div class="col s8">
-            <?= $this->Form->select('company_id', $options_com, ['class' => 'btn indigo']) ?>       
+                <?= $this->Form->select('company_id', $options_com, ['class' => 'btn indigo']) ?>
             </div>
-        </div> 
+        </div>
         <div align="center">
-            <?= $this->Form->button(__('Register'), ['class' => 'btn-large waves-effect waves-light indigo center']) ?>            
+            <?= $this->Form->button(__('Register'), ['class' => 'btn-large waves-effect waves-light indigo center']) ?>
         </div>
         <?= $this->Form->end() ?>
     </div>
-    <div class="col s1"></div>  
+    <div class="col s1"></div>
 </div>

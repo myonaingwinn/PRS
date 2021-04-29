@@ -74,6 +74,10 @@
         background-color: #4CAF50;
         color: white;
     }
+
+    .left-row {
+        margin-left: 15px;
+    }
 </style>
 
 <div class="topnav z-depth-2">
@@ -88,12 +92,6 @@ require_once(ROOT . DS . 'vendor' . DS  . 'fusioncharts' . DS . 'fusioncharts.ph
 
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
-
-$productType = 1;
-$categoryType = 1;
-$pid = 2;
-//$pList = displayProducts($categoryType);
-$prodFeed = getFeedback($pid);
 
 if (isset($_POST['showproduct'])) {
 
@@ -110,7 +108,22 @@ if (isset($_POST['showproduct'])) {
 </div>';
     }
 } else {
-    getColunCharts(1);
+    //getColunCharts(1);
+    $pid = getFirstPid();
+    getColunCharts($pid);
+    $prodFeed = getFeedback($pid);
+}
+
+function getFirstPid()
+{
+    $firstId = 1;
+    $proFirst = TableRegistry::get('products');
+    $pquery = $proFirst->find('all');
+    $pquery = $proFirst->find()->order(['id' => 'ASC']);
+    foreach ($pquery as $result1) {
+        $firstId = $result1->id;
+    }
+    return $firstId;
 }
 
 function getColunCharts($productID)
@@ -156,8 +169,8 @@ function getAvgRating(int $pid)
 {
     $connection = ConnectionManager::get('default');
     $results1 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE age<=16)', [$pid])->fetchAll('assoc');
-    $results2 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 16<age<=30)', [$pid])->fetchAll('assoc');
-    $results3 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 30<age<=50)', [$pid])->fetchAll('assoc');
+    $results2 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 16<age and age<=30)', [$pid])->fetchAll('assoc');
+    $results3 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE 30<age and age<=50)', [$pid])->fetchAll('assoc');
     $results4 = $connection->execute('SELECT avg(rating) as rating from `answers` WHERE product_id=? and user_id IN' . '(SELECT id FROM `users` WHERE age>50)', [$pid])->fetchAll('assoc');
 
     $avg1 = getAvgResult($results1);
@@ -196,7 +209,7 @@ function getFeedback($pid)
 {
     //echo ("product_id" . $pid);
     $connection = ConnectionManager::get('default');
-    $prodFeed = $connection->execute('SELECT users.name as fname, answers.remark as fremark , answers.rating as frating, answers.created as fdate FROM answers,users where product_id=? and users.id=answers.user_id', [$pid])->fetchAll('assoc');
+    $prodFeed = $connection->execute('SELECT users.name as fname, answers.remark as fremark , answers.rating as frating, answers.created as fdate FROM answers,users where product_id=? and users.id=answers.user_id group by user_id', [$pid])->fetchAll('assoc');
     return $prodFeed;
 }
 ?>
@@ -222,28 +235,24 @@ function getFeedback($pid)
 </div>
 <br>
 <div>
-    Rating and Reviews
+    <div class="row">
+        <h5 style="font-weight:bold;">Rating and Reviews</h5>
+    </div>
+    <?php $var = 1; ?>
     <?php foreach ($prodFeed as $p) : ?>
         <?php if ($p['fremark'] != "") : ?>
 
             <div class="row">
-                <p><?= $p['fname'] ?>
+                <p><?= "<span style=\"font-weight:bold;\">" . $this->Number->format($var++) ?><?= ". " . $p['fname'] . "</span>" ?>
                 </p>
+                <div class="left-row">
+                    <?php for ($i = 0; $i < $p['frating']; $i++)
+                        echo '<span class="fa fa-star checked"></span>';
+                    ?>
+                    <p><?= date('d.m.Y', strtotime($p['fdate'])); ?></p>
+                    <p><?= $p['fremark'] ?></p>
+                </div>
             </div>
-            <div class="row">
-
-                <?php for ($i = 0; $i < $p['frating']; $i++)
-                    echo '<span class="fa fa-star checked"></span>';
-                ?>
-            </div>
-            <div class="row">
-                <p><?= $p['fdate'] ?></p>
-            </div>
-
-            <div class="row">
-                <p><?= $p['fremark'] ?></p>
-            </div>
-            <br>
         <?php endif; ?>
     <?php endforeach; ?>
 </div>

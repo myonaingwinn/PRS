@@ -6,6 +6,7 @@ use App\Controller\AppController;
 use Cake\Utility\Security;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
 
 /**
  * Users Controller
@@ -302,5 +303,12 @@ class UsersController extends AppController
                 return $this->redirect(['action' => 'login']);
             }
         }
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->Auth->user())
+            $this->Auth->allow(['delete', 'add', 'index', 'edit', 'view']);
     }
 }

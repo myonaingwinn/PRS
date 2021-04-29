@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\I18n\Time;
+use Cake\Event\Event;
 
 /**
  * Surveys Controller
@@ -25,7 +26,7 @@ class SurveysController extends AppController
         $this->paginate = [
             'contain' => ['Products', 'Categories', 'Admins']
         ];
-        $surveys = $this->paginate($this->Surveys);
+        $surveys = $this->paginate($this->Surveys->find('all', array('conditions' => array('Surveys.del_flg' => 'not'))));
 
         $this->set(compact('surveys'));
         $this->set('_serialize', ['surveys']);
@@ -135,12 +136,12 @@ class SurveysController extends AppController
             $this->Flash->error(__('The survey could not be saved. Please, try again.'));
         }
 
-        $products = $this->Surveys->Products->find('list', ['limit' => 200]);
-        $categories = $this->Surveys->Categories->find('list', ['limit' => 200]);
-        $admins = $this->Surveys->Admins->find('list', ['limit' => 200]);
+        $products = $this->Surveys->Products->find('list', ['limit' => 200])->where(['del_flg' => 'not']);
+        $categories = $this->Surveys->Categories->find('list', ['limit' => 200])->where(['del_flg' => 'not']);
+        $admins = $this->Surveys->Admins->find('list', ['limit' => 200])->where(['del_flg' => 'not']);
 
-        $my_products = $this->Products->find('all');
-        $my_categories = $this->Categories->find('all');
+        $my_products = $this->Products->find('all')->where(['del_flg' => 'not']);
+        $my_categories = $this->Categories->find('all')->where(['del_flg' => 'not']);
 
         $this->set(compact('survey', 'products', 'categories', 'admins', 'my_products', 'my_categories'));
         $this->set('_serialize', ['survey']);
@@ -207,5 +208,12 @@ class SurveysController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->Auth->user())
+            $this->Auth->allow(['publish', 'delete', 'add', 'index', 'edit', 'view']);
     }
 }

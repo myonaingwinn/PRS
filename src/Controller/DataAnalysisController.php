@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
+use Cake\Event\Event;
 
 /**
  * DataAnalysis Controller
@@ -36,7 +37,7 @@ class DataAnalysisController extends AppController
         $answers = TableRegistry::get('answers');
         $connection = ConnectionManager::get('default');
         $results1 = $connection->execute('SELECT distinct image as pimage, name as pname, model_no as pmodel_no from `answers`, `products` WHERE products.id=answers.product_id and
-         answers.rating>3 GroupBy survey_id')->fetchAll('assoc');
+         answers.rating>3 and del_flg=\'not\' GroupBy survey_id')->fetchAll('assoc');
         // echo ($results1);
 
         $this->set('product_list', $results1);
@@ -52,7 +53,7 @@ class DataAnalysisController extends AppController
         $answers = TableRegistry::get('answers');
         $connection = ConnectionManager::get('default');
         $results1 = $connection->execute('SELECT distinct image as pimage,name as pname, model_no as pmodel_no from `answers`, `products` WHERE products.id=answers.product_id and
-         answers.rating>3')->fetchAll('assoc');
+         answers.rating>3 and del_flg=\'not\'')->fetchAll('assoc');
         // echo ($results1);
 
         $this->set('product_list', $results1);
@@ -79,5 +80,12 @@ class DataAnalysisController extends AppController
             )
         );
         $this->set('products_list', $query);
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->Auth->user())
+            $this->Auth->allow(['menu', 'category', 'product']);
     }
 }

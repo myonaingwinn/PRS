@@ -3,7 +3,7 @@
         <div class="card-content">
             <div class="row">
                 <form action="login" method="post">
-                    <span class="card-title">User Login</span>
+                    <span class="card-title">Admin Login</span>
                     <div class="input-field col s12">
                         <input placeholder="Your Email" name="email" type="email" class="validate" required>
                     </div>
@@ -16,11 +16,11 @@
             <div class="row">
                 <div class="col s6">
                     <div class="row my-row1">
-                        <a href="/forgotPassword">Forgot Password?</a>
+                        <a href="/admin/forgotPassword">Forgot Password?</a>
                     </div>
                     <div class="row my-row2">
                         Don't you have an account?&nbsp;
-                        <a href="/register">Register</a>
+                        <a href="/admin/register">Register</a>
                     </div>
                 </div>
                 <div class="col s6">
