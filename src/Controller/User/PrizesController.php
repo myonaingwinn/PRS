@@ -111,8 +111,4 @@ class PrizesController extends AppController
             'action' => 'index'
         ]);
     }
-
-    public function dashboard()
-    {
-    }
 }

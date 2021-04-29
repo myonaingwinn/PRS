@@ -14,18 +14,9 @@ use Cake\Event\Event;
  */
 class PrizesController extends AppController
 {
-
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
-
-
     public function prizelist()
     {
-        $prizes = $this->paginate($this->Prizes);
-
+        $prizes = $this->paginate($this->Prizes->find('all')->where(['del_flg' => 'not']));
         $this->set(compact('prizes'));
         $this->set('_serialize', ['prizes']);
     }
@@ -37,7 +28,6 @@ class PrizesController extends AppController
      */
     public function prizeadd()
     {
-
         $prize = $this->Prizes->newEntity();
         if ($this->request->is('post')) {
 
@@ -46,14 +36,9 @@ class PrizesController extends AppController
             if ($pr_count >= 1) {
                 $this->Flash->success(__('The prize name is existed.'));
             } else {
-
                 $prize = $this->Prizes->patchEntity($prize, $this->request->getData());
-
-
                 if ($this->Prizes->save($prize)) {
                     $this->Flash->success(__('The prize has been saved.'));
-
-
                     return $this->redirect(['action' => 'prizelist']);
                 }
                 $this->Flash->error(__('The prize could not be saved. Please, try again.'));
@@ -72,12 +57,9 @@ class PrizesController extends AppController
      */
     public function edit($id = null)
     {
-
-
         $prize = $this->Prizes->get($id, [
             'contain' => []
         ]);
-
 
         if ($this->request->is(['patch', 'post', 'put'])) {
 
@@ -86,19 +68,11 @@ class PrizesController extends AppController
             if ($pr_count > 1) {
                 $this->Flash->success(__('The prize name is existed.'));
             } else {
-
                 $prize = $this->Prizes->patchEntity($prize, $this->request->getData());
-
-
-
                 if ($this->Prizes->save($prize)) {
-
                     $this->Flash->success(__('The prize has been updated'));
-
                     return $this->redirect(['action' => 'prizelist']);
                 }
-
-
                 $this->Flash->error(__('The prize could not be updated. Please, try again.'));
             }
         }
@@ -116,13 +90,15 @@ class PrizesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $prize = $this->Prizes->get($id);
-        if ($this->Prizes->delete($prize)) {
+        $this->request->allowMethod(['post', 'delete']);
+        $prize_tbl = $this->loadModel('Prizes');
+        $prize_result = $this->Prizes->find()->where(['id' => $id])->first();
+        $prize_result->del_flg = 'deleted';
+        if ($prize_tbl->save($prize_result)) {
             $this->Flash->success(__('The prize has been deleted.'));
         } else {
             $this->Flash->error(__('The prize could not be deleted. Please, try again.'));
         }
-
         return $this->redirect(['action' => 'prizelist']);
     }
 

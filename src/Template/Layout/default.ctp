@@ -100,10 +100,11 @@ $cakeDescription = 'PRS';
             </li>
             <li><a href="/admin/"><i class="material-icons orange-text text-darken-2">account_box</i>Admins</a></li>
             <li><a href="/users"><i class="material-icons blue-text text-darken-2">group</i>Users</a></li>
-            <li><a class="waves-effect" href="/products"><i class="material-icons yellow-text text-darken-1">local_parking</i>Products</a></li>
+            <li><a class="waves-effect" href="/products"><i class="material-icons teal-text text-darken-1">local_parking</i>Products</a></li>
             <li><a class="waves-effect" href="/categories"><i class="material-icons cyan-text ">apps</i>Categories</a></li>
             <li><a class="waves-effect" href="/surveys"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/admin/luckydraw"><i class="material-icons purple-text text-lighten-1">card_giftcard</i>Lucky Draw</a></li>
+            <li><a class="waves-effect" href="/admin/prize"><i class="material-icons yellow-text text-darken-2">local_atm</i>Prizes</a></li>
             <li><a class="waves-effect" href="/admin/logout"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
         </ul>
     <?php endif ?>
@@ -197,7 +198,7 @@ $cakeDescription = 'PRS';
         height: 0;
     }
 
-    .active {
+    .pagination .active {
         background-color: #3F51B5 !important;
     }
 </style>

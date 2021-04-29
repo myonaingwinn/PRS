@@ -114,7 +114,6 @@ Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->connect('/forgotPassword', ['controller' => 'Admins', 'action' => 'forgotPassword']);
     $routes->connect('/prize', ['controller' => 'Prizes', 'action' => 'prizelist']);
     $routes->connect('/luckydraw', ['controller' => 'Luckydraw', 'action' => 'index']);
-    $routes->connect('/u', ['controller' => 'Users', 'action' => 'index']);
     $routes->fallbacks(DashedRoute::class);
 });
 
