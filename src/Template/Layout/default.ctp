@@ -131,27 +131,6 @@ $cakeDescription = 'PRS';
         font-family: 'Raleway', "Open Sans";
     }
 
-    /* for notification */
-    /* .badge1 {
-        position: relative;
-    }
-
-    .badge1[data-badge]:after {
-        content: attr(data-badge);
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        font-size: .7em;
-        background: red;
-        color: white;
-        width: 18px;
-        height: 18px;
-        text-align: center;
-        line-height: 18px;
-        border-radius: 50%;
-        box-shadow: 0 0 1px #333;
-    } */
-
     .error-alert {
         padding: 10px;
         background-color: #F78181;
@@ -216,5 +195,9 @@ $cakeDescription = 'PRS';
 
     div.message.hidden {
         height: 0;
+    }
+
+    .active {
+        background-color: #3F51B5 !important;
     }
 </style>
