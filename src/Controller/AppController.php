@@ -96,10 +96,10 @@ class AppController extends Controller
     public function beforeFilter(Event $event)
     {
         if ($this->Auth->user('name')) {
-            $this->set('user', $this->Auth->user());
+            $this->set('Luser', $this->Auth->user());
             $this->set('admin', null);
         } else {
-            $this->set('user', null);
+            $this->set('Luser', null);
             $this->set('admin', $this->Auth->user());
         }
         $this->Auth->allow(['add', 'login', 'forgotPassword', 'resetPassword']);

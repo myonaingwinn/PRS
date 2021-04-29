@@ -21,7 +21,7 @@ class PrizesController extends AppController
     public function index()
     {
         $id = $this->Auth->user('id');
-        $prizes = $this->paginate($this->Prizes);
+        $prizes = $this->paginate($this->Prizes->find('all')->where(['del_flg' => 'not']));
 
         $this->set(compact('prizes'));
         $this->set('_serialize', ['prizes']);

@@ -49,8 +49,8 @@ $cakeDescription = 'PRS';
 <body class="blue-grey lighten-5">
     <nav>
         <div class="nav-wrapper indigo z-depth-1">
-            <a href=" <?= ($user['id'] || $admin['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">PRS</a>
-            <?php if ($user['id'] || $admin['id']) : ?>
+            <a href=" <?= ($Luser['id'] || $admin['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">PRS</a>
+            <?php if ($Luser['id'] || $admin['id']) : ?>
                 <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
                     <i class="material-icons">menu</i>
                 </a>
@@ -64,20 +64,20 @@ $cakeDescription = 'PRS';
 
     <!-- side nav -->
     <!-- for UserPanel -->
-    <?php if ($user['id']) : ?>
+    <?php if ($Luser['id']) : ?>
         <ul id="slide-out" class="sidenav">
             <li>
                 <div class="user-view">
                     <div class="background">
                         <img width="300" height="500" src="/img/profile_img/background.jpg">
                     </div>
-                    <a><img class="circle" src="<?= ($user['profile_img']) ? '/img/profile_img/' . $user['profile_img'] : '/img/profile_img/default.png'  ?>"></a>
-                    <a><span class="white-text name"><?= $user['name'] ?></span></a>
-                    <a><span class="white-text email"><?= $user['email'] ?></span></a>
+                    <a><img class="circle" src="<?= ($Luser['profile_img']) ? '/img/profile_img/' . $Luser['profile_img'] : '/img/profile_img/default.png'  ?>"></a>
+                    <a><span class="white-text name"><?= $Luser['name'] ?></span></a>
+                    <a><span class="white-text email"><?= $Luser['email'] ?></span></a>
                 </div>
             </li>
-            <li><a href="/view_user/<?= $user['id'] ?>"><i class="material-icons light-blue-text">person</i>My Profile</a></li>
-            <li><a href="/edit_user/<?= $user['id'] ?>"><i class="material-icons pink-text text-lighten-2">edit</i>Update Profile</a></li>
+            <li><a href="/view_user/<?= $Luser['id'] ?>"><i class="material-icons light-blue-text">person</i>My Profile</a></li>
+            <li><a href="/edit_user/<?= $Luser['id'] ?>"><i class="material-icons pink-text text-lighten-2">edit</i>Update Profile</a></li>
             <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Rewards</a></li>
             <li><a class="waves-effect" href="/notifications"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
