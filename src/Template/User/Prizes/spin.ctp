@@ -88,7 +88,7 @@
 
     <form action=" <?php
                     echo Cake\Routing\Router::url([
-                        'controller' => 'prizes', 'action' => 'getscores/' . $user['id']
+                        'controller' => 'prizes', 'action' => 'getscores/' . $Luser['id']
                     ]); ?>" method="post" id="form">
         <input type="hidden" value="" id="custom_scores" name="custom_scores">
 

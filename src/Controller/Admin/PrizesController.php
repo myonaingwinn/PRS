@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
-
 /**
  * Prizes Controller
  *
@@ -33,10 +32,13 @@ class PrizesController extends AppController
 
             $prizes = $this->request->getData('prize_name');
             $pr_count = $this->Prizes->find()->where(['prize_name' => $prizes])->count();
+            $currDateTime = date("Y-m-d H:i:s");
             if ($pr_count >= 1) {
                 $this->Flash->success(__('The prize name is existed.'));
             } else {
                 $prize = $this->Prizes->patchEntity($prize, $this->request->getData());
+                $prize->created = $currDateTime;
+                $prize->modified = $currDateTime;
                 if ($this->Prizes->save($prize)) {
                     $this->Flash->success(__('The prize has been saved.'));
                     return $this->redirect(['action' => 'prizelist']);
@@ -57,6 +59,7 @@ class PrizesController extends AppController
      */
     public function edit($id = null)
     {
+        $currDateTime = date("Y-m-d H:i:s");
         $prize = $this->Prizes->get($id, [
             'contain' => []
         ]);
@@ -69,6 +72,7 @@ class PrizesController extends AppController
                 $this->Flash->success(__('The prize name is existed.'));
             } else {
                 $prize = $this->Prizes->patchEntity($prize, $this->request->getData());
+                $prize->modified = $currDateTime;
                 if ($this->Prizes->save($prize)) {
                     $this->Flash->success(__('The prize has been updated'));
                     return $this->redirect(['action' => 'prizelist']);

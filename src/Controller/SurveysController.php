@@ -83,6 +83,7 @@ class SurveysController extends AppController
 
             $totalCard = $this->request->getData('card_array');
             $admin_id = $this->Auth->user('id');
+            $survey->admin_id = $admin_id;
             $survey->del_flg = 'not';
             $survey->created = $currDateTime;
             $survey->modified = $currDateTime;
@@ -155,7 +156,7 @@ class SurveysController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-/*     public function edit($id = null)
+    /*     public function edit($id = null)
     {
         $survey = $this->Surveys->get($id, [
             'contain' => []
