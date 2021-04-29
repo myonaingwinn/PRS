@@ -28,7 +28,7 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('no') ?></th>
+                <th scope="col">No</th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                 <!-- <th scope="col"><?= $this->Paginator->sort('password') ?></th> -->
                 <!-- <th scope="col"><?= $this->Paginator->sort('del_flg') ?></th> -->

@@ -162,8 +162,8 @@ class ProductsController extends AppController
         // Delete Disable
         $query = $this->Products->Answers->find('all', array('conditions' => array('Answers.product_id' => $id)))->select(['id']);
         $data = $query->toArray();
-        $products =implode(' ',$data);
-        if (!empty($products)){
+        $products = implode(' ', $data);
+        if (!empty($products)) {
             $this->Flash->error(__('The product is being used in survey so that could not be deleted.'));
         } else {
             // Delete Flag
@@ -174,7 +174,7 @@ class ProductsController extends AppController
                 $this->Flash->error(__('The product could not be deleted. Please, try again.'));
             }
         }
-        
+
         return $this->redirect(['action' => 'index']);
     }
 
@@ -192,27 +192,28 @@ class ProductsController extends AppController
         ON users.id = answers.user_id GROUP BY product_name;')->fetchAll('assoc');
         $this->set('products', $products);
     }
-  
+
     public function search()
     {
 
         $this->request->allowMethod('ajax');
-   
+
         $keyword = $this->request->query('keyword');
 
-        $query = $this->Products->find('all',[
-            'conditions' => ['name LIKE'=>'%'.$keyword.'%'],
-            'order' => ['id'=>'DESC'],
+        $query = $this->Products->find('all', [
+            'conditions' => ['name LIKE' => '%' . $keyword . '%'],
+            'order' => ['id' => 'DESC'],
             'limit' => 10
         ]);
 
         $this->set('products', $this->paginate($query));
         $this->set('_serialize', ['products']);
+    }
 
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         if ($this->Auth->user())
-            $this->Auth->allow(['productlist', 'delete', 'add', 'index', 'edit', 'view']);
+            $this->Auth->allow(['productlist', 'delete', 'add', 'index', 'edit', 'view', 'search']);
     }
 }

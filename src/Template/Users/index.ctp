@@ -11,7 +11,7 @@
     <table>
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('No') ?></th>
+                <th scope="col">No</th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('gender') ?></th>
