@@ -1,7 +1,5 @@
 <?php
 
-use Cake\Controller\Component\AuthComponent;
-
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -49,16 +47,12 @@ $cakeDescription = 'PRS';
 <body class="blue-grey lighten-5">
     <nav>
         <div class="nav-wrapper indigo z-depth-1">
-            <a href=" <?= ($Luser['id'] || $admin['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">PRS</a>
+            <a href=" <?= ($Luser['id'] || $admin['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">Products Ranking System</a>
             <?php if ($Luser['id'] || $admin['id']) : ?>
                 <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
                     <i class="material-icons">menu</i>
                 </a>
             <?php endif ?>
-            <!-- notification -->
-            <!-- <ul id="nav-mobile" class="left hide-on-med-and-down right">
-                 <li><a href="#" class="badge1" data-badge="27"><i class="material-icons left">notifications</i></a></li> 
-            </ul>-->
         </div>
     </nav>
 
@@ -115,7 +109,6 @@ $cakeDescription = 'PRS';
     <footer>
     </footer>
     <!--JavaScript at end of body for optimized loading-->
-    <!-- <script type="text/javascript" src="js/materialize.min.js"></script> -->
     <?= $this->Html->script('materialize.min.js') ?>
 </body>
 
