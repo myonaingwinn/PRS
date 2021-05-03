@@ -15,30 +15,72 @@
                             <img class="photo" src="/img/profile_img/<?= $user['profile_img'] ? $user['profile_img'] : 'default.png' ?>" />
                         </div>
                         <?php
+                        echo $this->Form->control('userType', ['type' => 'hidden', 'id' => 'usertype', 'value' => '']);
                         echo "<table>";
-                        echo "<tr><th width='40%'>Choose profile</th><th class='input-field'>";
-                        echo $this->Form->control('profile_img', ['type' => 'file', 'label' => '']);
+                        if (!$admin['id']) {
+                            echo "<tr><th>Choose profile</th><th class='input-field'>";
+                            echo $this->Form->control('profile_img', ['type' => 'file', 'label' => '']);
+                        }
                         echo $this->Form->control('img_name', ['type' => 'hidden', 'default' => $user->profile_img]);
                         echo "</th></tr><tr><th>Name</th><th class='input-field '>";
-                        echo $this->Form->control('name', array('label' => '', 'class' => 'validate', 'value' => $user->name));
+                        if ($admin['id'])
+                            echo $this->Form->control('name', array('label' => '', 'class' => 'validate', 'disabled' => true, 'value' => $user->name));
+                        else
+                            echo $this->Form->control('name', array('label' => '', 'class' => 'validate', 'value' => $user->name));
+
                         echo "</th></tr><tr ><th>Email</th><th class='input-field'>";
-                        echo $this->Form->control('email', array('label' => '', 'class' => 'validate', 'value' => $user->email));
-                        echo "</th></tr><tr ><th >Password</th><th class='input-field '>";
-                        echo $this->Form->control('password', ['label' => '', 'maxlength' => '20', 'class' => 'validate', 'value' => $user->password]);
+                        if ($admin['id'])
+                            echo $this->Form->control('email', array('label' => '', 'class' => 'validate', 'disabled' => true, 'value' => $user->email));
+                        else echo $this->Form->control('email', array('label' => '', 'class' => 'validate', 'value' => $user->email));
+                        if (empty($admin['id'])) {
+                            echo "</th></tr><tr ><th >Password</th><th class='input-field '>";
+                            echo $this->Form->control('password', ['label' => '', 'maxlength' => '20', 'class' => 'validate', 'value' => $user->password]);
+                        } else {
+                            echo $this->Form->control('password', ['type' => 'hidden', 'default' => $user->password]);
+                        }
                         echo "</th></tr><tr><th>Gender</th><th class='input-field '>";
                         echo "<p><label><input class='with-gap' name='gender' type='radio' value='male' ";
                         if ($user->gender == 'male') {
                             echo "checked";
                         }
+                        if ($admin['id']) echo " disabled";
                         echo "/><span>Male</span></label>&emsp;<label><input class='with-gap' name='gender' type='radio' value='female'";
                         if ($user->gender == 'female') {
                             echo "checked";
                         }
+                        if ($admin['id']) echo " disabled";
                         echo "/><span>Female</span></label></p>";
-                        echo "</th></tr><tr><th>Phone Number</th><th class='input-field '>";
-                        echo $this->Form->control('phone', array('label' => '', 'class' => 'validate', 'type' => 'number', 'value' => $user->phone));
+                        echo "</th></tr>";
+                        if ($admin['id']) {
+                            echo "</th></tr><tr><th>User Type</th><th class='input-field '>";
+                            echo "<p><label><input class='with-gap' name='type' type='radio' value='normal' ";
+                            if ($user->premium_flg == 'normal') {
+                                echo "checked";
+                            }
+                            echo "/><span>Normal</span></label>&emsp;<label><input class='with-gap' name='type' type='radio' value='premium'";
+                            if ($user->premium_flg == 'premium') {
+                                echo "checked";
+                            }
+                            echo "/><span>Premium</span></label></p>";
+                        }
+                        echo "<tr><th>Phone Number</th><th class='input-field '>";
+                        if ($admin['id'])
+                            echo $this->Form->control('phone', array('label' => '', 'class' => 'validate', 'disabled' => true, 'type' => 'number', 'value' => $user->phone));
+                        else echo $this->Form->control('phone', array('label' => '', 'class' => 'validate', 'type' => 'number', 'value' => $user->phone));
                         echo "</th></tr><tr><th>Date Of Birth</th><th style='width:100%;'>";
-                        echo $this->Form->control(
+                        if ($admin['id'])
+                            echo $this->Form->control(
+                                'birthdate',
+                                [
+                                    'label' => '',
+                                    'class' => 'txt',
+                                    'type' => 'text',
+                                    'id' => 'datetimepicker',
+                                    'value' => $user->birthdate->i18nFormat('YYY-MM-dd'),
+                                    'disabled' => true,
+                                ]
+                            );
+                        else echo $this->Form->control(
                             'birthdate',
                             [
                                 'label' => '',
@@ -53,7 +95,7 @@
                 </div>
             </main>
             <!-- </form> -->
-            <?= $this->Form->button(__('Update'), ['class' => 'indigo waves-effect waves-light btn']) ?>
+            <?= $this->Form->button(__('Update'), ['class' => 'indigo waves-effect waves-light btn', 'id' => 'btnUpdate']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
@@ -82,6 +124,7 @@
 
     th {
         font-family: Raleway !important;
+        width: 40%;
     }
 
     td {
@@ -121,3 +164,10 @@
         border: 4px solid #fff;
     }
 </style>
+
+<script>
+    $("#btnUpdate").click(function() {
+        var user_type = $('input[name=type]:checked').val();
+        var a = $("#usertype").val(user_type);
+    });
+</script>

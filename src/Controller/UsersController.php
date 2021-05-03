@@ -202,6 +202,11 @@ class UsersController extends AppController
 
             if ($age >= 15 and $age <= 100) {
                 $phone_no = $this->request->getData('phone');
+                
+                $userType = $this->request->getData('userType');
+                if ($userType) {
+                    $user->premium_flg = $userType;
+                }
                 if (strlen($phone_no) < 15) {
                     $user->phone = $phone_no;
 

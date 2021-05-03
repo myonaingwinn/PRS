@@ -34,11 +34,11 @@
                     <td><?= $no++ ?></td>
                     <td><?= h($user->name) ?></td>
                     <td><?= h($user->email) ?></td>
-                    <td><?= h($user->gender) ?></td>
+                    <td class="capitalize"> <?= h($user->gender) ?></td>
                     <td><?= h($user->phone) ?></td>
                     <td><?= h($user->birthdate->i18nFormat('YYY-MM-dd')) ?></td>
-                    <td><?= h($user->premium_flg) ?></td>
-                    <td><?= h($user->reward) ?></td>
+                    <td class="capitalize"><?= h($user->premium_flg) ?></td>
+                    <td class="capitalize"><?= h($user->scores ? $user->scores[0]->score : $user->reward) ?></td>
 
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
@@ -60,3 +60,9 @@
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
 </div>
+
+<style>
+    .capitalize {
+        text-transform: capitalize;
+    }
+</style>
