@@ -7,6 +7,7 @@
             <?= $this->Form->create($user, [
                 'class' => 'was-validated', 'enctype' => 'multipart/form-data'
             ]) ?>
+            <input type="hidden" name="admin_id" value="<?= $admin['id'] ?>" />
             <main>
                 <div class="row">
                     <div class="left col s12">
@@ -75,7 +76,7 @@
         text-transform: capitalize;
     }
 
-    label{
+    label {
         color: black;
     }
 

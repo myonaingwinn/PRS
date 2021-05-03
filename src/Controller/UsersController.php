@@ -35,7 +35,7 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Admins']
+            'contain' => ['Admins', 'Scores']
         ];
         // $data = $this->Users->find('all')->where(del_flg => 'not');
         $data = $this->Users->find('all', array('conditions' => array('Users.del_flg' => 'not')));
@@ -204,7 +204,10 @@ class UsersController extends AppController
                 $phone_no = $this->request->getData('phone');
                 if (strlen($phone_no) < 15) {
                     $user->phone = $phone_no;
-                    $user->admin_id = $this->Auth->user('id');
+
+                    $admin_id = $this->request->getData('admin_id');
+                    $user->admin_id = $admin_id ? $admin_id : null;
+
                     if ($this->Users->save($user)) {
                         $this->Flash->success(__('Successfully Updated.'));
 
