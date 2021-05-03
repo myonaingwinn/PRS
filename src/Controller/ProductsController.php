@@ -90,8 +90,8 @@ class ProductsController extends AppController
         $categories = $this->Products->Categories->find('list', ['limit' => 200]);
         $admins = $this->Products->Admins->find('list', ['limit' => 200]);
 
-        $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name']);
-        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);
+        $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['del_flg' => "not"]);
+        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['del_flg' => "not"]);
 
         $this->set(compact('product', 'companies', 'categories', 'admins'));
 

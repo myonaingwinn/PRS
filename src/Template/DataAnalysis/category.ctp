@@ -74,14 +74,12 @@
         color: white;
     }
 </style>
-<?php
 
-use Cake\Core\App;
+<?php
 
 require_once(ROOT . DS . 'vendor' . DS  . 'fusioncharts' . DS . 'fusioncharts.php');
 
 use Cake\ORM\TableRegistry;
-use Cake\Datasource\ConnectionManager;
 
 $productType = 1;
 $categoryType = 1;
@@ -103,7 +101,7 @@ function getPieCharts($categoryType)
     $proData = TableRegistry::get('products');
     $catData = TableRegistry::get('categories');
 
-    $pinfo_query = $proData->find('all')->where(['category_id' => $categoryType]);
+    $pinfo_query = $proData->find('all')->where(['category_id' => $categoryType, 'del_flg' => "not"]);
     $catName = $catData->find('all')->where(['id' => $categoryType]);
     foreach ($catName as $result1) {
         $pie_category_name = $result1->name;
