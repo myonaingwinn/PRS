@@ -188,11 +188,21 @@ class SurveysController extends AppController
     {
         $this->request->allowMethod(['patch', 'post', 'put']);
         $survey = $this->Surveys->get($id);
-        $survey->del_flg = 'deleted';
-        if ($this->Surveys->save($survey)) {
-            $this->Flash->success(__('The survey has been deleted.'));
-        } else {
-            $this->Flash->error(__('The survey could not be deleted. Please, try again.'));
+
+        // answered? don't delete
+        $query = $this->Surveys->Answers->find('all')->where(['survey_id' => $id])->select('id');
+        $data = $query->toArray();
+        $survey_id = implode(' ', $data);
+
+        if (!empty($survey_id))
+            $this->Flash->error(__('This survey is being answered, so that could not be deleted.'));
+        else {
+            $survey->del_flg = 'deleted';
+            if ($this->Surveys->save($survey)) {
+                $this->Flash->success(__('The survey has been deleted.'));
+            } else {
+                $this->Flash->error(__('The survey could not be deleted. Please, try again.'));
+            }
         }
 
         return $this->redirect(['action' => 'index']);
