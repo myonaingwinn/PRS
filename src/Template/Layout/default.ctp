@@ -45,7 +45,7 @@ $cakeDescription = 'PRS';
 </head>
 
 <body class="blue-grey lighten-5">
-    <nav>
+    <!--     <nav>
         <div class="nav-wrapper indigo z-depth-1">
             <a href=" <?= ($Luser['id'] || $admin['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">Products Ranking System</a>
             <?php if ($Luser['id'] || $admin['id']) : ?>
@@ -54,7 +54,20 @@ $cakeDescription = 'PRS';
                 </a>
             <?php endif ?>
         </div>
-    </nav>
+    </nav> -->
+
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper indigo z-depth-2">
+                <a href=" <?= ($Luser['id'] || $admin['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">Products Ranking System</a>
+                <?php if ($Luser['id'] || $admin['id']) : ?>
+                    <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
+                        <i class="material-icons">menu</i>
+                    </a>
+                <?php endif ?>
+            </div>
+        </nav>
+    </div>
 
     <!-- side nav -->
     <!-- for UserPanel -->
