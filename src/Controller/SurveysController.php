@@ -26,8 +26,7 @@ class SurveysController extends AppController
         $this->paginate = [
             'contain' => ['Products', 'Categories', 'Admins']
         ];
-        $surveys = $this->paginate($this->Surveys->find('all', array('conditions' => array('Surveys.del_flg' => 'not'))));
-
+        $surveys = $this->paginate($this->Surveys->find('all')->where(['Surveys.del_flg' => 'not']));
         $this->set(compact('surveys'));
         $this->set('_serialize', ['surveys']);
     }
@@ -222,10 +221,37 @@ class SurveysController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    public function search()
+    {
+        // $this->request->allowMethod(['ajax','patch', 'post', 'put']);
+
+        $keyword = $this->request->getQuery('keyword');
+
+        $this->paginate = [
+            'contain' => ['Products', 'Categories', 'Admins']
+        ];
+
+        $surveys = $this->paginate($this->Surveys->find('all')
+            ->where(
+                [
+                    ['OR' => [
+                        ['Surveys.name LIKE' => '%' . $keyword . '%'],
+                        ['Surveys.description LIKE' => '%' . $keyword . '%']
+                    ]],
+                    ['AND' => ['Surveys.del_flg' => 'not']]
+                ]
+            )
+            ->order(['Surveys.name' => 'ASC'])
+            ->limit(20));
+
+        $this->set(compact('surveys'));
+        $this->set('_serialize', ['surveys']);
+    }
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         if ($this->Auth->user())
-            $this->Auth->allow(['publish', 'delete', 'add', 'index', 'view']);
+            $this->Auth->allow(['publish', 'delete', 'add', 'index', 'view', 'search']);
     }
 }
