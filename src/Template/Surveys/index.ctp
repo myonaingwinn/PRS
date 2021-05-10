@@ -23,7 +23,7 @@
                     <th scope="col"><?= $this->Paginator->sort('admin_id') ?></th>
                     <!-- <th scope="col"><?= $this->Paginator->sort('created') ?></th> -->
                     <!-- <th scope="col"><?= $this->Paginator->sort('modified') ?></th> -->
-                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                    <th scope="col" class="actions" width="10%"><?= __('Actions') ?></th>
                 </tr>
             </thead>
             <tbody>
