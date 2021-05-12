@@ -1,7 +1,7 @@
 /vendor/*
-/config/app.php
 /tmp/*
 /logs/*
-/src/Shell/*
-/tests/TestCase/Shell/*
 *.orig
+config/app.php
+webroot/upload/images/*
+webroot/img/profile_img/*

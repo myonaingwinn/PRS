@@ -241,7 +241,10 @@ class UsersController extends AppController
                     if ($this->Users->save($user)) {
                         $this->Flash->success(__('Successfully Updated.'));
 
-                        return $this->redirect('data_analysis');
+                        if ($this->Auth->user('name'))
+                            return $this->redirect('data_analysis');
+                        else
+                            return $this->redirect('users');
                     }
                 } else {
                     $this->Flash->error(__('Invalid phone number'));

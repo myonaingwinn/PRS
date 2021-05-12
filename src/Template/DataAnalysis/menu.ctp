@@ -8,8 +8,10 @@
         max-width: -moz-fit-content;
         max-width: fit-content;
         margin: 0 auto;
-        overflow-x: auto;
+        /* overflow-x: auto; */
         white-space: nowrap;
+        table-layout: auto;
+        width: 100%;
     }
 
     .hline {
@@ -74,6 +76,10 @@
         background-color: #4CAF50;
         color: white;
     }
+
+    img {
+        border-radius: 10px;
+    }
 </style>
 
 <div class="topnav z-depth-2">
@@ -85,7 +91,7 @@
 <br><br>
 <div><a class="btn-large teal lighten-2">Trending Products</a></div>
 
-<div>
+<!-- <div>
     <table>
         <tbody>
             <tr>
@@ -104,6 +110,43 @@
                 <?php endforeach; ?>
 
             </tr>
+        </tbody>
+    </table>
+</div> -->
+
+<div>
+    <br>
+    <table>
+        <tbody>
+            <?php $var = 1; ?>
+            <?php foreach ($product_list as $p) : ?>
+                <?php if ($var % 2 != 0) : ?>
+                    <tr>
+                        <?php if ($p['pimage'] != null) ?>
+                        <?php $imgName = "/upload/images/" . $p['pimage']; ?>
+                        <td width="20">
+                            <?php echo "<img src='" . $imgName . " ' width=\"160px\" height=\"160px\">"; ?>
+                        </td>
+                        <td width="20">
+                            Product Model No: <span style="color:red"><?= h($p['pmodel_no']) ?></span><br>
+                            Product Name: <span style="color:red"><?= h($p['pname']) ?></span><br>
+                            Product Price: <span style="color:red"><?= h($p['pprice']) ?></span>
+                        </td>
+                    <?php else : ?>
+                        <?php if ($p['pimage'] != null) ?>
+                        <?php $imgName = "/upload/images/" . $p['pimage']; ?>
+                        <td width="20">
+                            <?php echo "<img src='" . $imgName . " ' width=\"160px\" height=\"160px\">"; ?>
+                        </td>
+                        <td width="20">
+                            Product Model No: <span style="color:red"><?= h($p['pmodel_no']) ?></span><br>
+                            Product Name: <span style="color:red"><?= h($p['pname']) ?></span><br>
+                            Product Price: <span style="color:red"><?= h($p['pprice']) ?></span>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php $var++; ?>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>

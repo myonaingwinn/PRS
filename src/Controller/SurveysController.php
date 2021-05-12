@@ -26,8 +26,7 @@ class SurveysController extends AppController
         $this->paginate = [
             'contain' => ['Products', 'Categories', 'Admins']
         ];
-        $surveys = $this->paginate($this->Surveys->find('all', array('conditions' => array('Surveys.del_flg' => 'not'))));
-
+        $surveys = $this->paginate($this->Surveys->find('all')->where(['Surveys.del_flg' => 'not']));
         $this->set(compact('surveys'));
         $this->set('_serialize', ['surveys']);
     }
@@ -188,11 +187,21 @@ class SurveysController extends AppController
     {
         $this->request->allowMethod(['patch', 'post', 'put']);
         $survey = $this->Surveys->get($id);
-        $survey->del_flg = 'deleted';
-        if ($this->Surveys->save($survey)) {
-            $this->Flash->success(__('The survey has been deleted.'));
-        } else {
-            $this->Flash->error(__('The survey could not be deleted. Please, try again.'));
+
+        // answered? don't delete
+        $query = $this->Surveys->Answers->find('all')->where(['survey_id' => $id])->select('id');
+        $data = $query->toArray();
+        $survey_id = implode(' ', $data);
+
+        if (!empty($survey_id))
+            $this->Flash->error(__('This survey is being answered, so that could not be deleted.'));
+        else {
+            $survey->del_flg = 'deleted';
+            if ($this->Surveys->save($survey)) {
+                $this->Flash->success(__('The survey has been deleted.'));
+            } else {
+                $this->Flash->error(__('The survey could not be deleted. Please, try again.'));
+            }
         }
 
         return $this->redirect(['action' => 'index']);
@@ -212,10 +221,37 @@ class SurveysController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    public function search()
+    {
+        $this->request->allowMethod('ajax');
+
+        $keyword = $this->request->getQuery('keyword');
+
+        $this->paginate = [
+            'contain' => ['Products', 'Categories', 'Admins']
+        ];
+
+        $surveys = $this->paginate($this->Surveys->find('all')
+            ->where(
+                [
+                    ['OR' => [
+                        ['Surveys.name LIKE' => '%' . $keyword . '%'],
+                        ['Surveys.description LIKE' => '%' . $keyword . '%']
+                    ]],
+                    ['AND' => ['Surveys.del_flg' => 'not']]
+                ]
+            )
+            ->order(['Surveys.name' => 'ASC'])
+            ->limit(20));
+
+        $this->set(compact('surveys'));
+        $this->set('_serialize', ['surveys']);
+    }
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         if ($this->Auth->user())
-            $this->Auth->allow(['publish', 'delete', 'add', 'index', 'view']);
+            $this->Auth->allow(['publish', 'delete', 'add', 'index', 'view', 'search']);
     }
 }
