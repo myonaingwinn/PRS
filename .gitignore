@@ -5,3 +5,6 @@
 /src/Shell/*
 /tests/TestCase/Shell/*
 *.orig
+webroot/upload/images/*
+webroot/upload/videos/*
+webroot/img/profile_img/*

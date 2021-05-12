@@ -1,89 +1,147 @@
-<?php
-
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Product[]|\Cake\Collection\CollectionInterface $products
- */
-?>
+<!-- Search Button Style -->
+<style>
+    .Flatsearch {
+        align-items: center;
+        border-radius: 5px;
+        border: 0px solid #ccc;
+        display: flex;
+        justify-content: space-between;
+        width:300px;
+        margin: 1px 0;
+        padding: 0px;
+        transition: all 0.5s ease 0s;
+    }
+    .Flatsearch:hover, .Flatsearch:focus {
+        background: #3F51B5;
+        color: #fff;
+    }
+    .Flatsearch button,
+    .Flatsearch input {
+      -webkit-appearance: none;
+        -moz-appearance: none;
+              appearance: none;
+      background: transparent;
+      border: 0;
+      color: inherit;
+      font: inherit;
+      outline: 0;
+    }
+</style>
+<!-- Product List Page -->
 <div class="products index large-9 medium-8 columns content">
-  <h4><?= __('Product List') ?></h4>
-  <div class="row">
-    <div class="col s5">
-      <?= $this->Form->control('search'); ?>
-    </div>
-    <div class="col s4"></div>
-    <div class="col s3">
-      <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'waves-effect waves-light btn right indigo']) ?>
-    </div>
-  </div>
-  <div class="table-content">
-    <table cellpadding="0" cellspacing="0">
-      <thead>
-        <tr>
-          <th scope="col">No</th>
-          <th scope="col"><?= $this->Paginator->sort('Product') ?></th>
-          <th scope="col"><?= $this->Paginator->sort('Price') ?></th>
-          <th scope="col"><?= $this->Paginator->sort('Status') ?></th>
-          <th scope="col"><?= $this->Paginator->sort('User') ?></th>
-          <th scope="col"><?= $this->Paginator->sort('Trending') ?></th>
-          <th scope="col"><?= $this->Paginator->sort('Action') ?></th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php $page = $this->Paginator->counter(['format' => __('{{page}}')]);
-        $no = 1;
-        if ($page > 2)
-          $no = $page * 20 - 19;
-        else if ($page == 2)
-          $no = $page * 10 + 1;
-        ?>
-        <?php foreach ($products as $product) : ?>
-          <tr>
-            <td><?= $this->Number->format($no++) ?></td>
-            <td><?= $product['image'] ?>&nbsp;&nbsp;&nbsp;&nbsp;<?= $product['name'] ?></td>
-            <td><?= $product['price'] ?></td>
-            <td>
-              <input type="text" value="<?= (6 / 5) * 100 ?>" id="pp" hidden>
-              <?php if ((3 / 5) * 100 > 50) {
-                echo "<i class='material-icons green-text'>arrow_upward</i>";
-              } elseif ((3 / 5) * 100 < 50) {
-                echo "<label>Down</label>";
-              } elseif ((3 / 5) * 100 == 50) {
-                echo "<label>Stabel</label>";
-              }
-              ?>
-            </td>
-            <td><?= $product['name'] ?></td>
-            <td><?= 4 / 5 * 100 ?>%<progress id="pp" value="<?= 4 / 5 * 100 ?>" max="100"> </progress></td>
-            <td>
-              <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
-              <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product->id], ['confirm' => __('Are you sure you want to delete # {0}?', $product->id)]) ?>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
+    
+    <!-- Header -->
+    <h4><?= __('Product List') ?></h4>
+    
+    <!-- Upper Section -->
+    <div class="row">
 
-  <div class="paginator">
-    <ul class="pagination">
-      <?= $this->Paginator->first('<< ' . __('first')) ?>
-      <?= $this->Paginator->prev('< ' . __('previous')) ?>
-      <?= $this->Paginator->numbers() ?>
-      <?= $this->Paginator->next(__('next') . ' >') ?>
-      <?= $this->Paginator->last(__('last') . ' >>') ?>
-    </ul>
-    <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-  </div>
+        <!-- Search Button -->
+        <div class="col s4 Flatsearch">
+            <?= $this->Form->text('search', ['id' => 'search', 'size' => '100', 'maxlength' => '100', 'placeholder' => 'Search...']) ?>
+            <?= $this->Form->button('<i class="material-icons prefix">search</i>', ['type' => 'button' ,'id' => 'button']); ?>      
+        </div>
+        
+        <!-- Empty Spacing -->
+        <div class="col s5"></div>
+        
+        <!-- New Product Button -->
+        <div class="col s3">            
+            <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'waves-effect waves-light btn right indigo']) ?>
+        </div>
+
+    </div>
+    <!-- End Upper Section -->
+
+    <!-- Table Section -->
+    <div class="table-content">
+        <!-- Search Result Table List -->
+        <table cellpadding="0" cellspacing="0">
+            
+            <!-- Header Section -->
+            <thead>
+                <tr>
+                    <th scope="col"><?= __('No') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('Product') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('Price') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('Status') ?></th>                    
+                    <th scope="col"><?= $this->Paginator->sort('Trending') ?></th>
+                    <th scope="col"><?= __('Action') ?></th>
+                </tr>
+            </thead>
+
+            <!-- Body Section -->
+            <tbody>
+                <!-- Pagination Format -->
+                <?php $page = $this->Paginator->counter(['format' => __('{{page}}')]);
+                    $no = 1;
+                    if ($page > 2) $no = $page * 20 - 19;
+                    else if ($page == 2) $no = $page * 10 + 1; ?>
+                
+                <!-- Forech Loop Listing -->
+                <?php foreach ($products as $product) : ?>
+                    <tr>
+                        <td><?= __($no++) ?></td>
+                        <td><?= $product['name'] ?></td>
+                        <td><?= $this->Number->format($product['price']) ?></td>
+                        <td><?php 
+                            // Status Condition
+                            if (($product['rating'] / 5) * 100 > 50) {
+                                echo "<i class='material-icons green-text'>arrow_upward</i>";
+                            } elseif (($product['rating'] / 5) * 100 < 50) {
+                                if (($product['rating'] / 5) * 100 === 0) {
+                                    echo "<label>no answer</label>";
+                                } elseif (($product['rating'] / 5) * 100 === NULL) {
+                                    echo "<i class='material-icons black-text'>arrow_downward</i>";
+                                } else {
+                                    echo "<i class='material-icons red-text'>arrow_downward</i>";
+                                }
+                            } ?>
+                        </td>
+                        <td><?php 
+                            // Progress Bar Condition
+                            if ($product['rating'] === NULL || $product['rating'] === ''): ?>
+                                <?= 0 / 5 * 100 ?>% <progress value="<?= 0 / 5 * 100 ?>" max="100"></progress>
+                            <?php else: ?>
+                                <?= $product['rating'] / 5 * 100 ?>% <progress value="<?= $product['rating'] / 5 * 100 ?>" max="100"></progress>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $product['id']]) ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product['id']]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product['id']], ['confirm' => __('Are you sure you want to delete '.$product['name'].'?', $product['id'])]) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <!-- End Foreach Loop Listing -->
+            </tbody>
+        </table>
+
+        <!-- Paginator Section -->
+        <div class="paginator">
+            <ul class="pagination">
+              <?= $this->Paginator->first('<< ' . __('first')) ?>
+              <?= $this->Paginator->prev('< ' . __('previous')) ?>
+              <?= $this->Paginator->numbers() ?>
+              <?= $this->Paginator->next(__('next') . ' >') ?>
+              <?= $this->Paginator->last(__('last') . ' >>') ?>
+            </ul>
+            <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+        </div>
+    </div>
+    <!-- End Table Section -->
 </div>
 
+<!-- Search Function Script -->
 <script>
   $('document').ready(function() {
+    // Invoke Search Bar
     $('#search').keyup(function() {
       var searchkey = $(this).val();
       searchProducts(searchkey);
     });
 
+    // Controller Query Link with Ajax
     function searchProducts(keyword) {
       var data = keyword;
       $.ajax({
@@ -93,6 +151,7 @@
           keyword: data
         },
 
+        // Show Result List
         success: function(response) {
           $('.table-content').html(response);
         }

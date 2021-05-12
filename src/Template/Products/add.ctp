@@ -21,13 +21,13 @@
             <div class="input-field col s11">
                 <i class="material-icons prefix">attach_money</i>
                 <?= $this->Form->number('price', ['id' => 'price', 'min' => '0', 'max' => '999999999999999', 'title' => 'Please insert MMK currency']) ?>
-                <?= $this->Form->label('product_price') ?>
+                <?= $this->Form->label('Please insert Myanmar currency') ?>
             </div>
             <div class="row">
                 <div class="file-field input-field col s6">
                     <div class="btn indigo">
                         <span class="material-icons">wallpaper</span>
-                        <?= $this->Form->control('image', ['type' => 'file', 'accept' => 'image/jpeg']) ?>
+                        <?= $this->Form->file('image', ['accept' => 'image/jpeg']) ?>
                     </div>
                     <div class="file-path-wrapper">
                         <?= $this->Form->text('image', ['class' => 'file-path validate', 'placeholder' => 'Please choose single image file']) ?>
