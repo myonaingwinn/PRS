@@ -17,7 +17,11 @@
 <div class="users index large-9 medium-8 columns content">
     <h3><?= __('Users') ?></h3>
 
-    <?= $this->Form->control('search'); ?>
+    <!-- <?= $this->Form->control('search'); ?> -->
+    <div class="input-field col s4">
+        <i class="material-icons prefix">search</i>
+        <input id="search" name="search" type="text" class="validate" placeholder="Search...">
+    </div>
 
     <div class="table-content">
 
