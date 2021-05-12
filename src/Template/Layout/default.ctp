@@ -88,6 +88,7 @@ $cakeDescription = 'PRS';
             <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Rewards</a></li>
             <li><a class="waves-effect" href="/notifications"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
+            <li><a class="waves-effect" href="/products"><i class="material-icons teal-text text-darken-1">local_parking</i>Products</a></li>
             <li><a class="waves-effect" href="/logout"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
         </ul>
     <?php endif ?>
