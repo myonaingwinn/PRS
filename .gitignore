@@ -5,3 +5,12 @@
 /src/Shell/*
 /tests/TestCase/Shell/*
 *.orig
+
+
+/vendor/*
+/tmp/*
+/logs/*
+*.orig
+config/app.php
+webroot/upload/images/*
+webroot/img/profile_img/*
