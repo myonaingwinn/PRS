@@ -1,13 +1,4 @@
 /vendor/*
-/config/app.php
-/tmp/*
-/logs/*
-/src/Shell/*
-/tests/TestCase/Shell/*
-*.orig
-
-
-/vendor/*
 /tmp/*
 /logs/*
 *.orig
