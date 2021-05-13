@@ -119,34 +119,27 @@
     <table>
         <tbody>
             <?php $var = 1; ?>
-            <?php foreach ($product_list as $p) : ?>
-                <?php if ($var % 2 != 0) : ?>
-                    <tr>
-                        <?php if ($p['pimage'] != null) ?>
-                        <?php $imgName = "/upload/images/" . $p['pimage']; ?>
-                        <td width="20">
-                            <?php echo "<img src='" . $imgName . " ' width=\"160px\" height=\"160px\">"; ?>
-                        </td>
-                        <td width="20">
-                            Product Model No: <span style="color:red"><?= h($p['pmodel_no']) ?></span><br>
-                            Product Name: <span style="color:red"><?= h($p['pname']) ?></span><br>
-                            Product Price: <span style="color:red"><?= h($p['pprice']) ?></span>
-                        </td>
-                    <?php else : ?>
-                        <?php if ($p['pimage'] != null) ?>
-                        <?php $imgName = "/upload/images/" . $p['pimage']; ?>
-                        <td width="20">
-                            <?php echo "<img src='" . $imgName . " ' width=\"160px\" height=\"160px\">"; ?>
-                        </td>
-                        <td width="20">
-                            Product Model No: <span style="color:red"><?= h($p['pmodel_no']) ?></span><br>
-                            Product Name: <span style="color:red"><?= h($p['pname']) ?></span><br>
-                            Product Price: <span style="color:red"><?= h($p['pprice']) ?></span>
-                        </td>
-                    </tr>
-                <?php endif; ?>
-                <?php $var++; ?>
-            <?php endforeach; ?>
+            <tr>
+                <?php foreach ($product_list as $p) : ?>
+
+                    <?php if ($p['pimage'] != null) ?>
+                    <?php $imgName = "/upload/images/" . $p['pimage']; ?>
+                    <td width="20">
+                        <?php echo "<img src='" . $imgName . " ' width=\"160px\" height=\"160px\">"; ?>
+                    </td>
+                    <td width="20">
+                        Product Model No: <span style="color:red"><?= h($p['pmodel_no']) ?></span><br>
+                        Product Name: <span style="color:red"><?= h($p['pname']) ?></span><br>
+                        Product Price: <span style="color:red"><?= number_format(floatval($p['pprice'])) . " MMK"; ?></span>
+                    </td>
+                    <?php if ($var % 2 == 0) : ?>
+            </tr>
+            <tr>
+            <?php endif; ?>
+            <?php $var++; ?>
+        <?php endforeach; ?>
+
         </tbody>
+
     </table>
 </div>

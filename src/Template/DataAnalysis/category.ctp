@@ -235,7 +235,10 @@ function getAvgResult($results)
             <tr>
                 <td width="20"><?= h($p->name) ?></td>
                 <td width="20"><?= h($p->model_no) ?></td>
-                <td width="20"><?= h($p->price) ?></td>
+                Product Price: <spanstyle="color:red"><?= number_format(floatval($p['pprice'])); ?></span>
+
+
+                    <td width="20"><?= number_format(floatval($p->price)) . " MMK" ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

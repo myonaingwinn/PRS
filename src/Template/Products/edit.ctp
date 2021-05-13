@@ -83,9 +83,11 @@ use Cake\Log\Log;
             <div class="col s8">
                 <select id="typeCom" name="company_id">
                     <option value="">Select Company</option>
-                    <?php foreach ($companies_list as $c) :
+                    <?php foreach ($companies_list as $c) : $selected = "";
+                        if ($c->id == $product->company_id)
+                            $selected = "selected";
                     ?>
-                        <option value="<?= h($c->id) ?>"><?= h($c->name) ?></option>
+                        <option value="<?= h($c->id) ?>" <?php echo $selected ?>><?= h($c->name) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -107,6 +109,9 @@ use Cake\Log\Log;
         var categories = <?php echo json_encode($categories_list); ?>;
         var companies = <?php echo json_encode($companies_list); ?>;
         var categoryID = $(this).val();
+        ///var cid = 18;
+
+        console.log(cid);
 
         $('#typeCom option').remove();
         $('#typeCom').append('<option value="" disabled >Select company</option>');
@@ -116,7 +121,9 @@ use Cake\Log\Log;
 
             if (str != undefined) {
                 if (str.includes(categoryID)) {
+
                     $('#typeCom').append('<option value="' + $(this)[0].id + '">' + $(this)[0].name + '</option>');
+
                 }
             }
         });

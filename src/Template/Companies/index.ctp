@@ -18,7 +18,7 @@
                 <th scope="col"><?= $this->Paginator->sort('website') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('address') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('phone') ?></th>
-
+                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -31,6 +31,7 @@
                     <td><?= h($company->website) ?></td>
                     <td><?= h($company->address) ?></td>
                     <td><?= h($company->phone) ?></td>
+                    <td><?= date('Y-m-d', strtotime(h($company->created))); ?></td>
 
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $company->id]) ?>
