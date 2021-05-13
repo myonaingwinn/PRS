@@ -1,7 +1,7 @@
 <?php
 ?>
 <div class="surveys index large-9 medium-8 columns content">
-    <h3><?= __('ReAward') ?></h3>
+    <h3><?= __('Rewards') ?></h3>
     <?php foreach ($scores as $score) : ?>
 
 

@@ -13,9 +13,8 @@
                 <th scope="col" class="actions"><?= __('No') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Prize Name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Scores') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('Created') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-
+                <th scope="col" width="20%"><?= $this->Paginator->sort('Taken Date') ?></th>
+                <th scope="col" class="actions" width="10%"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
