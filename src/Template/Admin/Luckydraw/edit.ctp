@@ -15,9 +15,9 @@
       <?= $this->Form->create($luckydraw) ?>
 
       <!--Header-->
-      <span class="card-title">Update Score</span>
+     <center> <span class="card-title">Update Score</span></center>
       <div class="input-field col s6">
-        <?php echo $this->Form->control('scores', array('label' => false)); ?>
+        <?php echo $this->Form->control('scores', array('label' => false,'id' => 'scores')); ?>
       </div>
       <div class="input-field col s6">
         <?php echo $this->Form->control('color', array('label' => false, 'type' => 'color', 'id' => 'color')); ?>
@@ -44,17 +44,25 @@
     margin-top: 5rem;
     width: 60%;
   }
+  #scores{
+  width: 60%;
+  margin-left: 80px;
+}
 
   #btnUpdate {
-    margin-right: 40px;
+    margin-right: 10px;
+    margin-bottom: -1rem;
   }
 
   #btnCancel {
-    margin-right: -40px;
+    margin-right: -10px;
+    margin-bottom: -1rem;
   }
 
   #color {
-    width: 150px;
+    width: 100px;
     height: 30px;
+    margin-left: 80px;
+    margin-top: 10px;
   }
 </style>
