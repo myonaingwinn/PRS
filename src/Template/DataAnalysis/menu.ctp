@@ -149,4 +149,36 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+<<<<<<< HEAD
+</div>
+
+<div>
+    <br>
+    <table class="table2">
+        <tbody>
+ 
+            <?php $var = 1; ?>
+            <tr>
+                <?php foreach ($product_list as $p) : ?>
+ 
+                    <?php if ($p['pimage'] != null) ?>
+                    <?php $imgName = "/upload/images/" . $p['pimage']; ?>
+                    <td width="20">
+                        <?php echo "<img src='" . $imgName . " ' width=\"160px\" height=\"160px\">"; ?>
+                        <br>
+                        Product Model No: <span style="color:red"><?= h($p['pmodel_no']) ?></span><br>
+                        Product Name: <span style="color:red"><?= h($p['pname']) ?></span><br>
+                        Product Price: <span style="color:red"><?= h($p['pprice']) ?></span>
+                    </td>
+ 
+                    <?php if ($var % 4 == 0) : ?>
+            </tr>
+            <tr><?php endif; ?>
+            <?php $var++; ?>
+        <?php endforeach; ?>
+            </tr>
+        </tbody>
+    </table>
+=======
+>>>>>>> 0e337383331b6d0ed65a398a93dfe714b4d4f655
 </div>
