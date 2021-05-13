@@ -95,6 +95,9 @@ class ProductsTable extends Table
             ->requirePresence('del_flg', 'create')
             ->notEmpty('del_flg');
 
+        $validator
+            ->allowEmpty('description');
+
         return $validator;
     }
 

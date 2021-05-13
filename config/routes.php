@@ -103,6 +103,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 });
 
 
+
 Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->connect('/:controller', ['action' => 'index']);
     $routes->connect('/:controller/:action/*');
@@ -114,6 +115,7 @@ Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->connect('/forgotPassword', ['controller' => 'Admins', 'action' => 'forgotPassword']);
     $routes->connect('/prize', ['controller' => 'Prizes', 'action' => 'prizelist']);
     $routes->connect('/luckydraw', ['controller' => 'Luckydraw', 'action' => 'index']);
+    
     $routes->fallbacks(DashedRoute::class);
 });
 

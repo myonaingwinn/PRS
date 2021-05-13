@@ -50,9 +50,7 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $product['id'], '0']) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product['id']]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product['id']], ['confirm' => __('Are you sure you want to delete '.$product['name'].'?', $product['id'])]) ?>
+                    <?= $this->Html->link(__('View'), ['action' => 'view', $product['id'], '1']) ?>
                 </td>
             </tr>
         <?php endforeach; ?>

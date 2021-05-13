@@ -2,6 +2,7 @@
 /tmp/*
 /logs/*
 *.orig
-config/app.php
 webroot/upload/images/*
+webroot/upload/videos/*
+config/app.php
 webroot/img/profile_img/*
