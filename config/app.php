@@ -185,8 +185,8 @@ return [
             'host' => 'localhost',
             'port' => 25,
             'timeout' => 30,
-            'username' => 'ecctester2222@gmail.com',
-            'password' => 'ECCtester@2222',
+            'username' => '',
+            'password' => '',
             'client' => null,
             'tls' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
@@ -194,8 +194,8 @@ return [
         'mailGmail' => [
             'host' => 'smtp.gmail.com',
             'port' => 587,
-            'username' => 'testtesttest4me@gmail.com',
-            'password' => 'testMe20!',
+            'username' => 'testerformls@gmail.com',
+            'password' => 'mu$lar123',
             'className' => 'Smtp',
             'tls' => true,
             'client' => null,
@@ -259,7 +259,7 @@ return [
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
              */
-            //'port' => 'non_standard_port_number',
+            'port' => '8080',
             'username' => 'root',
             'password' => 'root',
             'database' => 'prs',

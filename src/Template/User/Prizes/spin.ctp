@@ -90,9 +90,12 @@
                     echo Cake\Routing\Router::url([
                         'controller' => 'prizes', 'action' => 'getscores/' . $Luser['id']
                     ]); ?>" method="post" id="form">
+
         <input type="hidden" value="" id="custom_scores" name="custom_scores">
+        <input type="hidden" value="" id="userType" name="userType">
 
     </form>
+
     <!-- comment routes.php line 58 -->
     <script>
         // Create new wheel object specifying the parameters at creation time.
@@ -149,6 +152,7 @@
         function startSpin() {
             theWheel.animation.spins = 10;
             theWheel.startAnimation();
+
         }
         // -------------------------------------------------------
         // Function for reset button.
@@ -165,7 +169,7 @@
                 resetWheel();
             } else {
                 var stext = indicatedSegment.text;
-                alert("You have won " + stext);
+                alert("You have won " + stext + ". Premium user can get double score!");
                 document.getElementById("custom_scores").value = stext;
                 console.log(stext);
                 formAction();
@@ -176,6 +180,11 @@
             let form = document.getElementById('form');
             form.submit();
         }
+
+        $(function() {
+            var user = <?php echo json_encode($Luser) ?>;
+            $("#userType").val(user.premium_flg);
+        });
     </script>
 </body>
 
