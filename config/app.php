@@ -1,21 +1,21 @@
 <?php
 return [
     /**
-                                         * Debug Level:
-                                         *
-                                         * Production Mode:
-                                         * false: No error messages, errors, or warnings shown.
-                                     *
-                                     * Development Mode:
-                                     * true: Errors and warnings shown.
-                                     */
+     * Debug Level:
+     *
+     * Production Mode:
+     * false: No error messages, errors, or warnings shown.
+     *
+     * Development Mode:
+     * true: Errors and warnings shown.
+     */
     'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
 
     /**
-                         * Configure basic information about the application.
-                     *
-                     * - namespace - The namespace to find app classes under.
-             * - defaultLocale - The default locale for translation, formatting currencies and numbers, date and time.
+     * Configure basic information about the application.
+     *
+     * - namespace - The namespace to find app classes under.
+     * - defaultLocale - The default locale for translation, formatting currencies and numbers, date and time.
      * - encoding - The encoding used for HTML + database connections.
      * - base - The base directory the app resides in. If false this
      *   will be auto detected.
@@ -152,7 +152,7 @@ return [
      */
     'Error' => [
         'errorLevel' => E_ALL & ~E_DEPRECATED,
-		'errorLevel' => E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED ,
+        'errorLevel' => E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED,
         'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
         'skipLog' => [],
         'log' => true,
@@ -179,7 +179,7 @@ return [
      * 'YourTransport.php', where 'Your' is the name of the transport.
      */
     'EmailTransport' => [
-          'default' => [
+        'default' => [
             'className' => 'Mail',
             // The following keys are used in SMTP transports
             'host' => 'localhost',
@@ -190,7 +190,7 @@ return [
             'client' => null,
             'tls' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
-          ],
+        ],
         'mailGmail' => [
             'host' => 'smtp.gmail.com',
             'port' => 587,
@@ -201,7 +201,7 @@ return [
             'client' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
-        'mailTrap'=>[
+        'mailTrap' => [
             'host' => 'smtp.mailtrap.io',
             'port' => 2525,
             'username' => '98830b8ca87fde',
@@ -230,9 +230,9 @@ return [
             'transport' => 'mailForget',
             'from' => ['ecctester2222@gmail.com' => 'Products Ranking System'],
         ],
-        'mailTrap'=>[
-            'transport'=>'mailTrap',
-            'from'=>['no-reply@prs.com'=>'Products Ranking System'],
+        'mailTrap' => [
+            'transport' => 'mailTrap',
+            'from' => ['no-reply@prs.com' => 'Products Ranking System'],
         ],
         'mailGmail' => [
             'transport' => 'mailGmail',
@@ -262,10 +262,11 @@ return [
             'port' => '8080',
             'username' => 'root',
             'password' => 'root',
+
+
             'database' => 'prs',
-            // 'database' => 'products_ranking_system',
-            // 'database' => 'prs_slpp',
-            // 'database' => 'prs_skeleton',
+
+
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],

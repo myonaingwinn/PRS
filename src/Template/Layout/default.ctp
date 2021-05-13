@@ -86,6 +86,7 @@ $cakeDescription = 'PRS';
             <li><a href="/view_user/<?= $Luser['id'] ?>"><i class="material-icons light-blue-text">person</i>My Profile</a></li>
             <li><a href="/edit_user/<?= $Luser['id'] ?>"><i class="material-icons pink-text text-lighten-2">edit</i>Update Profile</a></li>
             <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Rewards</a></li>
+            <li><a class="waves-effect" href="/rewardhistory"><i class="material-icons blue-text text-darken-2">pages</i>Reward History</a></li>
             <li><a class="waves-effect" href="/notifications"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
             <li><a class="waves-effect" href="/products"><i class="material-icons teal-text text-darken-1">local_parking</i>Products</a></li>
