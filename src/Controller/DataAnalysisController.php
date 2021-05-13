@@ -61,7 +61,6 @@ class DataAnalysisController extends AppController
     public function category()
     {
         $categories = TableRegistry::get('categories');
-
         $query = $categories->find('all')->where(['del_flg' => "not"]);
         $this->set('categories_list', $query);
     }

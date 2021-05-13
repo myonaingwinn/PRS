@@ -15,7 +15,7 @@
                 <th scope="col" width="50%"><?= $this->Paginator->sort('description') ?></th>
                 <!-- <th scope="col"><?= $this->Paginator->sort('product_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('category_id') ?></th> -->
-                <th scope="col"><?= $this->Paginator->sort('answered date') ?></th>
+                <th scope="col" width="15%"><?= $this->Paginator->sort('answered date') ?></th>
                 <!-- <th scope="col"><?= $this->Paginator->sort('modified') ?></th> -->
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>

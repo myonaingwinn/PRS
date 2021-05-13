@@ -130,13 +130,11 @@ function getColunCharts($productID)
 {
     $chart_product_name = "";
     $proData = TableRegistry::get('products');
-
     $pquery = $proData->find('all')->where(['id' => $productID, 'del_flg' => "not"]);
     foreach ($pquery as $result1) {
         $chart_product_name = $result1->name;
     }
     $dataChart = getAvgRating($productID);
-
     $arrData1 = array(
         "chart" => array(
             "animation" => "0",
