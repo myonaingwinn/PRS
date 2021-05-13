@@ -9,11 +9,8 @@
         width:300px;
         margin: 1px 0;
         padding: 0px;
+        color: #000;
         transition: all 0.5s ease 0s;
-    }
-    .Flatsearch:hover, .Flatsearch:focus {
-        background: #3F51B5;
-        color: #fff;
     }
     .Flatsearch button,
     .Flatsearch input {
@@ -27,6 +24,7 @@
       outline: 0;
     }
 </style>
+
 <!-- Product List Page -->
 <div class="products index large-9 medium-8 columns content">
     
@@ -47,7 +45,7 @@
         
         <!-- New Product Button -->
         <div class="col s3">            
-            <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'waves-effect waves-light btn right indigo']) ?>
+            <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'user-hide waves-effect waves-light btn right indigo']) ?>
         </div>
 
     </div>
@@ -107,13 +105,14 @@
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $product['id']]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product['id']]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product['id']], ['confirm' => __('Are you sure you want to delete '.$product['name'].'?', $product['id'])]) ?>
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $product['id'], $purl]) ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product['id']], ['class' => 'user-hide']) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product['id']], ['class' => 'user-hide'], ['confirm' => __('Are you sure you want to delete '.$product['name'].'?', $product['id'])]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
                 <!-- End Foreach Loop Listing -->
+
             </tbody>
         </table>
 
@@ -135,7 +134,13 @@
 <!-- Search Function Script -->
 <script>
   $('document').ready(function() {
-    // Invoke Search Bar
+
+    // User Authorize Hide Function
+    var purl = "<?php echo $purl ?>";
+    if (purl == "1") {
+        $('.user-hide').hide();
+    }
+    
     $('#search').keyup(function() {
       var searchkey = $(this).val();
       searchProducts(searchkey);
@@ -146,7 +151,12 @@
       var data = keyword;
       $.ajax({
         method: 'get',
-        url: "<?php echo $this->Url->build(['controller' => 'Products', 'action' => 'Search']); ?>",
+        url: "<?php 
+        if ($purl === '1') 
+        echo $this->Url->build(['controller' => 'Products', 'action' => 'Searchuser']); 
+        else 
+        echo $this->Url->build(['controller' => 'Products', 'action' => 'Search']); 
+        ?>",
         data: {
           keyword: data
         },

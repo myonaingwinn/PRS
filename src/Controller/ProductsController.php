@@ -23,17 +23,33 @@ class ProductsController extends AppController
         // Pagination Product List at Limit 20
         $products = $this->paginate($query);
 
+        // Admin User Differentiation
+        $url = $this->request->here();
+        $urluser = substr($url,1,4);
+        $purl = substr($url,-1);
+        $purl2 = substr($url,-8,1);
+
+        // Passing Data for Admin User Role
+        if ($urluser == 'user' || $purl == '1' || $purl2 == '1') {
+            $this->set('purl', '1');
+        } else {
+            $this->set('purl', '0');
+        }
+
         $this->set(compact('products'));
 
     }
 
     // Product View Button Link
-    public function view($id = null)
+    public function view($id = null, $purl)
     {
         // Join query with companies and categories tables
         $product = $this->Products->get($id, [
             'contain' => ['Companies', 'Categories'],
         ]);
+
+        // Admin User Rold Differentiation
+        $this->set('purl', $purl);
 
         $this->set('product', $product);
     }
@@ -201,6 +217,32 @@ class ProductsController extends AppController
 
     // Product Searching Process
     public function search()
+    {
+        // Ajax allow
+        $this->request->allowMethod('ajax');
+
+        // Get string from search bar
+        $keyword = $this->request->query('keyword');
+
+        // Product Searching Query
+        $query = $this->Products
+            ->find('all')
+            ->select(['id' => 'Products.id', 'name' => 'Products.name', 'price' => 'Products.price', 'rating' => 'Answers.rating'])
+            ->leftJoin(
+                ['Answers' => 'answers'],
+                ['Products.id = Answers.product_id'])
+            ->where([['OR' => [['name LIKE'=>'%'.$keyword.'%'],['price LIKE'=>'%'.$keyword.'%']]],['AND' => ['del_flg' => 'not']]])
+            ->group(['id'])
+            ->order(['name' => 'ASC']);
+
+        // Pagination Product List at Limit 20
+        $products = $this->paginate($query);
+
+        $this->set(compact('products'));
+    }
+
+    // Product Searching Process For User
+    public function searchuser()
     {
         // Ajax allow
         $this->request->allowMethod('ajax');

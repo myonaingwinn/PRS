@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
  * @property int $admin_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property string $description
  *
  * @property \App\Model\Entity\Company $company
  * @property \App\Model\Entity\Category $category

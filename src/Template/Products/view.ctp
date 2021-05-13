@@ -1,5 +1,10 @@
-<!-- Back Button -->
-<?= $this->Html->link(__('Back'), ['action' => 'index'], ['class' => 'waves-effect waves-light btn indigo right']) ?>
+<!-- Admin and User Back Button -->
+<?php 
+if ($purl === '1'): ?>
+    <?= $this->Html->link(__('Back'), ['action' => 'index',1], ['class' => 'waves-effect waves-light btn indigo right']) ?>
+<?php else: ?>
+    <?= $this->Html->link(__('Back'), ['action' => 'index',0], ['class' => 'waves-effect waves-light btn indigo right']) ?>
+<?php endif; ?>
 
 <!-- Header name as product name -->
 <h4><?= __($product['name']) ?></h4>
@@ -65,7 +70,13 @@
         <div class="row">
             <div class="col s4">Description</div>
             <div class="col s1"> - </div>
-            <div class="col s7"><?= __('This is the description of the product naming Amaimono. This product is so prue for system') ?></div>
+            <div class="col s7">
+                <?php if ($product['description'] === NULL || $product['description'] === ''): ?>
+                    <?= __('empty') ?>
+                <?php else: ?>
+                    <?= __($product['description']) ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
     <!-- Body Upper End -->

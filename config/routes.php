@@ -79,6 +79,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/notifications', ['controller' => 'Notifications', 'action' => 'index']);
 
     $routes->connect('/products', ['controller' => 'Products', 'action' => 'index']);
+    $routes->connect('/user/products', ['controller' => 'Products', 'action' => 'index']);
     // $routes->connect('/survey-summary', ['controller' => 'Surveys', 'action' => 'index']);
     // $routes->connect('/add', ['controller' => 'Products', 'action' => 'add']);
     // $routes->connect('/edit/*', ['controller' => 'Products', 'action' => 'edit']);
@@ -103,6 +104,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 });
 
 
+
 Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->connect('/:controller', ['action' => 'index']);
     $routes->connect('/:controller/:action/*');
@@ -114,6 +116,7 @@ Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->connect('/forgotPassword', ['controller' => 'Admins', 'action' => 'forgotPassword']);
     $routes->connect('/prize', ['controller' => 'Prizes', 'action' => 'prizelist']);
     $routes->connect('/luckydraw', ['controller' => 'Luckydraw', 'action' => 'index']);
+    
     $routes->fallbacks(DashedRoute::class);
 });
 
