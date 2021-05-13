@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Products Controller
@@ -94,8 +95,15 @@ class ProductsController extends AppController
         $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['del_flg' => "not"]);
 
         $this->set(compact('product', 'companies', 'categories', 'admins'));
-
         $this->set(compact('options_com', 'options_cat'));
+
+        //For Updated Select Box
+        $categories = TableRegistry::get('categories');
+        $categories_list = $categories->find('all')->where(['del_flg' => "not"]);
+        $companies = TableRegistry::get('companies');
+        $companies_list = $companies->find('all')->where(['del_flg' => "not"]);
+        $this->set(compact('categories_list', $categories_list));
+        $this->set(compact('companies_list', $companies_list));
     }
 
     public function edit($id = null)
@@ -156,6 +164,14 @@ class ProductsController extends AppController
 
         $this->set(compact('product', 'companies', 'categories', 'admins'));
         $this->set(compact('options_com', 'options_cat'));
+
+        //For Updated Select Box
+        $categories = TableRegistry::get('categories');
+        $categories_list = $categories->find('all')->where(['del_flg' => "not"]);
+        $companies = TableRegistry::get('companies');
+        $companies_list = $companies->find('all')->where(['del_flg' => "not"]);
+        $this->set(compact('categories_list', $categories_list));
+        $this->set(compact('companies_list', $companies_list));
     }
 
     public function delete($id = null)

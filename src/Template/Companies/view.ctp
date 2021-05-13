@@ -47,10 +47,7 @@ foreach ($type_list as $t) {
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($company->id) ?></td>
         </tr>
-        <tr>
-            <th scope="row"><?= __('Del Flg') ?></th>
-            <td><?= h($company->del_flg) ?></td>
-        </tr>
+
         <tr>
             <th scope="row"><?= __('Types of Products') ?></th>
             <td><?php

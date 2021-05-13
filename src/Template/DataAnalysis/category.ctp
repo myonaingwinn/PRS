@@ -215,7 +215,7 @@ function getAvgResult($results)
             </select>
         </div>
         <div class="col s2">
-            <button type="submit" name="peach" class="btn waves-effect indigo" />View Results</button>
+            <button type="submit" name="peach" class="btn waves-effect indigo">View Results</button>
         </div>
     </div>
 </form>
