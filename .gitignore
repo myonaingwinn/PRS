@@ -1,10 +1,8 @@
 /vendor/*
-/config/app.php
 /tmp/*
 /logs/*
-/src/Shell/*
-/tests/TestCase/Shell/*
 *.orig
 webroot/upload/images/*
 webroot/upload/videos/*
+config/app.php
 webroot/img/profile_img/*

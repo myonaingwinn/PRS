@@ -104,11 +104,6 @@ class ProductsController extends AppController
         $companies_list = $this->Products->Companies->find('all')->where(['del_flg' => "not"]);
         
         $this->set(compact('product', 'categories_list', 'companies_list'));
-
-        // $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['del_flg' => "not"]);
-        // $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['del_flg' => "not"]);
-
-        // $this->set(compact('product', 'options_com', 'options_cat'));
     }
 
     // Product Editing Link
@@ -177,12 +172,12 @@ class ProductsController extends AppController
             // Failing Process
             $this->Flash->error(__('The product could not be updated. Please, try again.'));
         }
-
-        // Drop Down List companies and categories
-        $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name']);
-        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name']);
-
-        $this->set(compact('product', 'options_com', 'options_cat'));
+      
+        //Drop Down List companies and categories
+        $categories_list = $this->Products->Categories->find('all')->where(['del_flg' => "not"]);
+        $companies_list = $this->Products->Companies->find('all')->where(['del_flg' => "not"]);
+        
+        $this->set(compact('product', 'categories_list', 'companies_list'));
     }
 
     // Product Deleting Link
