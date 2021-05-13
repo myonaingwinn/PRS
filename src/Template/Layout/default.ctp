@@ -85,7 +85,7 @@ $cakeDescription = 'PRS';
             </li>
             <li><a href="/view_user/<?= $Luser['id'] ?>"><i class="material-icons light-blue-text">person</i>My Profile</a></li>
             <li><a href="/edit_user/<?= $Luser['id'] ?>"><i class="material-icons pink-text text-lighten-2">edit</i>Update Profile</a></li>
-            <li><a class="waves-effect" href="products#1"><i class="material-icons teal-text text-darken-1">local_parking</i>Products</a></li>
+            <li><a class="waves-effect" href="/products"><i class="material-icons teal-text text-darken-1">local_parking</i>Products</a></li>
             <li><a class="waves-effect" href="/user/prizes"><i class="material-icons yellow-text text-darken-2">monetization_on</i>Scores & Rewards</a></li>
             <li><a class="waves-effect" href="/notifications"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
@@ -108,7 +108,7 @@ $cakeDescription = 'PRS';
             </li>
             <li><a href="/admin/"><i class="material-icons orange-text text-darken-2">account_box</i>Admins</a></li>
             <li><a href="/users"><i class="material-icons blue-text text-darken-2">group</i>Users</a></li>
-            <li><a class="waves-effect" href="/products#0"><i class="material-icons teal-text text-darken-1">local_parking</i>Products</a></li>
+            <li><a class="waves-effect" href="/products"><i class="material-icons teal-text text-darken-1">local_parking</i>Products</a></li>
             <li><a class="waves-effect" href="/categories"><i class="material-icons cyan-text ">apps</i>Categories</a></li>
             <li><a class="waves-effect" href="/surveys"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/admin/luckydraw"><i class="material-icons purple-text text-lighten-1">card_giftcard</i>Lucky Draw</a></li>

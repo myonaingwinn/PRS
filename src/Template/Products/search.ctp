@@ -26,7 +26,7 @@
             <tr>
                 <td><?= __($no++) ?></td>
                 <td><?= $product['name'] ?></td>
-                <td><?= $this->Number->format($product['price']) ?></td>
+                <td><?= $this->Number->format($product['price']) ?> MMK</td>
                 <td><?php 
                     // Status Condition
                     if (($product['rating'] / 5) * 100 > 50) {

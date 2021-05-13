@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 class ProductsController extends AppController
 {
@@ -24,16 +25,13 @@ class ProductsController extends AppController
         $products = $this->paginate($query);
 
         // Admin User Differentiation
-        $url = $this->request->here();
-        $urluser = substr($url,1,4);
-        $purl = substr($url,-1);
-        $purl2 = substr($url,-8,1);
+        $role = $this->Auth->user('name');
 
         // Passing Data for Admin User Role
-        if ($urluser == 'user' || $purl == '1' || $purl2 == '1') {
-            $this->set('purl', '1');
-        } else {
+        if ($role === '' || $role === NULL) {
             $this->set('purl', '0');
+        } else {
+            $this->set('purl', '1');
         }
 
         $this->set(compact('products'));
@@ -101,11 +99,16 @@ class ProductsController extends AppController
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
         
-        // Drop Down List companies and categories
-        $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['del_flg' => "not"]);
-        $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['del_flg' => "not"]);
+        //Drop Down List companies and categories
+        $categories_list = $this->Products->Categories->find('all')->where(['del_flg' => "not"]);
+        $companies_list = $this->Products->Companies->find('all')->where(['del_flg' => "not"]);
+        
+        $this->set(compact('product', 'categories_list', 'companies_list'));
 
-        $this->set(compact('product', 'options_com', 'options_cat'));
+        // $options_com = $this->Products->Companies->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['del_flg' => "not"]);
+        // $options_cat = $this->Products->Categories->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['del_flg' => "not"]);
+
+        // $this->set(compact('product', 'options_com', 'options_cat'));
     }
 
     // Product Editing Link

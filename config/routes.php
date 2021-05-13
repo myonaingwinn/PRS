@@ -79,7 +79,6 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/notifications', ['controller' => 'Notifications', 'action' => 'index']);
 
     $routes->connect('/products', ['controller' => 'Products', 'action' => 'index']);
-    $routes->connect('/user/products', ['controller' => 'Products', 'action' => 'index']);
     // $routes->connect('/survey-summary', ['controller' => 'Surveys', 'action' => 'index']);
     // $routes->connect('/add', ['controller' => 'Products', 'action' => 'add']);
     // $routes->connect('/edit/*', ['controller' => 'Products', 'action' => 'edit']);

@@ -66,6 +66,20 @@ if ($purl === '1'): ?>
             <div class="col s7"><?= __($product['category']['name']) ?></div>
         </div>
 
+        <!-- Created Date -->
+        <div class="row">
+            <div class="col s4">Created Date</div>
+            <div class="col s1"> - </div>
+            <div class="col s7"><?= h($product->created->i18nFormat('yyyy-MM-dd')) ?></div>
+        </div>
+
+        <!-- Modified Date -->
+        <div class="row">
+            <div class="col s4">Modified Date</div>
+            <div class="col s1"> - </div>
+            <div class="col s7"><?= h($product->modified->i18nFormat('yyyy-MM-dd')) ?></div>
+        </div>
+
         <!-- Description -->
         <div class="row">
             <div class="col s4">Description</div>
@@ -78,6 +92,7 @@ if ($purl === '1'): ?>
                 <?php endif; ?>
             </div>
         </div>
+
     </div>
     <!-- Body Upper End -->
 

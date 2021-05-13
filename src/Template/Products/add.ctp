@@ -88,7 +88,12 @@
             </div>
             <!-- Drop Down List -->
             <div class="col s8">
-                <?= $this->Form->select('category_id', $options_cat, ['class' => 'btn indigo']) ?>
+                <select id="typeCat" name="category_id">
+                    <option value="">Select Category</option>
+                    <?php foreach ($categories_list as $c) : ?>
+                        <option value="<?= h($c->id) ?>"><?= h($c->name) ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
         <!-- End Category Information -->
@@ -102,7 +107,12 @@
             </div>
             <!-- Drop Down List -->
             <div class="col s8">
-                <?= $this->Form->select('company_id', $options_com, ['class' => 'btn indigo']) ?>
+                <select id="typeCom" name="company_id">
+                    <option value="">Select Company</option>
+                    <?php foreach ($companies_list as $c) : ?>
+                        <option value="<?= h($c->id) ?>"><?= h($c->name) ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
         <!-- End Company Information -->
@@ -120,3 +130,30 @@
 
 </div>
 <!-- End Body Section -->
+
+<!-- Dynamically Drop Down List Script -->
+<script>
+    $(document).ready(function() {
+        $('select').formSelect();
+    });
+
+    $("#typeCat").on('change', function() {
+        var categories = <?php echo json_encode($categories_list); ?>;
+        var companies = <?php echo json_encode($companies_list); ?>;
+        var categoryID = $(this).val();
+
+        $('#typeCom option').remove();
+        $('#typeCom').append('<option value="" disabled >Select company</option>');
+
+        $.each(companies, function() {
+            var str = $(this)[0].category_type;
+
+            if (str != undefined) {
+                if (str.includes(categoryID)) {
+                    $('#typeCom').append('<option value="' + $(this)[0].id + '">' + $(this)[0].name + '</option>');
+                }
+            }
+        });
+        $('select').formSelect();
+    });
+</script>
