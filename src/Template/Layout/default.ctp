@@ -45,7 +45,7 @@ $cakeDescription = 'PRS';
 </head>
 
 <body class="blue-grey lighten-5">
-    <nav>
+    <!--     <nav>
         <div class="nav-wrapper indigo z-depth-1">
             <a href=" <?= ($Luser['id'] || $admin['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">Products Ranking System</a>
             <?php if ($Luser['id'] || $admin['id']) : ?>
@@ -54,7 +54,20 @@ $cakeDescription = 'PRS';
                 </a>
             <?php endif ?>
         </div>
-    </nav>
+    </nav> -->
+
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper indigo z-depth-2">
+                <a href=" <?= ($Luser['id'] || $admin['id']) ? '/data_analysis' : '' ?> " class="brand-logo center">Products Ranking System</a>
+                <?php if ($Luser['id'] || $admin['id']) : ?>
+                    <a href="#" data-target="slide-out" class="sidenav-trigger left show-on-large">
+                        <i class="material-icons">menu</i>
+                    </a>
+                <?php endif ?>
+            </div>
+        </nav>
+    </div>
 
     <!-- side nav -->
     <!-- for UserPanel -->
@@ -76,6 +89,7 @@ $cakeDescription = 'PRS';
             <li><a class="waves-effect" href="/rewardhistory"><i class="material-icons blue-text text-darken-2">pages</i>Reward History</a></li>
             <li><a class="waves-effect" href="/notifications"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/answers"><i class="material-icons blue-text text-darken-2">pages</i>Surveys History</a></li>
+            <li><a class="waves-effect" href="/products"><i class="material-icons teal-text text-darken-1">local_parking</i>Products</a></li>
             <li><a class="waves-effect" href="/logout"><i class="material-icons red-text">exit_to_app</i>Logout</a></li>
         </ul>
     <?php endif ?>

@@ -149,6 +149,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+<<<<<<< HEAD
 </div>
 
 <div>
@@ -178,4 +179,6 @@
             </tr>
         </tbody>
     </table>
+=======
+>>>>>>> 0e337383331b6d0ed65a398a93dfe714b4d4f655
 </div>

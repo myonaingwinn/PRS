@@ -119,8 +119,12 @@ class PrizesController extends AppController
         if ($this->request->is('post')) {
             $get_scores = $_POST['custom_scores'];
             $user_tbl = $this->loadModel('Scores');
+            $type = $this->request->getData('userType');
+            // return debug($type);
             $user_result = $this->Scores->find()->where(['user_id' => $id, 'del_flg' => 'not'])->first();
-            debug($user_result);
+            if ($type == 'premium') {
+                $get_scores = 2 * $get_scores;
+            }
             if ($user_result != null) {
                 $user_scores = $user_result->score;
                 $user_result->score = $user_scores + $get_scores;
@@ -132,8 +136,6 @@ class PrizesController extends AppController
                 //TODO:add expire_datetime
                 $user_tbl->save($score);
             }
-
-            echo $get_scores;
         }
         return $this->redirect([
             'controller' => 'Prizes',
