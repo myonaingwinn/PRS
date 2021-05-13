@@ -1,17 +1,18 @@
-<?php
-
-/**
- * @var \App\View\AppView $this
- */
-?>
 <style>
     .card {
-        margin-top: 5rem;
+        margin-top: 1rem;
+    }
 
+    .card-action {
+        margin-top: -2rem;
     }
 
     .input {
         margin: 1rem;
+    }
+
+    .input-field {
+        margin-bottom: -.3rem;
     }
 
     .row {
@@ -29,6 +30,11 @@
     .my-row2 {
         margin-top: .1rem;
     }
+
+    h4 {
+        margin-top: -.3rem;
+        margin-bottom: 1.5rem;
+    }
 </style>
 
 
@@ -38,10 +44,12 @@
             <div class="card-content">
                 <div class="row">
                     <form action="add" method="post">
-                        <span class="card-title">Add Company</span>
+                        <center>
+                            <h4>Add Company</h4>
+                        </center>
                         <table>
                             <tr>
-                                <td>Company Name</td>
+                                <th>Company Name</th>
                                 <td>
                                     <div class="input-field col s12 my-input">
                                         <input name="name" type="text" class="validate" required>
@@ -49,7 +57,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Company Website <br>(Optional)</td>
+                                <th>Company Website <br>(Optional)</th>
                                 <td>
                                     <div class="input-field col s12 my-input">
                                         <input name="website" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
@@ -57,7 +65,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Company Address</td>
+                                <th>Company Address</th>
                                 <td>
                                     <div class="input-field col s12 my-input">
                                         <input name="address" type="text" class="validate" required>
@@ -65,7 +73,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Primary Contact Number <br>(format: 09-xxxxxxxx, 01-xxxxx)</td>
+                                <th>Primary Contact Number <br>(format: 09-xxxxxxxx, 01-xxxxx)</th>
                                 <td>
                                     <div class="input-field col s12 my-input">
                                         <input name="phone" type="text" pattern="[0-9]{0,3}-[0-9]{5,9}" required>
@@ -73,7 +81,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Secondary Contact Number <br>(Optional)</td>
+                                <th>Secondary Contact Number <br>(Optional)</th>
                                 <td>
                                     <div class="input-field col s12 my-input">
                                         <input name="other_phone" type="text" pattern="[0-9]{0,3}-[0-9]{5,9}">
@@ -82,20 +90,18 @@
                             </tr>
 
                             <tr>
-                                <td>Types of Products</td>
+                                <th>Types of Products</th>
                                 <td>
                                     <div class="input-field col s12">
                                         <select name="type[]" id="seltest" multiple>
                                             <option value="" disabled>Choose Category</option>
                                             <?php foreach ($categories_list as $cat) : ?>
                                                 <option value="<?= h($cat->id) ?>"><?= h($cat->name) ?></option>
-
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </td>
                             </tr>
-
                         </table>
                 </div>
             </div>
