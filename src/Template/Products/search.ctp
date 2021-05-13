@@ -1,14 +1,14 @@
 <!-- Search Result Table List -->
 <table cellpadding="0" cellspacing="0">
-    
+
     <!-- Header Section -->
     <thead>
         <tr>
-            <th scope="col"><?= __('No') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('Product') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('Price') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('Status') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('Trending') ?></th>
+            <th scope="col">No</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Status</th>
+            <th scope="col">Trending</th>
             <th scope="col"><?= __('Action') ?></th>
         </tr>
     </thead>
@@ -17,17 +17,17 @@
     <tbody>
         <!-- Pagination Format -->
         <?php $page = $this->Paginator->counter(['format' => __('{{page}}')]);
-            $no = 1;
-            if ($page > 2) $no = $page * 20 - 19;
-            else if ($page == 2) $no = $page * 10 + 1; ?>
-        
+        $no = 1;
+        if ($page > 2) $no = $page * 20 - 19;
+        else if ($page == 2) $no = $page * 10 + 1; ?>
+
         <!-- Forech Loop Listing -->
         <?php foreach ($products as $product) : ?>
             <tr>
                 <td><?= __($no++) ?></td>
                 <td><?= $product['name'] ?></td>
                 <td><?= $this->Number->format($product['price']) ?> MMK</td>
-                <td><?php 
+                <td><?php
                     // Status Condition
                     if (($product['rating'] / 5) * 100 > 50) {
                         echo "<i class='material-icons green-text'>arrow_upward</i>";
@@ -41,18 +41,18 @@
                         }
                     } ?>
                 </td>
-                <td><?php 
+                <td><?php
                     // Progress Bar Condition
-                    if ($product['rating'] === NULL || $product['rating'] === ''): ?>
+                    if ($product['rating'] === NULL || $product['rating'] === '') : ?>
                         <?= 0 / 5 * 100 ?>% <progress value="<?= 0 / 5 * 100 ?>" max="100"></progress>
-                    <?php else: ?>
+                    <?php else : ?>
                         <?= $product['rating'] / 5 * 100 ?>% <progress value="<?= $product['rating'] / 5 * 100 ?>" max="100"></progress>
                     <?php endif; ?>
                 </td>
                 <td>
                     <?= $this->Html->link(__('View'), ['action' => 'view', $product['id'], '0']) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product['id']]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product['id']], ['confirm' => __('Are you sure you want to delete '.$product['name'].'?', $product['id'])]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product['id']], ['confirm' => __('Are you sure you want to delete ' . $product['name'] . '?', $product['id'])]) ?>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -63,11 +63,11 @@
 <!-- Paginator Section -->
 <div class="paginator">
     <ul class="pagination">
-      <?= $this->Paginator->first('<< ' . __('first')) ?>
-      <?= $this->Paginator->prev('< ' . __('previous')) ?>
-      <?= $this->Paginator->numbers() ?>
-      <?= $this->Paginator->next(__('next') . ' >') ?>
-      <?= $this->Paginator->last(__('last') . ' >>') ?>
+        <?= $this->Paginator->first('<< ' . __('first')) ?>
+        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+        <?= $this->Paginator->numbers() ?>
+        <?= $this->Paginator->next(__('next') . ' >') ?>
+        <?= $this->Paginator->last(__('last') . ' >>') ?>
     </ul>
     <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
 </div>

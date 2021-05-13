@@ -11,14 +11,14 @@
     <div class="col s1"></div>
     <!-- Main Body -->
     <div class="col s10">
-        
+
         <!-- Form Create -->
         <?= $this->Form->create($product, ['class' => 'was-validated', 'enctype' => 'multipart/form-data']) ?>
-        
+
         <!-- Product Sub Header -->
         <h5><?= __('Product Infomation') ?></h5>
         <hr>
-        
+
         <!-- Product Information -->
         <div class="row">
 
@@ -82,7 +82,7 @@
         <h5><?= __('Category Infomation') ?></h5>
         <hr>
         <div class="row">
-            <div class="col s3">
+            <div class="col s3 height">
                 <?= __('Product Category') ?>
             </div>
             <!-- Drop Down List -->
@@ -106,7 +106,7 @@
         <h5><?= __('Company Information') ?></h5>
         <hr>
         <div class="row">
-            <div class="col s3">
+            <div class="col s3 height">
                 <?= __('Product Company') ?>
             </div>
             <!-- Drop Down List -->
@@ -123,10 +123,10 @@
             </div>
         </div>
         <!-- End Company Information -->
-        
+
         <!-- Main Update Button -->
         <div align="center">
-            <?= $this->Form->button(__('Register'), ['class' => 'btn-large waves-effect waves-light indigo center']) ?>
+            <?= $this->Form->button(__('Update'), ['class' => 'btn-large waves-effect waves-light indigo center']) ?>
         </div>
         <?= $this->Form->end() ?>
         <!-- End Form -->
@@ -167,3 +167,11 @@
         $('select').formSelect();
     }).change();
 </script>
+
+<!-- dropdown list margin -->
+<style>
+    .height {
+        margin-top: 1rem;
+        margin-left: 1rem;
+    }
+</style>
