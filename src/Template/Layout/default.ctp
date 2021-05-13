@@ -110,6 +110,7 @@ $cakeDescription = 'PRS';
             <li><a href="/admin/"><i class="material-icons orange-text text-darken-2">account_box</i>Admins</a></li>
             <li><a href="/users"><i class="material-icons blue-text text-darken-2">group</i>Users</a></li>
             <li><a class="waves-effect" href="/products"><i class="material-icons teal-text text-darken-1">local_parking</i>Products</a></li>
+            <li><a class="waves-effect" href="/companies"><i class="material-icons green-text text-accent-3">work</i>Companies</a></li>
             <li><a class="waves-effect" href="/categories"><i class="material-icons cyan-text ">apps</i>Categories</a></li>
             <li><a class="waves-effect" href="/surveys"><i class="material-icons green-text">local_play</i>Surveys</a></li>
             <li><a class="waves-effect" href="/admin/luckydraw"><i class="material-icons purple-text text-lighten-1">card_giftcard</i>Lucky Draw</a></li>
