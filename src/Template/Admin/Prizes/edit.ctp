@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container" style="width:350px;">
     <!--Form without header-->
     <div class="card">
 
@@ -39,35 +39,22 @@
       </div>
       <div class="card-action">
         <div class="row my-row">
-          <div class="col s4"></div>
-          <div class="col s2">
+          <div class="col s2"></div>
+          <div class="col s4">
             <?= $this->Form->button(__('Update'), array('class' => 'btn indigo')) ?>
           </div>
           <div class="col s3">
             <?= $this->Html->link(__('Cancel'), array('controller' => 'Prizes', 'action' => 'prizelist'), array('class' => 'btn indigo')) ?>
 
           </div>
-          <div class="col s2"></div>
+          <div class="col s3"></div>
         </div>
       </div>
-
-
-
-
       <?= $this->Form->end() ?>
-
     </div>
-
-
-
-
   </div>
   <!--/Form without header-->
-
-
-
   </div>
-
 </body>
 
 </html>

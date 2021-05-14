@@ -17,7 +17,7 @@
 
 <body>
   <!-- Grid column -->
-  <div class="container">
+  <div class="container" style="width:350px;">
 
     <!--Form without header-->
     <div class="card">
@@ -36,8 +36,8 @@
       </div>
       <div class="card-action">
         <div class="row my-row">
-          <div class="col s4"></div>
-          <div class="col s2">
+          <div class="col s2"></div>
+          <div class="col s4">
             <button type="submit" class="waves-effect waves-light btn indigo center">Save</button>
           </div>
           <div class="col s3">
@@ -49,12 +49,11 @@
               ]
             ) ?>
           </div>
-          <div class="col s2"></div>
+          <div class="col s3"></div>
         </div>
       </div>
       <?= $this->Form->end() ?>
     </div>
   </div>
 </body>
-
 </html>

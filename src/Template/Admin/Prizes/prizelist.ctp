@@ -2,7 +2,7 @@
 
 ?>
 <div class="surveys index large-9 medium-8 columns content">
-    <h3><?= __('Prize List') ?></h3>
+    <h3><?= __('Prizes') ?></h3>
 
     <?= $this->Html->link("New Prize", array('controller' => 'Prizes', 'action' => 'prizeadd'), array('class' => 'btn indigo right')) ?>
     <table cellpadding="0" cellspacing="0">
