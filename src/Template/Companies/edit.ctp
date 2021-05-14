@@ -69,7 +69,8 @@ foreach ($type_list as $t) {
                             <th>Company Website <br> (Optional)</th>
                             <td>
                                 <div class="input-field col s12 my-input">
-                                    <input name="website" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" value="<?= $company['website'] ?>" />
+                                    <!-- <input name="website" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" value="<?= $company['website'] ?>" /> -->
+                                    <input name="website" type="text" value="<?= $company['website'] ?>" />
                                 </div>
                             </td>
                         </tr>

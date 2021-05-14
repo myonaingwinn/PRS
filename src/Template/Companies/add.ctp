@@ -60,7 +60,8 @@
                                 <th>Company Website <br>(Optional)</th>
                                 <td>
                                     <div class="input-field col s12 my-input">
-                                        <input name="website" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+                                        <!-- <input name="website" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" /> -->
+                                        <input name="website" type="text" />
                                     </div>
                                 </td>
                             </tr>
