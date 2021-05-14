@@ -23,11 +23,11 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($category->created) ?></td>
+            <td><?= date('d.m.Y', strtotime(h($category->created))) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($category->modified) ?></td>
+            <td><?= date('d.m.Y', strtotime(h($category->modified))) ?></td>
         </tr>
     </table>
     <div class="row">

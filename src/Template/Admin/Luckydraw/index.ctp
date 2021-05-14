@@ -11,7 +11,7 @@
 ?>
 <h3><?= __('Scores') ?></h3>
 <div class="row">
-  <?= $this->Html->link(__('New Score'),  array('controller' => 'Luckydraw', 'action' => 'add'), ['id'=>'btnNew','class' => 'waves-effect waves-light btn right indigo']) ?>
+  <?= $this->Html->link(__('New Score'),  array('controller' => 'Luckydraw', 'action' => 'add'), ['id' => 'btnNew', 'class' => 'waves-effect waves-light btn right indigo']) ?>
 </div>
 <div class="table-content">
   <table cellpadding="0" cellspacing="0">
@@ -20,6 +20,7 @@
         <th scope="col">No</th>
         <th scope="col"><?= $this->Paginator->sort('scores') ?></th>
         <th scope="col"><?= $this->Paginator->sort('color') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('created') ?></th>
         <th scope="col" width="15%">Action</th>
       </tr>
     </thead>
@@ -38,6 +39,7 @@
           <td>
             <div style="background-color:<?= h($luckydraw->color) ?> ; width:60px;height:20px;"></div>
           </td>
+          <td><?= date('Y-m-d', strtotime(h($luckydraw->created))); ?></td>
           <td>
             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $luckydraw->id]) ?>
             <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $luckydraw->id], ['confirm' => __('Are you sure you want to delete # {0}?', $luckydraw->id)]) ?>
@@ -63,11 +65,13 @@
     width: 80%;
     margin-left: 7rem;
   }
+
   h3 {
     margin-top: 2rem;
     margin-left: 6rem;
   }
-  #btnNew{
+
+  #btnNew {
     margin-right: 6rem;
     margin-bottom: -1rem;
   }

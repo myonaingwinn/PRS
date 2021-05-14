@@ -1,28 +1,3 @@
-<?php
-
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Admin[]|\Cake\Collection\CollectionInterface $admins
- */
-?>
-<!-- <nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Admin'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Companies'), ['controller' => 'Companies', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Company'), ['controller' => 'Companies', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Options'), ['controller' => 'Options', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Option'), ['controller' => 'Options', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Products'), ['controller' => 'Products', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Product'), ['controller' => 'Products', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Questions'), ['controller' => 'Questions', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Question'), ['controller' => 'Questions', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Surveys'), ['controller' => 'Surveys', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Survey'), ['controller' => 'Surveys', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav> -->
 <div class="admins index large-9 medium-8 columns content">
     <h3><?= __('Admins') ?></h3>
     <table cellpadding="0" cellspacing="0">
@@ -52,7 +27,10 @@
                     <td><?= h($admin->email) ?></td>
                     <!-- <td><?= h($admin->password) ?></td> -->
                     <!-- <td><?= h($admin->del_flg) ?></td> -->
-                    <td><?= h($admin->created) ?></td>
+                    <td>
+                        <!-- <?= h($admin->created) ?> -->
+                        <?= date('Y-m-d', strtotime(h($admin->created))); ?>
+                    </td>
                     <!-- <td><?= h($admin->modified) ?></td> -->
                     <!-- <td><?= h($admin->token) ?></td> -->
                     <td class="actions">
