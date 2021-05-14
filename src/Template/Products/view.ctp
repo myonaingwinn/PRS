@@ -37,10 +37,10 @@ if ($purl === '1') : ?>
             <div class="col s4 bold">Model</div>
             <div class="col s1"> - </div>
             <div class="col s7">
-                <?php if ($product['model'] === NULL || $product['model'] === '') : ?>
+                <?php if ($product['model_no'] === NULL || $product['model_no'] === '') : ?>
                     <?= __('empty') ?>
                 <?php else : ?>
-                    <?= __($product['model']) ?>
+                    <?= __($product['model_no']) ?>
                 <?php endif; ?>
             </div>
         </div>
