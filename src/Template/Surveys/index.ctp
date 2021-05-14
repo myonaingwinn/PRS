@@ -1,27 +1,34 @@
 <div class="surveys index large-9 medium-8 columns content">
-    <div class="row">
-        <div class="col s8">
-            <h3><?= __('Surveys') ?></h3>
-        </div>
-        <div class="input-field col s4">
+    <div class="col s8">
+        <h3><?= __('Surveys') ?></h3>
+    </div>
+    <!-- Old search box -->
+    <!-- <div class="input-field col s4">
             <i class="material-icons prefix">search</i>
             <input id="search" name="search" type="text" class="validate" placeholder="Search...">
-            <!-- <label for="search">Search</label> -->
+        </div> -->
+    <div class="row my-row">
+        <div class="col s4 Flatsearch">
+            <?= $this->Form->text('search', ['id' => 'search', 'size' => '100', 'maxlength' => '100', 'placeholder' => 'Search...']) ?>
+            <?= $this->Form->button('<i class="small material-icons prefix">search</i>', ['type' => 'button', 'id' => 'button']); ?>
+        </div>
+        <div class="col s5"></div>
+        <div class="col s3">
+            <a id="btnAddSurvey" href="/add_survey" class="btn indigo right">New Survey</a>
         </div>
     </div>
-    <a id="btnAddSurvey" href="/add_survey" class="btn indigo right">New Survey</a>
     <div class="table-content">
         <table cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                    <th scope="col" width="40%"><?= $this->Paginator->sort('description') ?></th>
+                    <th scope="col" width="20%"><?= $this->Paginator->sort('name') ?></th>
+                    <th scope="col" width="35%"><?= $this->Paginator->sort('description') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('product_id') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('category_id') ?></th>
                     <!-- <th scope="col"><?= $this->Paginator->sort('del_flg') ?></th> -->
                     <th scope="col"><?= $this->Paginator->sort('admin_id') ?></th>
-                    <!-- <th scope="col"><?= $this->Paginator->sort('created') ?></th> -->
+                    <th scope="col" width="11%"><?= $this->Paginator->sort('created') ?></th>
                     <!-- <th scope="col"><?= $this->Paginator->sort('modified') ?></th> -->
                     <th scope="col" class="actions" width="10%"><?= __('Actions') ?></th>
                 </tr>
@@ -43,7 +50,7 @@
                         <td><?= $survey->has('category') ? h($survey->category->name) : '' ?></td>
                         <!-- <td><?= h($survey->del_flg) ?></td> -->
                         <td><?= $survey->has('admin') ? h($survey->admin->email) : '' ?></td>
-                        <!-- <td><?= h($survey->created->i18nFormat('yyyy-MM-dd HH:mm:ss')) ?></td> -->
+                        <td><?= h($survey->created->i18nFormat('yyyy-MM-dd')) ?></td>
                         <!-- <td><?= h($survey->modified) ?></td> -->
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $survey->id]) ?>
@@ -69,54 +76,51 @@
 </div>
 
 <style>
-    h3 {
-        margin-top: 0.8rem;
+    .Flatsearch {
+        align-items: center;
+        border-radius: 5px;
+        border: 0px solid #ccc;
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
+        margin: 1px 0;
+        padding: 0px;
+        color: #000;
+        transition: all 0.5s ease 0s;
     }
 
-    .row {
-        margin-bottom: .3rem;
-        margin-top: 1rem;
+    .Flatsearch button,
+    .Flatsearch input {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: transparent;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        outline: 0;
     }
 
-    div.input-field.col.s4 {
-        border-radius: 10px;
-        background-color: #e0e0e0;
-        box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%);
-        box-shadow: 0 3px 1px -2px rgb(0 0 0 / 12%);
-        /* box-shadow: 0 1px 5px 0 rgb(0 0 0 / 20%); */
-
-        /* box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
-        /* margin-right: 1rem; */
+    i.small.material-icons.prefix {
+        margin-left: -2rem;
+        color: gray;
     }
 
-    .input-field .prefix {
-        top: .7rem;
-        color: grey;
+    #search {
+        padding-right: 1.8rem;
     }
 
-    input#search.validate,
-    input#search.validate.valid {
-        margin: 3px 5px 3px 35px;
-        border: none;
-        font-family: inherit;
-        box-shadow: none;
+    #button {
+        margin-right: 2rem;
     }
 
-    input#search.validate::placeholder {
-        color: grey;
-    }
-
-    input#search:focus {
-        box-shadow: none;
-    }
-
-    i.material-icons.prefix.active {
-        color: #3F51B5;
+    .my-row {
+        margin-bottom: .5rem;
+        margin-top: -.5rem;
     }
 
     #btnAddSurvey {
-        margin-bottom: .5rem;
-        margin-right: 1rem;
+        margin-top: .6rem;
     }
 </style>
 
