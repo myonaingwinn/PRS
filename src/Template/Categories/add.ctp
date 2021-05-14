@@ -22,12 +22,9 @@
         margin-top: 0rem;
     }
 
-    .my-row1 {
-        margin-top: -.2rem;
-    }
-
-    .my-row2 {
-        margin-top: .1rem;
+    #txtCatName{
+        padding-top: 1rem;
+        margin-bottom: -1rem;
     }
 </style>
 
@@ -39,13 +36,13 @@
                     <form action="add" method="post">
                         <span class="card-title">Add Category</span>
                         <div class="input-field col s12 my-input">
-                            <input placeholder="Enter Category Name" name="name" type="text" class="validate" required>
+                            <input id="txtCatName" placeholder="Enter Category Name" name="name" type="text" class="validate" required>
                         </div>
                 </div>
             </div>
             <div class="card-action">
                 <div class="row">
-                    <button type="submit" class="waves-effect waves-light btn indigo center">Save</button>
+                    <button type="submit" class="waves-effect waves-light btn indigo center">Save</button>&emsp;
                     <?= $this->Html->link(__('Cancel'), ['action' => 'index'], ['class' => 'waves-effect waves-light btn center indigo']) ?>
                 </div>
                 </form>

@@ -1,7 +1,11 @@
 <style>
     .card {
         margin-top: 5rem;
-        width: 500px;
+    }
+
+    center {
+        padding-top: 1rem;
+        margin-bottom: -1.5rem;
     }
 
     .input {
@@ -12,42 +16,41 @@
         margin-bottom: -.1rem;
     }
 
-    .my-input {
-        margin-top: 0rem;
+    .card-action{
+        margin-top: -1.8rem;
     }
 
-    .my-row1 {
-        margin-top: -.2rem;
-    }
-
-    .my-row2 {
-        margin-top: .1rem;
+    th{
+        text-align: center;
     }
 </style>
 <div class="container">
-    <center>
-        <div class="card">
-            <div class="card-content">
-                <?= $this->Form->create($category) ?>
-                <fieldset>
-                    <legend><?= __('Edit Category') ?></legend>
-                    <table class="vertical-table">
+    <div class="row">
+        <div class="col s1"></div>
+        <div class="col s10">
+            <div class="card">
+                <center>
+                    <span class="card-title">Update Category</span>
+                </center>
+                <div class="card-content">
+                    <?= $this->Form->create($category) ?>
+                    <table>
                         <tr>
-                            <th scope="row"><?= __('Category Name') ?></th>
-                            <td><?= $this->Form->control('name', array('label' => '', 'class' => 'validate')); ?></td>
+                            <th>Category Name</th>
+                            <td>
+                                <?= $this->Form->control('name', array('label' => '', 'class' => 'input-field validate')); ?>
+                            </td>
                         </tr>
-                        <tr>
-                            <th scope="row"><?= __('Del_Flg Status') ?></th>
-                            <td><?= $this->Form->control('del_flg', array('label' => '', 'class' => 'validate')); ?></td>
-                        </tr>
-
                     </table>
-                </fieldset>
-                <div class="row">
-                    <button type="submit" class="waves-effect waves-light btn indigo center">Update</button>
+                </div>
+                <div class="card-action center">
+                    <button type="submit" class="waves-effect waves-light btn indigo center">Update</button>&emsp;
                     <?= $this->Html->link(__('Cancel'), ['action' => 'index'], ['class' => 'waves-effect waves-light btn center indigo']) ?>
                 </div>
                 <?= $this->Form->end() ?>
             </div>
         </div>
+    </div>
+    <div class="col s1"></div>
+</div>
 </div>
