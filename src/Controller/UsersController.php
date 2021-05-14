@@ -60,8 +60,8 @@ class UsersController extends AppController
                 ],
                 'AND' => ['Users.del_flg' => 'not']
             ]),
-            'order' => ['id' => 'DESC'],
-            'limit' => 10
+            'order' => ['Users.name' => 'ASC']
+
         ]);
         $users = $this->paginate($query);
 
@@ -241,10 +241,7 @@ class UsersController extends AppController
                     if ($this->Users->save($user)) {
                         $this->Flash->success(__('Successfully Updated.'));
 
-                        if ($this->Auth->user('name'))
-                            return $this->redirect('data_analysis');
-                        else
-                            return $this->redirect('users');
+                        return $this->redirect('data_analysis');
                     }
                 } else {
                     $this->Flash->error(__('Invalid phone number'));

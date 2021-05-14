@@ -2,20 +2,25 @@
     <thead>
         <tr>
             <th scope="col">No</th>
-            <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('gender') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('phone') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('Date of Birth') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('type') ?></th>
-            <!-- <th scope="col"><?= $this->Paginator->sort('reward') ?></th> -->
+            <th scope="col"><?= __('name') ?></th>
+            <th scope="col"><?= __('email') ?></th>
+            <th scope="col"><?= __('gender') ?></th>
+            <th scope="col"><?= __('phone') ?></th>
+            <th scope="col"><?= __('Date of Birth') ?></th>
+            <th scope="col"><?= __('type') ?></th>
+            <th scope="col"><?= __('Created Date') ?></th>
             <th scope="col" class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
     <tbody>
-
-        <?php $no = 1;
-        foreach ($users as $user) : ?>
+        <?php $page = $this->Paginator->counter(['format' => __('{{page}}')]);
+        $no = 1;
+        if ($page > 2)
+            $no = $page * 20 - 19;
+        else if ($page == 2)
+            $no = $page * 10 + 1;
+        ?>
+        <?php foreach ($users as $user) : ?>
             <tr>
                 <td><?= $no++ ?></td>
                 <td><?= h($user->name) ?></td>
@@ -24,6 +29,7 @@
                 <td><?= h($user->phone) ?></td>
                 <td><?= h($user->birthdate->i18nFormat('YYY-MM-dd')) ?></td>
                 <td class="capitalize"><?= h($user->premium_flg) ?></td>
+                <td><?= h($user->created->i18nFormat('YYY-MM-dd')) ?></td>
                 <!-- <td class="capitalize"><?= h($user->scores ? $user->scores[0]->score : 'Empty') ?></td> -->
 
                 <td class="actions">
@@ -35,3 +41,13 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+<div class="paginator">
+    <ul class="pagination">
+        <?= $this->Paginator->first('<< ' . __('first')) ?>
+        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+        <?= $this->Paginator->numbers() ?>
+        <?= $this->Paginator->next(__('next') . ' >') ?>
+        <?= $this->Paginator->last(__('last') . ' >>') ?>
+    </ul>
+    <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+</div>

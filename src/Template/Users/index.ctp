@@ -7,8 +7,47 @@
 ?>
 
 <style>
+    i.small.material-icons.prefix {
+        margin-left: -2rem;
+        color: gray;
+
+    }
+
+    #search {
+        padding-right: 1.8rem;
+    }
+
+    #button {
+        margin-right: 2rem;
+    }
+
     .capitalize {
         text-transform: capitalize;
+    }
+
+    .Flatsearch {
+        align-items: center;
+        border-radius: 5px;
+        border: 0px solid #ccc;
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
+        margin: 1px 0;
+        padding: 0px;
+        color: #000;
+        transition: all 0.5s ease 0s;
+    }
+
+    .Flatsearch button,
+    .Flatsearch input {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: transparent;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        outline: 0;
     }
 </style>
 
@@ -18,9 +57,9 @@
     <h3><?= __('Users') ?></h3>
 
     <!-- <?= $this->Form->control('search'); ?> -->
-    <div class="input-field col s4">
-        <i class="material-icons prefix">search</i>
-        <input id="search" name="search" type="text" class="validate" placeholder="Search...">
+    <div class="col s4 Flatsearch">
+        <?= $this->Form->text('search', ['id' => 'search', 'size' => '100', 'maxlength' => '100', 'placeholder' => 'Search...']) ?>
+        <?= $this->Form->button('<i class="small material-icons prefix">search</i>', ['type' => 'button', 'id' => 'button']); ?>
     </div>
 
     <div class="table-content">
@@ -35,6 +74,7 @@
                     <th scope="col"><?= $this->Paginator->sort('phone') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('Date of Birth') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('type') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('Create Date') ?></th>
                     <!-- <th scope="col"><?= $this->Paginator->sort('reward') ?></th> -->
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -55,6 +95,7 @@
                         <td><?= h($user->phone) ?></td>
                         <td><?= h($user->birthdate->i18nFormat('YYY-MM-dd')) ?></td>
                         <td class="capitalize"><?= h($user->premium_flg) ?></td>
+                        <td><?= h($user->created->i18nFormat('YYY-MM-dd')) ?></td>
                         <!-- <td class="capitalize"><?= h($user->scores ? $user->scores[0]->score : 'Empty') ?></td> -->
 
                         <td class="actions">
@@ -84,8 +125,12 @@
 <script>
     $('document').ready(function() {
         $('#search').keyup(function() {
-            var searchkey = $(this).val();
-            searchUsers(searchkey);
+            if (!$(this).val() || $(this).val().trim() == '') {
+                location.reload();
+            } else {
+                var searchkey = $(this).val();
+                searchUsers(searchkey);
+            }
         });
 
         function searchUsers(keyword) {
