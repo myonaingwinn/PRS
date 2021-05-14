@@ -17,7 +17,8 @@ class ProductsController extends AppController
             ->select(['id' => 'Products.id', 'name' => 'Products.name', 'price' => 'Products.price', 'rating' => 'Answers.rating'])
             ->leftJoin(
                 ['Answers' => 'answers'],
-                ['Products.id = Answers.product_id'])
+                ['Products.id = Answers.product_id']
+            )
             ->where(['del_flg' => 'not'])
             ->group(['id']);
 
@@ -35,7 +36,6 @@ class ProductsController extends AppController
         }
 
         $this->set(compact('products'));
-
     }
 
     // Product View Button Link
@@ -56,21 +56,21 @@ class ProductsController extends AppController
     public function add()
     {
         $product = $this->Products->newEntity();
-        
+
         // Request Link with POST
         if ($this->request->is('post')) {
-            
+
             // get all insert data from user
             $product = $this->Products->patchEntity($product, $this->request->getData());
 
             // Default Delete Flag
             $product->del_flg = "not";
-            
+
             // Login Admin Id
             $product->admin_id = $this->Auth->user('id');
 
             //Image Upload
-            $fileimage = $this->request->getData('image');            
+            $fileimage = $this->request->getData('image');
             $nameimage = $fileimage['name'];
             $target_image = WWW_ROOT . 'upload' . DS . 'images' . DS . $nameimage;
             if (move_uploaded_file($fileimage['tmp_name'], $target_image)) {
@@ -88,7 +88,7 @@ class ProductsController extends AppController
                     $product->video = $namevideo;
                 }
             }
-            
+
             // Saving Process
             if ($this->Products->save($product)) {
                 $this->Flash->success(__('The product has been saved.'));
@@ -98,11 +98,11 @@ class ProductsController extends AppController
             // Failing Process
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
-        
+
         //Drop Down List companies and categories
         $categories_list = $this->Products->Categories->find('all')->where(['del_flg' => "not"]);
         $companies_list = $this->Products->Companies->find('all')->where(['del_flg' => "not"]);
-        
+
         $this->set(compact('product', 'categories_list', 'companies_list'));
     }
 
@@ -119,7 +119,7 @@ class ProductsController extends AppController
             ->select(['image'])
             ->where(['id' => $id]);
         $dbimage = $query->first();
-        
+
         // video select query
         $query2 = $this->Products->find()
             ->select(['video'])
@@ -128,13 +128,13 @@ class ProductsController extends AppController
 
         // Request Link with PATCH POST PUT
         if ($this->request->is(['patch', 'post', 'put'])) {
-            
+
             // Get All Data
             $product = $this->Products->patchEntity($product, $this->request->getData());
 
             // Default Delete Flag
             $product->del_flg = "not";
-            
+
             // Loing Admin Id
             $product->admin_id = $this->Auth->user('id');
 
@@ -172,11 +172,11 @@ class ProductsController extends AppController
             // Failing Process
             $this->Flash->error(__('The product could not be updated. Please, try again.'));
         }
-      
+
         //Drop Down List companies and categories
         $categories_list = $this->Products->Categories->find('all')->where(['del_flg' => "not"]);
         $companies_list = $this->Products->Companies->find('all')->where(['del_flg' => "not"]);
-        
+
         $this->set(compact('product', 'categories_list', 'companies_list'));
     }
 
@@ -185,23 +185,24 @@ class ProductsController extends AppController
     {
         // Request Link with POST DELETE
         $this->request->allowMethod(['post', 'delete']);
-        
+
         // Only Get Id
         $product = $this->Products->get($id);
 
         // Delete Disable Query
         $query = $this->Products->Answers->find('all', array('conditions' => array('Answers.product_id' => $id)))->select(['id']);
         $data = $query->toArray();
-        
+
         // Converting String 
         $products = implode(' ', $data);
         if (!empty($products)) {
             // Failing Process
             $this->Flash->error(__('The product is being used in survey so that could not be deleted.'));
+            return $this->redirect(['action' => 'index']);
         } else {
             // Update DB Delete Flag
             $product->del_flg = "deleted";
-            
+
             // Saving Process
             if ($this->Products->save($product)) {
                 $this->Flash->success(__('The product has been deleted.'));
@@ -228,8 +229,9 @@ class ProductsController extends AppController
             ->select(['id' => 'Products.id', 'name' => 'Products.name', 'price' => 'Products.price', 'rating' => 'Answers.rating'])
             ->leftJoin(
                 ['Answers' => 'answers'],
-                ['Products.id = Answers.product_id'])
-            ->where([['OR' => [['name LIKE'=>'%'.$keyword.'%'],['price LIKE'=>'%'.$keyword.'%']]],['AND' => ['del_flg' => 'not']]])
+                ['Products.id = Answers.product_id']
+            )
+            ->where([['OR' => [['name LIKE' => '%' . $keyword . '%'], ['price LIKE' => '%' . $keyword . '%']]], ['AND' => ['del_flg' => 'not']]])
             ->group(['id'])
             ->order(['name' => 'ASC']);
 
@@ -254,8 +256,9 @@ class ProductsController extends AppController
             ->select(['id' => 'Products.id', 'name' => 'Products.name', 'price' => 'Products.price', 'rating' => 'Answers.rating'])
             ->leftJoin(
                 ['Answers' => 'answers'],
-                ['Products.id = Answers.product_id'])
-            ->where([['OR' => [['name LIKE'=>'%'.$keyword.'%'],['price LIKE'=>'%'.$keyword.'%']]],['AND' => ['del_flg' => 'not']]])
+                ['Products.id = Answers.product_id']
+            )
+            ->where([['OR' => [['name LIKE' => '%' . $keyword . '%'], ['price LIKE' => '%' . $keyword . '%']]], ['AND' => ['del_flg' => 'not']]])
             ->group(['id'])
             ->order(['name' => 'ASC']);
 

@@ -142,10 +142,10 @@
         </tbody>
 
     </table>
-<<<<<<< HEAD
+    <!-- <<<<<<< HEAD -->
 </div>
 
-<div>
+<!-- <div>
     <br>
     <table class="table2">
         <tbody>
@@ -174,4 +174,4 @@
     </table>
 =======
 >>>>>>> 0e337383331b6d0ed65a398a93dfe714b4d4f655
-</div>
+</div> -->
