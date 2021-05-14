@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Cake\I18n\Time;
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Answers Controller
@@ -27,8 +28,37 @@ class AnswersController extends AppController
         ];
         $Answer = $this->Answers->find('all')->where(['user_id' => $this->Auth->user('id')])->group('survey_id');
 
-        // $surveys = $this->paginate($Surveys);
         $answers = $this->paginate($Answer);
+
+        $this->set(compact('answers'));
+    }
+
+    public function search()
+    {
+        $this->request->allowMethod('ajax');
+
+        $keyword = $this->request->getQuery('keyword');
+
+        $this->paginate = [
+            'contain' => ['Surveys']
+        ];
+
+        $answers = $this->paginate($this->Answers->find('all')
+            ->where(
+                [
+                    ['OR' => [
+                        ['Surveys.name LIKE' => '%' . $keyword . '%'],
+                        ['Surveys.description LIKE' => '%' . $keyword . '%']
+                    ]],
+                    ['AND' => [
+                        ['Surveys.del_flg' => 'not'],
+                        ['Answers.user_id' => $this->Auth->user('id')]
+                    ]]
+                ]
+            )
+            ->order(['Surveys.name' => 'ASC'])
+            ->group('Answers.survey_id')
+            ->limit(20));
 
         $this->set(compact('answers'));
         $this->set('_serialize', ['answers']);
@@ -43,12 +73,6 @@ class AnswersController extends AppController
      */
     public function view($id = null)
     {
-        /* $answer = $this->Answers->get($id, [
-            'contain' => ['Products', 'Categories', 'Questions', 'Surveys', 'Options', 'Users']
-        ]);
-
-        $this->set('answer', $answer);
-        $this->set('_serialize', ['answer']); */
         $answers = $this->Answers->find('all')->where(['user_id' => $this->Auth->user('id'), 'survey_id' => $id]);
         $this->loadModel('Surveys');
         $this->loadModel('Questions');
@@ -111,8 +135,6 @@ class AnswersController extends AppController
                 }
             }
 
-            // return debug($answers);
-
             if (!empty($answers)) {
                 foreach ($answers as $ans) {
                     $answer->user_id = $this->Auth->user('id');
@@ -141,20 +163,7 @@ class AnswersController extends AppController
                 }
             }
             return $this->redirect('/user/spin');
-            /*             if ($this->Answers->save($answer)) {
-                $this->Flash->success(__('The answer has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The answer could not be saved. Please, try again.')); */
         }
-        // $products = $this->Answers->Products->find('list', ['limit' => 200]);
-        // $categories = $this->Answers->Categories->find('list', ['limit' => 200]);
-        // $questions = $this->Answers->Questions->find('list', ['limit' => 200]);
-        // $surveys = $this->Answers->Surveys->find('list', ['limit' => 200]);
-        // $options = $this->Answers->Options->find('list', ['limit' => 200]);
-        // $users = $this->Answers->Users->find('list', ['limit' => 200]);
-        // $this->set(compact('answer', 'products', 'categories', 'questions', 'surveys', 'options', 'users'));
 
         $survey = $this->Surveys->find()->select(['id', 'title' => 'name', 'description', 'category_id', 'product_id'])->where(['id' => $surveyID, 'del_flg' => 'not'])->toArray();
 
@@ -242,4 +251,11 @@ class AnswersController extends AppController
         }
         return $result;
     }
+
+    /*     public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->Auth->user())
+            $this->Auth->allow(['publish', 'delete', 'add', 'index', 'view', 'search']);
+    } */
 }
