@@ -32,6 +32,14 @@
                                 <th scope="row"><?= __('User Type') ?></th>
                                 <td class="capitalize"><?= h($user->premium_flg) ?></td>
                             </tr>
+                            <tr>
+                                <th scope="row"><?= __('Create Date') ?></th>
+                                <td><?= h($user->created->i18nFormat('YYY-MM-dd')) ?></td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><?= __('Last Modified Date') ?></th>
+                                <td><?= h($user->modified->i18nFormat('YYY-MM-dd')) ?></td>
+                            </tr>
                         </table>
                     </div>
                 </div>
