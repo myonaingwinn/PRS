@@ -145,10 +145,8 @@
     $("#typeCat").on('change', function() {
         var categories = <?php echo json_encode($categories_list); ?>;
         var companies = <?php echo json_encode($companies_list); ?>;
+        var comp_selected = <?php echo json_encode($product->company_id); ?>;
         var categoryID = $(this).val();
-        ///var cid = 18;
-
-        console.log(cid);
 
         $('#typeCom option').remove();
         $('#typeCom').append('<option value="" disabled >Select company</option>');
@@ -158,8 +156,12 @@
 
             if (str != undefined) {
                 if (str.includes(categoryID)) {
-
-                    $('#typeCom').append('<option value="' + $(this)[0].id + '">' + $(this)[0].name + '</option>');
+                    if ($(this)[0].id == comp_selected) {
+                        console.log($(this)[0].id == comp_selected)
+                        $('#typeCom').append('<option value="' + $(this)[0].id + '" selected>' + $(this)[0].name + '</option>');
+                    } else {
+                        $('#typeCom').append('<option value="' + $(this)[0].id + '">' + $(this)[0].name + '</option>');
+                    }
 
                 }
             }
@@ -167,6 +169,7 @@
         $('select').formSelect();
     }).change();
 </script>
+
 
 <!-- dropdown list margin -->
 <style>
