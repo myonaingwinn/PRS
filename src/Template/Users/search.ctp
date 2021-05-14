@@ -8,7 +8,7 @@
             <th scope="col"><?= __('phone') ?></th>
             <th scope="col"><?= __('Date of Birth') ?></th>
             <th scope="col"><?= __('type') ?></th>
-            <th scope="col"><?= __('Create Date') ?></th>
+            <th scope="col"><?= __('Created Date') ?></th>
             <th scope="col" class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
