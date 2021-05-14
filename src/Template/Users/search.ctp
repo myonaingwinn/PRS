@@ -2,13 +2,13 @@
     <thead>
         <tr>
             <th scope="col">No</th>
-            <th scope="col"><?= __('name') ?></th>
-            <th scope="col"><?= __('email') ?></th>
-            <th scope="col"><?= __('gender') ?></th>
-            <th scope="col"><?= __('phone') ?></th>
+            <th scope="col"><?= __('Name') ?></th>
+            <th scope="col"><?= __('Email') ?></th>
+            <th scope="col"><?= __('Gender') ?></th>
+            <th scope="col"><?= __('Phone') ?></th>
             <th scope="col"><?= __('Date of Birth') ?></th>
-            <th scope="col"><?= __('type') ?></th>
-            <th scope="col"><?= __('Created Date') ?></th>
+            <th scope="col"><?= __('Type') ?></th>
+            <th scope="col"><?= __('Registered Date') ?></th>
             <th scope="col" class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>

@@ -10,7 +10,6 @@
     i.small.material-icons.prefix {
         margin-left: -2rem;
         color: gray;
-
     }
 
     #search {
@@ -74,7 +73,7 @@
                     <th scope="col"><?= $this->Paginator->sort('phone') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('Date of Birth') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('type') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('Create Date') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('Registered Date') ?></th>
                     <!-- <th scope="col"><?= $this->Paginator->sort('reward') ?></th> -->
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
                 </tr>
