@@ -46,7 +46,7 @@ class UsersController extends AppController
     public function search()
     {
 
-        $this->request->allowMethod('ajax');
+        $this->request->allowMethod('get');
 
         $keyword = $this->request->getQuery('keyword');
 

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 
 class ProductsController extends AppController
 {
@@ -218,7 +217,7 @@ class ProductsController extends AppController
     public function search()
     {
         // Ajax allow
-        $this->request->allowMethod('ajax');
+        $this->request->allowMethod('get');
 
         // Get string from search bar
         $keyword = $this->request->query('keyword');
@@ -245,7 +244,7 @@ class ProductsController extends AppController
     public function searchuser()
     {
         // Ajax allow
-        $this->request->allowMethod('ajax');
+        $this->request->allowMethod('get');
 
         // Get string from search bar
         $keyword = $this->request->query('keyword');
@@ -273,6 +272,6 @@ class ProductsController extends AppController
     {
         parent::beforeFilter($event);
         if ($this->Auth->user())
-            $this->Auth->allow(['index', 'view', 'add', 'edit', 'delete', 'search']);
+            $this->Auth->allow(['index', 'view', 'add', 'edit', 'delete', 'search', 'searchuser']);
     }
 }
