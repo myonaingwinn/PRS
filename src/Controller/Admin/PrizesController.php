@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\I18n\Time;
 
 /**
  * Prizes Controller
@@ -31,9 +32,12 @@ class PrizesController extends AppController
         if ($this->request->is('post')) {
 
             $prizes = $this->request->getData('prize_name');
-            
+
             $pr_count = $this->Prizes->find()->where(['prize_name' => $prizes])->count();
-            $currDateTime = date("Y-m-d H:i:s");
+            //$currDateTime = date("Y-m-d H:i:s");
+            // time zone
+            $currDateTime = Time::now();
+            $currDateTime->timezone = 'Asia/Yangon';
             if ($pr_count >= 1) {
                 $this->Flash->success(__('The prize name is existed.'));
             } else {
