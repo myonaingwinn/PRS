@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Cake\I18n\Time;
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Answers Controller
@@ -175,7 +176,7 @@ class AnswersController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    /*     public function edit($id = null)
     {
         $answer = $this->Answers->get($id, [
             'contain' => []
@@ -197,7 +198,7 @@ class AnswersController extends AppController
         $users = $this->Answers->Users->find('list', ['limit' => 200]);
         $this->set(compact('answer', 'products', 'categories', 'questions', 'surveys', 'options', 'users'));
         $this->set('_serialize', ['answer']);
-    }
+    } */
 
     /**
      * Delete method
@@ -206,18 +207,19 @@ class AnswersController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    /*     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $answer = $this->Answers->get($id);
-        if ($this->Answers->delete($answer)) {
+        $answer->del_flg = 'deleted';
+        if ($this->Answers->save($answer)) {
             $this->Flash->success(__('The answer has been deleted.'));
         } else {
             $this->Flash->error(__('The answer could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
-    }
+    } */
 
     public function saveAnswer($answer)
     {
@@ -241,5 +243,12 @@ class AnswersController extends AppController
             }
         }
         return $result;
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->Auth->user('name'))
+            $this->Auth->allow(['index', 'view', 'add']);
     }
 }

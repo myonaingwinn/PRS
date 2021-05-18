@@ -218,6 +218,6 @@ class ProductsController extends AppController
     {
         parent::beforeFilter($event);
         if ($this->Auth->user())
-            $this->Auth->allow(['productlist', 'delete', 'add', 'index', 'edit', 'view', 'search']);
+            $this->Auth->allow(['index', 'productlist', 'view', 'searchuser']);
     }
 }
