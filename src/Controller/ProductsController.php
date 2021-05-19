@@ -13,7 +13,7 @@ class ProductsController extends AppController
         // Cakephp Product List Query Style
         $query = $this->Products
             ->find('all')
-            ->select(['id' => 'Products.id', 'name' => 'Products.name', 'price' => 'Products.price', 'rating' => 'Answers.rating'])
+            ->select(['id' => 'Products.id', 'name' => 'Products.name', 'price' => 'Products.price', 'rating' => 'Answers.rating', 'created' => 'Products.created'])
             ->leftJoin(
                 ['Answers' => 'answers'],
                 ['Products.id = Answers.product_id']

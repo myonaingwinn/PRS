@@ -78,6 +78,7 @@
                     <th scope="col"><?= $this->Paginator->sort('Price') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('Status') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('Trending') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                     <th scope="col"><?= __('Action') ?></th>
                 </tr>
             </thead>
@@ -118,6 +119,7 @@
                                 <?= $product['rating'] / 5 * 100 ?>% <progress value="<?= $product['rating'] / 5 * 100 ?>" max="100"></progress>
                             <?php endif; ?>
                         </td>
+                        <td><?= date('Y-m-d', strtotime(h($product['created']))); ?></td>
                         <td>
                             <?= $this->Html->link(__('View'), ['action' => 'view', $product['id'], $purl]) ?>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product['id']], ['class' => 'user-hide']) ?>
