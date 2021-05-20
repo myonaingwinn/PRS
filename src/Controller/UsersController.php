@@ -344,14 +344,6 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
         if ($this->Auth->user())
-            $this->Auth->allow(['delete', 'add', 'index', 'edit', 'view', 'search']);
+            $this->Auth->allow(['delete', 'add', 'index', 'edit', 'view', 'search', 'logout']);
     }
-/* 
-    public function isAuthorized($user)
-    {
-        if (isset($user['name'])) {
-            return true;
-        }
-        return parent::isAuthorized($user);
-    } */
 }
