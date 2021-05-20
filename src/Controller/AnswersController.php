@@ -26,7 +26,7 @@ class AnswersController extends AppController
         $this->paginate = [
             'contain' => ['Surveys']
         ];
-        $Answer = $this->Answers->find('all')->where(['user_id' => $this->Auth->user('id')])->group('survey_id');
+        $Answer = $this->Answers->find('all')->where(['user_id' => $this->Auth->user('id'), 'del_flg' => 'not'])->group('survey_id');
 
         // $surveys = $this->paginate($Surveys);
         $answers = $this->paginate($Answer);
