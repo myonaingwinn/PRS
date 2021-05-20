@@ -85,9 +85,10 @@ class AppController extends Controller
             $this->set('_serialize', true);
         }
     }
-    public function isAuthorized()
+
+    public function isAuthorized($user)
     {
-        if ($this->Auth->user('name')) {
+        if (!isset($user['name'])) {
             return true;
         }
         return false;

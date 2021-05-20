@@ -3,6 +3,7 @@
 namespace App\Controller\User;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Prizes Controller
@@ -141,5 +142,12 @@ class PrizesController extends AppController
             'controller' => 'Prizes',
             'action' => 'index'
         ]);
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->Auth->user())
+            $this->Auth->allow(['index', 'spin', 'getscores','score']);
     }
 }

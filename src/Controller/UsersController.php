@@ -346,4 +346,12 @@ class UsersController extends AppController
         if ($this->Auth->user())
             $this->Auth->allow(['delete', 'add', 'index', 'edit', 'view', 'search']);
     }
+/* 
+    public function isAuthorized($user)
+    {
+        if (isset($user['name'])) {
+            return true;
+        }
+        return parent::isAuthorized($user);
+    } */
 }

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use Cake\I18n\Time;
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 class NotificationsController extends AppController
 {
@@ -36,5 +36,12 @@ class NotificationsController extends AppController
     public function answer($id = null)
     {
         return $this->redirect('add_answer/' . $id);
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->Auth->user())
+            $this->Auth->allow(['index', 'answer']);
     }
 }

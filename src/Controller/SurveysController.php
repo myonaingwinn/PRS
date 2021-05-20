@@ -251,7 +251,19 @@ class SurveysController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        if ($this->Auth->user())
+        if (!$this->Auth->user('name')) {
             $this->Auth->allow(['publish', 'delete', 'add', 'index', 'view', 'search']);
+        } else {
+            $this->Auth->deny();
+            return $this->redirect('data_analysis');
+        }
     }
+
+/*     public function isAuthorized($user)
+    {
+        if (!isset($user['name'])) {
+            return true;
+        }
+        return parent::isAuthorized($user);
+    } */
 }
