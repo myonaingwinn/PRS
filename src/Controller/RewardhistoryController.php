@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Rewardhistory Controller
@@ -54,5 +55,17 @@ class RewardhistoryController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if ($this->Auth->user('name')) {
+            $this->Auth->allow(['delete', 'index']);
+        } else {
+            $this->Auth->deny();
+            $this->Flash->error(__($this->Auth->getConfig('authError')));
+            return $this->redirect('data_analysis');
+        }
     }
 }

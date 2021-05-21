@@ -12,9 +12,9 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Controller;
+namespace App\Controller\User;
 
-use Cake\Controller\Controller\User;
+use Cake\Controller\Controller;
 use Cake\Event\Event;
 
 /**
@@ -65,5 +65,18 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        if ($this->Auth->user('name')) {
+            $this->set('Luser', $this->Auth->user());
+            $this->set('admin', null);
+        } else {
+            $this->set('Luser', null);
+            $this->set('admin', $this->Auth->user());
+        }
+        $this->Auth->allow(['add', 'login', 'forgotPassword', 'resetPassword']);
+        $this->Auth->setConfig('authError', "Oops, you are not authorized to access this area.");
     }
 }

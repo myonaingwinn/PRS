@@ -150,7 +150,12 @@ class CompaniesController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        if ($this->Auth->user())
-            $this->Auth->allow(['delete', 'add', 'index', 'view','edit']);
+        if (!$this->Auth->user('name')) {
+            $this->Auth->allow(['delete', 'add', 'index', 'view', 'edit']);
+        } else {
+            $this->Auth->deny();
+            $this->Flash->error(__($this->Auth->getConfig('authError')));
+            return $this->redirect('data_analysis');
+        }
     }
 }

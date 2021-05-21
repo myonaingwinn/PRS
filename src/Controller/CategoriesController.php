@@ -142,15 +142,8 @@ class CategoriesController extends AppController
             $this->Auth->allow(['delete', 'add', 'index', 'edit', 'view']);
         } else {
             $this->Auth->deny();
+            $this->Flash->error(__($this->Auth->getConfig('authError')));
             return $this->redirect('data_analysis');
         }
     }
-
-    /*     public function isAuthorized($user)
-    {
-        if (!isset($user['name'])) {
-            return true;
-        }
-        return parent::isAuthorized($user);
-    } */
 }

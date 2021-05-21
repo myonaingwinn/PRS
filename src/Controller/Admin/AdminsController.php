@@ -116,6 +116,10 @@ class AdminsController extends AppController
 
     public function login()
     {
+        if ($this->Auth->user('id')) {
+            $this->Flash->info(__('You\'re already logged in'));
+            return $this->redirect($this->Auth->redirectUrl());
+        }
         if ($this->request->is('post')) {
             $admin = $this->Auth->identify();
             if ($admin) {
@@ -176,10 +180,11 @@ class AdminsController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        if (!$this->Auth->user('name'))
-            {$this->Auth->allow(['delete', 'add', 'index']);
+        if (!$this->Auth->user('name')) {
+            $this->Auth->allow(['delete', 'add', 'index']);
         } else {
             $this->Auth->deny();
+            $this->Flash->error(__($this->Auth->getConfig('authError')));
             return $this->redirect('data_analysis');
         }
     }

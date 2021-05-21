@@ -118,6 +118,7 @@ class PrizesController extends AppController
             {$this->Auth->allow(['delete', 'prizeadd', 'edit', 'prizelist']);
         } else {
             $this->Auth->deny();
+            $this->Flash->error(__($this->Auth->getConfig('authError')));
             return $this->redirect('data_analysis');
         }
     }
