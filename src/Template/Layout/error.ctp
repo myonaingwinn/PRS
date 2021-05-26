@@ -4,9 +4,9 @@
 </title>
 <?= $this->Html->meta('icon') ?>
 
-<?= $this->Html->css('materialize.min.css') ?>
 <!-- <?= $this->Html->css('base.css') ?> -->
 <?= $this->Html->css('cake.css') ?>
+<?= $this->Html->css('materialize.min.css') ?>
 
 <?= $this->fetch('meta') ?>
 <?= $this->fetch('css') ?>
@@ -14,11 +14,11 @@
 
 <div class="container">
     <div class="row">
-        <div id="header">
-            <h1><?= __('Error') ?></h1>
-        </div>
         <div id="content">
             <?= $this->fetch('content') ?>
+            <script>
+                console.log(<?= $this->fetch('content') ?>);
+            </script>
         </div>
         <div id="footer">
             <?= $this->Html->link(__('Back'), 'javascript:history.back()', ['class' => 'btn waves-effect waves-light indigo right']) ?>
@@ -37,6 +37,10 @@
     }
 
     .container {
-        margin-top: 2rem;
+        margin-top: 6rem;
+    }
+
+    a:hover {
+        color: white;
     }
 </style>
