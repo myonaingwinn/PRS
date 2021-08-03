@@ -20,7 +20,7 @@ class NotificationsController extends AppController
             'contain' => ['Products', 'Categories', 'Admins']
         ];
         $user_id = $this->Auth->user('id');
-        $data = $this->Surveys->find('all')->where(['public' => 'Y'])
+        $data = $this->Surveys->find('all')->where(['Surveys.public' => 'Y', 'Surveys.del_flg' => 'not'])
             ->notMatching(
                 "Answers",
                 function ($q) use ($user_id) {
